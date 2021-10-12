@@ -2,12 +2,14 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="Linear Op Mode test", group="Linear Opmode")
 public class TestController extends LinearOpMode {
 
     private ElapsedTime runtime;
+    private DcMotor dcMotor;
 
     @Override
     public void runOpMode() throws InterruptedException {
