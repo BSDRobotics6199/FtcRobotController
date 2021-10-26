@@ -31,10 +31,10 @@ public class TestController extends OpMode {
 
         //Assuming that there are four drive wheels
         //This registers them
-        frontRight  = hardwareMap.get(DcMotor.class, "left_drive");
-        frontLeft = hardwareMap.get(DcMotor.class, "right_drive");
-        backRight = hardwareMap.get(DcMotor.class, "left_drive");
-        backLeft = hardwareMap.get(DcMotor.class, "right_drive");
+        frontRight  = hardwareMap.get(DcMotor.class, "frontRight");
+        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+        backRight = hardwareMap.get(DcMotor.class, "backRight");
+        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
 
         //Setting the motors to stop when there is no power
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
