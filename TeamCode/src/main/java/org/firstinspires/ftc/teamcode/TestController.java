@@ -30,6 +30,7 @@ public class TestController extends OpMode {
         telemetry.update();
 
         //Assuming that there are four drive wheels
+        //This registers them
         frontRight  = hardwareMap.get(DcMotor.class, "left_drive");
         frontLeft = hardwareMap.get(DcMotor.class, "right_drive");
         backRight = hardwareMap.get(DcMotor.class, "left_drive");
@@ -42,6 +43,7 @@ public class TestController extends OpMode {
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //Just have raw power input
+        //Also note that this code may not even be needed
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -61,7 +63,8 @@ public class TestController extends OpMode {
         double turnPower = gamepad1.right_stick_x;
 
         //So this part makes sure that the power is not too high or too low, it also makes the robot
-        //actually move
+        //actually move, so from what I understand, it makes one side move faster than the other to
+        //achieve the rotation
         frontRight.setPower(Range.clip(drivePower - turnPower, -1, 1));
         backRight.setPower(Range.clip(drivePower - turnPower, -1, 1));
 
