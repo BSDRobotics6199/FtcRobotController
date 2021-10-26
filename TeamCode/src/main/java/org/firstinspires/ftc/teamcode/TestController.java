@@ -31,44 +31,36 @@ public class TestController extends OpMode {
 
         //Assuming that there are four drive wheels
         //This registers them
-        frontRight  = hardwareMap.get(DcMotor.class, "frontRight");
-        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        backRight = hardwareMap.get(DcMotor.class, "backRight");
-        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-
-        //Setting the motors to stop when there is no power
-        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        //Just have raw power input
-        //Also note that this code may not even be needed
-        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        //Setting the right side to reverse (it is what the example code and last year's code does,
-        // it apparently makes the robot go forwards, do not question it)
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRight  = initializeMotor("frontRight");
+        frontLeft = initializeMotor("frontLeft");
+        backRight = initializeMotor("backRight");
+        backLeft = initializeMotor("backLeft");
     }
 
     @Override
     public void loop() {
         //Here you will have to make the main logic of the operation mode
         //Ok apparently when you have the stick forwards it is negative y so you have to negate it
-        double drivePower = -gamepad1.left_stick_y;
-        double turnPower = gamepad1.right_stick_x;
+        float drivePower = -gamepad1.left_stick_y;
+        float turnPower = gamepad1.right_stick_x;
+        float strafePower = gamepad1.left_stick_x;
 
         //So this part makes sure that the power is not too high or too low, it also makes the robot
         //actually move, so from what I understand, it makes one side move faster than the other to
         //achieve the rotation
-        frontRight.setPower(Range.clip(drivePower - turnPower, -1, 1));
-        backRight.setPower(Range.clip(drivePower - turnPower, -1, 1));
+        frontRight.setPower(Range.clip(drivePower + turnPower + strafePower, -1, 1));
+        backRight.setPower(Range.clip(drivePower - turnPower + strafePower, -1, 1));
 
-        frontLeft.setPower(Range.clip(drivePower + turnPower, -1, 1));
-        backLeft.setPower(Range.clip(drivePower + turnPower, -1, 1));
+        frontLeft.setPower(Range.clip(drivePower - turnPower - strafePower, -1, 1));
+        backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
+    }
+    private DcMotor initializeMotor(String hardwareID) {
+        DcMotor returnMotor = hardwareMap.get(DcMotor.class, hardwareID);
+        returnMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        returnMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        if (hardwareID.substring(-5).equals("Right")) {
+            returnMotor.setDirection(DcMotor.Direction.REVERSE);
+        }
+        return returnMotor;
     }
 }
