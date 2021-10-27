@@ -53,12 +53,18 @@ public class TestController extends OpMode {
 
         frontLeft.setPower(Range.clip(drivePower - turnPower - strafePower, -1, 1));
         backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
+
+        //funny it rumbles if you press circle
+        if (gamepad1.circle) {
+            gamepad1.rumble(1000);
+        }
     }
+
     private DcMotor initializeMotor(String hardwareID) {
         DcMotor returnMotor = hardwareMap.get(DcMotor.class, hardwareID);
         returnMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         returnMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        if (hardwareID.substring(-5).equals("Right")) {
+        if (hardwareID.substring(-5).equalsIgnoreCase("Right")) {
             returnMotor.setDirection(DcMotor.Direction.REVERSE);
         }
         return returnMotor;
