@@ -49,10 +49,10 @@ public class TestController extends OpMode {
         //actually move, so from what I understand, it makes one side move faster than the other to
         //achieve the rotation
         frontRight.setPower(Range.clip(drivePower + turnPower + strafePower, -1, 1));
-        backRight.setPower(Range.clip(drivePower - turnPower + strafePower, -1, 1));
+        backRight.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
 
         frontLeft.setPower(Range.clip(drivePower - turnPower - strafePower, -1, 1));
-        backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
+        backLeft.setPower(Range.clip(drivePower - turnPower + strafePower, -1, 1));
 
         //funny it rumbles if you press circle
         if (gamepad1.circle) {
