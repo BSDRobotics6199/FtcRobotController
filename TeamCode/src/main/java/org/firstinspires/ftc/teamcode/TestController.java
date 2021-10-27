@@ -64,8 +64,9 @@ public class TestController extends OpMode {
         DcMotor returnMotor = hardwareMap.get(DcMotor.class, hardwareID);
         returnMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         returnMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        if (hardwareID.substring(hardwareID.length()-6).equalsIgnoreCase("Right")) {
+        if (hardwareID.substring(hardwareID.length()-4).equalsIgnoreCase("Left")) {
             returnMotor.setDirection(DcMotor.Direction.REVERSE);
+            telemetry.addData("hardwareID", hardwareID.substring(hardwareID.length()-5));
         }
         return returnMotor;
     }
