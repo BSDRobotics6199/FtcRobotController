@@ -48,11 +48,11 @@ public class TestController extends OpMode {
         //So this part makes sure that the power is not too high or too low, it also makes the robot
         //actually move, so from what I understand, it makes one side move faster than the other to
         //achieve the rotation
-        frontRight.setPower(Range.clip(drivePower + turnPower + strafePower, -1, 1));
-        backRight.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
+        frontRight.setPower(Range.clip(drivePower - turnPower - strafePower, -1, 1));
+        backRight.setPower(Range.clip(drivePower - turnPower + strafePower, -1, 1));
 
-        frontLeft.setPower(Range.clip(drivePower - turnPower - strafePower, -1, 1));
-        backLeft.setPower(Range.clip(drivePower - turnPower + strafePower, -1, 1));
+        frontLeft.setPower(Range.clip(drivePower + turnPower + strafePower, -1, 1));
+        backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
 
         //funny it rumbles if you press circle
         if (gamepad1.circle) {
@@ -66,7 +66,6 @@ public class TestController extends OpMode {
         returnMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         if (hardwareID.substring(hardwareID.length()-4).equalsIgnoreCase("Left")) {
             returnMotor.setDirection(DcMotor.Direction.REVERSE);
-            telemetry.addData("hardwareID", hardwareID.substring(hardwareID.length()-5));
         }
         return returnMotor;
     }
