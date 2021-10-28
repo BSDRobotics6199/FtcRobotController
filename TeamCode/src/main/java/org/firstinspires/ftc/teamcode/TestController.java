@@ -39,6 +39,9 @@ public class TestController extends OpMode {
         backLeft = initializeMotor("backLeft");
         leftClaw = hardwareMap.get(Servo.class, "servoLeft");
         rightClaw = hardwareMap.get(Servo.class, "servoRight");
+
+        //Reverses one of the servos
+        leftClaw.setDirection(Servo.Direction.REVERSE);
     }
 
     @Override
@@ -73,8 +76,13 @@ public class TestController extends OpMode {
         }
         return returnMotor;
     }
-    private void ServoSqueeze(/*int leftBound, int rightBound*/) {
+    private void servoSqueeze(/*int leftBound, int rightBound*/) {
         leftClaw.setPosition(leftClaw.getPosition() + 1);
         rightClaw.setPosition(rightClaw.getPosition() + 1);
+    }
+
+    private void servoExpand(/*int leftBound, int rightBound*/){
+        leftClaw.setPosition(leftClaw.getPosition() -1);
+        rightClaw.setPosition(rightClaw.getPosition() -1);
     }
 }
