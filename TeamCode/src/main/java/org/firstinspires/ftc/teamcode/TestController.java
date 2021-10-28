@@ -24,6 +24,7 @@ public class TestController extends OpMode {
     private DcMotor backLeft;
     private Servo leftClaw;
     private Servo rightClaw;
+    private double leftPos;
     @Override
     public void init() {
         //Starts the operation mode
@@ -79,10 +80,15 @@ public class TestController extends OpMode {
     private void servoSqueeze(/*int leftBound, int rightBound*/) {
         leftClaw.setPosition(leftClaw.getPosition() + 1);
         rightClaw.setPosition(rightClaw.getPosition() + 1);
+        if (Math.abs(leftPos-leftClaw.getPosition())<1) {
+            telemetry.addData("leftStrained" , true);
+        }
+        leftPos = leftClaw.getPosition();
     }
 
     private void servoExpand(/*int leftBound, int rightBound*/){
         leftClaw.setPosition(leftClaw.getPosition() -1);
         rightClaw.setPosition(rightClaw.getPosition() -1);
+
     }
 }
