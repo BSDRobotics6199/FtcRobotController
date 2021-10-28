@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -21,7 +22,8 @@ public class TestController extends OpMode {
     private DcMotor frontLeft;
     private DcMotor backRight;
     private DcMotor backLeft;
-
+    private Servo leftClaw;
+    private Servo rightClaw;
     @Override
     public void init() {
         //Starts the operation mode
@@ -35,6 +37,8 @@ public class TestController extends OpMode {
         frontLeft = initializeMotor("frontLeft");
         backRight = initializeMotor("backRight");
         backLeft = initializeMotor("backLeft");
+        leftClaw = hardwareMap.get(Servo.class, "servoLeft");
+        rightClaw = hardwareMap.get(Servo.class, "servoRight");
     }
 
     @Override
@@ -68,5 +72,9 @@ public class TestController extends OpMode {
             returnMotor.setDirection(DcMotor.Direction.REVERSE);
         }
         return returnMotor;
+    }
+    private void ServoSqueeze(/*int leftBound, int rightBound*/) {
+        leftClaw.setPosition(leftClaw.getPosition() + 1);
+        rightClaw.setPosition(rightClaw.getPosition() + 1);
     }
 }
