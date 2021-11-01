@@ -95,7 +95,7 @@ public class TestController extends OpMode {
             telemetry.addData("leftStrained" , true);
         }
         leftClawPosition = leftClaw.getPosition();
-        telemetry.addData("Right position:", servoController.getServoPosition(0));
+        telemetry.addData("Right position:", rightClaw.getPosition());
     }
 
     private void servoExpand(/*int leftBound, int rightBound*/){
