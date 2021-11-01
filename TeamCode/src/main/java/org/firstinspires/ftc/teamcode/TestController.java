@@ -28,8 +28,6 @@ public class TestController extends OpMode {
     private Servo leftClaw;
     private Servo rightClaw;
     private ServoController servoController;
-    private int leftClawPort;
-    private int rightClawPort;
     private double leftClawPosition;
     @Override
     public void init() {
@@ -44,9 +42,10 @@ public class TestController extends OpMode {
         frontLeft = initializeMotor("frontLeft");
         backRight = initializeMotor("backRight");
         backLeft = initializeMotor("backLeft");
+        leftClaw = hardwareMap.get(Servo.class, "leftClaw");
+        rightClaw = hardwareMap.get(Servo.class, "rightClaw");
         servoController = hardwareMap.getAll(ServoController.class).get(0);
-        telemetry.addData("ServoXs: ", hardwareMap.getAll(ServoImplEx.class));
-        telemetry.addData("ServoXs: ", hardwareMap.getAll(ServoImpl.class));
+        telemetry.addData("Servos: ", hardwareMap.getAll(Servo.class));
     }
 
     @Override
@@ -88,26 +87,26 @@ public class TestController extends OpMode {
         return returnMotor;
     }
     private void servoSqueeze(/*int leftBound, int rightBound*/) {
-        servoController.setServoPosition(0,
+        leftClaw.setPosition(
                 Range.clip(servoController.getServoPosition(0) - 0.1, 0, 1));
-        servoController.setServoPosition(1,
+        rightClaw.setPosition(
                 Range.clip(servoController.getServoPosition(1) - 0.1, 0, 1));
         if (Math.abs(leftClawPosition-servoController.getServoPosition(0))<0.01) {
             telemetry.addData("leftStrained" , true);
         }
-        leftClawPosition = servoController.getServoPosition(0);
+        leftClawPosition = leftClaw.getPosition();
         telemetry.addData("Right position:", servoController.getServoPosition(0));
     }
 
     private void servoExpand(/*int leftBound, int rightBound*/){
-        servoController.setServoPosition(0,
+        leftClaw.setPosition(
                 Range.clip(servoController.getServoPosition(0) - 0.1, 0, 1));
-        servoController.setServoPosition(1,
+        rightClaw.setPosition(
                 Range.clip(servoController.getServoPosition(1) - 0.1, 0, 1));
         if (Math.abs(leftClawPosition-servoController.getServoPosition(0))<0.01) {
             telemetry.addData("leftStrained" , true);
         }
-        leftClawPosition = servoController.getServoPosition(0);
+        leftClawPosition = leftClaw.getPosition();
         telemetry.addData("Left position:", servoController.getServoPosition(0));
     }
 }
