@@ -80,6 +80,7 @@ public class TestController extends OpMode {
         if (gamepad1.square) {
             servoExpand();
         }
+        telemetry.addData("DeltaTime", dt);
         lastTime = runtime.time();
     }
 
