@@ -15,45 +15,16 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @TeleOp(name="Linear Op Mode test", group="Linear Opmode")
-public class TestController extends OpMode {
-    //Note this code did not directly come from the examples but is heavily inspired by the examples
-    //along with the code from last year, I have made some changes but a decent amount of the logic
-    //is paraphrased, this is merely just a foundation that we will work to change later.
+public class TestController extends RoboOp {
 
-    private ElapsedTime runtime;
-    private DcMotor frontRight;
-    private DcMotor frontLeft;
-    private DcMotor backRight;
-    private DcMotor backLeft;
-    private Servo leftClaw;
-    private Servo rightClaw;
-    private ServoController servoController;
-    private double leftClawPosition;
-    private double lastTime;
-    private double dt;
     @Override
     public void init() {
-        //Starts the operation mode
-        runtime = new ElapsedTime();
-        telemetry.addData("Status", "Started");
-        telemetry.update();
-
-        //Assuming that there are four drive wheels
-        //This registers them
-        //TODO: add lift motor
-        frontRight  = initializeMotor("frontRight");
-        frontLeft = initializeMotor("frontLeft");
-        backRight = initializeMotor("backRight");
-        backLeft = initializeMotor("backLeft");
-        leftClaw = hardwareMap.get(Servo.class, "leftClaw");
-        rightClaw = hardwareMap.get(Servo.class, "rightClaw");
-        rightClaw.setDirection(Servo.Direction.REVERSE);
-        servoController = hardwareMap.getAll(ServoController.class).get(0);
-        telemetry.addData("Servos: ", hardwareMap.getAll(Servo.class));
+       super.init();
     }
 
     @Override
     public void loop() {
+        super.loop();
         //Here you will have to make the main logic of the operation mode
         //Ok apparently when you have the stick forwards it is negative y so you have to negate it
         float drivePower = -gamepad1.left_stick_y;
@@ -80,41 +51,5 @@ public class TestController extends OpMode {
         if (gamepad1.square) {
             servoExpand();
         }
-        telemetry.addData("DeltaTime", dt);
-        lastTime = runtime.time();
-    }
-
-    private DcMotor initializeMotor(String hardwareID) {
-        DcMotor returnMotor = hardwareMap.get(DcMotor.class, hardwareID);
-        returnMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        returnMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        if (hardwareID.substring(hardwareID.length()-4).equalsIgnoreCase("Left")) {
-            returnMotor.setDirection(DcMotor.Direction.REVERSE);
-        }
-        return returnMotor;
-    }
-    private void servoSqueeze(/*int leftBound, int rightBound*/) {
-        //TODO: ignore user input when strained
-        leftClaw.setPosition(
-                Range.clip(leftClaw.getPosition() + 1*dt, 0.69, 1));
-        rightClaw.setPosition(
-                Range.clip(rightClaw.getPosition() + 1*dt, 0.69, 1));
-        if (Math.abs(leftClawPosition-servoController.getServoPosition(0))<0.01) {
-            telemetry.addData("leftStrained", true);
-        }
-        leftClawPosition = leftClaw.getPosition();
-        telemetry.addData("Claw position:", rightClaw.getPosition());
-    }
-
-    private void servoExpand(/*int leftBound, int rightBound*/){
-        leftClaw.setPosition(
-                Range.clip(leftClaw.getPosition() - 1*dt, 0.69, 1));
-        rightClaw.setPosition(
-                Range.clip(rightClaw.getPosition() - 1*dt, 0.69, 1));
-        if (Math.abs(leftClawPosition-servoController.getServoPosition(0))<0.01) {
-            telemetry.addData("leftStrained" , true);
-        }
-        leftClawPosition = leftClaw.getPosition();
-        telemetry.addData("Claw position:", rightClaw.getPosition());
     }
 }

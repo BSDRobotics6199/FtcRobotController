@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-@TeleOp(name="Linear Op Mode test", group="Linear Opmode")
+@TeleOp(name="RoboOp", group="Linear Opmode")
 public class RoboOp extends OpMode {
     //Note this code did not directly come from the examples but is heavily inspired by the examples
     //along with the code from last year, I have made some changes but a decent amount of the logic
@@ -32,7 +32,7 @@ public class RoboOp extends OpMode {
     protected double lastTime;
     protected double dt;
     protected double drivePower, strafePower, turnPower;
-
+    protected double x, y;
     @Override
     public void init() {
         //Starts the operation mode
@@ -56,6 +56,11 @@ public class RoboOp extends OpMode {
 
     @Override
     public void loop() {
+        dt = runtime.time() - lastTime;
+
+        //So this part makes sure that the power is not too high or too low, it also makes the robot
+        //actually move, so from what I understand, it makes one side move faster than the other to
+        //achieve the rotation
         frontRight.setPower(Range.clip(drivePower - turnPower - strafePower, -1, 1));
         backRight.setPower(Range.clip(drivePower - turnPower + strafePower, -1, 1));
 
@@ -72,7 +77,6 @@ public class RoboOp extends OpMode {
         returnMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         if (hardwareID.substring(hardwareID.length()-4).equalsIgnoreCase("Left")) {
             returnMotor.setDirection(DcMotor.Direction.REVERSE);
-            telemetry.addData("hardwareID", hardwareID.substring(hardwareID.length()-4));
         }
         return returnMotor;
     }
