@@ -29,6 +29,8 @@ public class TestController extends OpMode {
     private Servo rightClaw;
     private ServoController servoController;
     private double leftClawPosition;
+    private double lastTime;
+    private double dt;
     @Override
     public void init() {
         //Starts the operation mode
@@ -38,12 +40,14 @@ public class TestController extends OpMode {
 
         //Assuming that there are four drive wheels
         //This registers them
+        //TODO: add lift motor
         frontRight  = initializeMotor("frontRight");
         frontLeft = initializeMotor("frontLeft");
         backRight = initializeMotor("backRight");
         backLeft = initializeMotor("backLeft");
         leftClaw = hardwareMap.get(Servo.class, "leftClaw");
         rightClaw = hardwareMap.get(Servo.class, "rightClaw");
+        rightClaw.setDirection(Servo.Direction.REVERSE);
         servoController = hardwareMap.getAll(ServoController.class).get(0);
         telemetry.addData("Servos: ", hardwareMap.getAll(Servo.class));
     }
@@ -55,6 +59,7 @@ public class TestController extends OpMode {
         float drivePower = -gamepad1.left_stick_y;
         float turnPower = gamepad1.right_stick_x;
         float strafePower = gamepad1.left_stick_x;
+        dt = runtime.time() - lastTime;
 
         //So this part makes sure that the power is not too high or too low, it also makes the robot
         //actually move, so from what I understand, it makes one side move faster than the other to
@@ -75,6 +80,7 @@ public class TestController extends OpMode {
         if (gamepad1.square) {
             servoExpand();
         }
+        lastTime = runtime.time();
     }
 
     private DcMotor initializeMotor(String hardwareID) {
@@ -87,26 +93,27 @@ public class TestController extends OpMode {
         return returnMotor;
     }
     private void servoSqueeze(/*int leftBound, int rightBound*/) {
+        //TODO: ignore user input when strained
         leftClaw.setPosition(
-                Range.clip(servoController.getServoPosition(0) - 0.1, 0, 1));
+                Range.clip(leftClaw.getPosition() + 1*dt, 0.69, 1));
         rightClaw.setPosition(
-                Range.clip(servoController.getServoPosition(1) - 0.1, 0, 1));
+                Range.clip(rightClaw.getPosition() + 1*dt, 0.69, 1));
         if (Math.abs(leftClawPosition-servoController.getServoPosition(0))<0.01) {
-            telemetry.addData("leftStrained" , true);
+            telemetry.addData("leftStrained", true);
         }
         leftClawPosition = leftClaw.getPosition();
-        telemetry.addData("Right position:", rightClaw.getPosition());
+        telemetry.addData("Claw position:", rightClaw.getPosition());
     }
 
     private void servoExpand(/*int leftBound, int rightBound*/){
         leftClaw.setPosition(
-                Range.clip(servoController.getServoPosition(0) - 0.1, 0, 1));
+                Range.clip(leftClaw.getPosition() - 1*dt, 0.69, 1));
         rightClaw.setPosition(
-                Range.clip(servoController.getServoPosition(1) - 0.1, 0, 1));
+                Range.clip(rightClaw.getPosition() - 1*dt, 0.69, 1));
         if (Math.abs(leftClawPosition-servoController.getServoPosition(0))<0.01) {
             telemetry.addData("leftStrained" , true);
         }
         leftClawPosition = leftClaw.getPosition();
-        telemetry.addData("Left position:", servoController.getServoPosition(0));
+        telemetry.addData("Claw position:", rightClaw.getPosition());
     }
 }
