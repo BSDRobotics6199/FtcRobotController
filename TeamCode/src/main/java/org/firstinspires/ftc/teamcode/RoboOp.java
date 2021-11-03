@@ -110,5 +110,5 @@ public class RoboOp extends OpMode {
     protected void liftBack() {
         lift.setPower(-1);
     }
-    //
+    //adds lift functionality
 }
