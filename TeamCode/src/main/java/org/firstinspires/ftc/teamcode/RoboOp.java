@@ -58,8 +58,6 @@ public class RoboOp extends OpMode {
 
     @Override
     public void loop() {
-        dt = runtime.time() - lastTime;
-
         //So this part makes sure that the power is not too high or too low, it also makes the robot
         //actually move, so from what I understand, it makes one side move faster than the other to
         //achieve the rotation
@@ -69,7 +67,6 @@ public class RoboOp extends OpMode {
         frontLeft.setPower(Range.clip(drivePower + turnPower + strafePower, -1, 1));
         backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
 
-        telemetry.addData("DeltaTime", dt);
         lastTime = runtime.time();
     }
 

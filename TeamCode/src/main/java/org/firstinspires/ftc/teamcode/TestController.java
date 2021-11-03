@@ -24,22 +24,18 @@ public class TestController extends RoboOp {
 
     @Override
     public void loop() {
-        super.loop();
+        dt = runtime.time() - lastTime;
+        telemetry.addData("DeltaTime", dt);
         //Here you will have to make the main logic of the operation mode
         //Ok apparently when you have the stick forwards it is negative y so you have to negate it
-        float drivePower = -gamepad1.left_stick_y;
-        float turnPower = gamepad1.right_stick_x;
-        float strafePower = gamepad1.left_stick_x;
-        dt = runtime.time() - lastTime;
+        drivePower = -gamepad1.left_stick_y;
+        turnPower = gamepad1.right_stick_x;
+        strafePower = gamepad1.left_stick_x;
 
         //So this part makes sure that the power is not too high or too low, it also makes the robot
         //actually move, so from what I understand, it makes one side move faster than the other to
         //achieve the rotation
-        frontRight.setPower(Range.clip(drivePower - turnPower - strafePower, -1, 1));
-        backRight.setPower(Range.clip(drivePower - turnPower + strafePower, -1, 1));
-
-        frontLeft.setPower(Range.clip(drivePower + turnPower + strafePower, -1, 1));
-        backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
+        super.loop();
 
         //funny it rumbles if you press circle
         if (gamepad1.circle) {
