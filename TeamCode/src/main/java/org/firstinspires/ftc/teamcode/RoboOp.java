@@ -33,11 +33,6 @@ public class RoboOp extends OpMode {
     protected double dt;
     protected double drivePower, strafePower, turnPower;
     protected double x, y;
-    //Meters per second
-    protected final double velocity = 0.5;
-    //Degrees per second
-    protected final double turnSpeed = 15;
-    
     @Override
     public void init() {
         //Starts the operation mode
@@ -71,8 +66,6 @@ public class RoboOp extends OpMode {
 
         frontLeft.setPower(Range.clip(drivePower + turnPower + strafePower, -1, 1));
         backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
-
-
 
         telemetry.addData("DeltaTime", dt);
         lastTime = runtime.time();
