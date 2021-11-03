@@ -51,5 +51,11 @@ public class TestController extends RoboOp {
         if (gamepad1.square) {
             servoExpand();
         }
+        if (gamepad1.circle) {
+            liftForward();
+        }
+        if (gamepad1.triangle) {
+            liftBack();
+        }
     }
 }

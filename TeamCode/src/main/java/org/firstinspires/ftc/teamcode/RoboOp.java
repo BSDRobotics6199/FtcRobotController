@@ -25,6 +25,7 @@ public class RoboOp extends OpMode {
     protected DcMotor frontLeft;
     protected DcMotor backRight;
     protected DcMotor backLeft;
+    protected DcMotor lift;
     protected Servo leftClaw;
     protected Servo rightClaw;
     protected ServoController servoController;
@@ -43,15 +44,16 @@ public class RoboOp extends OpMode {
         //Assuming that there are four drive wheels
         //This registers them
         //TODO: add lift motor
-        frontRight  = initializeMotor("frontRight");
-        frontLeft = initializeMotor("frontLeft");
-        backRight = initializeMotor("backRight");
-        backLeft = initializeMotor("backLeft");
-        leftClaw = hardwareMap.get(Servo.class, "leftClaw");
-        rightClaw = hardwareMap.get(Servo.class, "rightClaw");
+        frontRight  = initializeMotor("right_front");
+        frontLeft = initializeMotor("left_front");
+        backRight = initializeMotor("right_rear");
+        backLeft = initializeMotor("left_rear");
+        lift = initializeMotor("lift");
+        leftClaw = hardwareMap.get(Servo.class, "left");
+        rightClaw = hardwareMap.get(Servo.class, "right");
         rightClaw.setDirection(Servo.Direction.REVERSE);
         servoController = hardwareMap.getAll(ServoController.class).get(0);
-        telemetry.addData("Servos: ", hardwareMap.getAll(Servo.class));
+        telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
     }
 
     @Override
@@ -75,7 +77,7 @@ public class RoboOp extends OpMode {
         DcMotor returnMotor = hardwareMap.get(DcMotor.class, hardwareID);
         returnMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         returnMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        if (hardwareID.substring(hardwareID.length()-4).equalsIgnoreCase("Left")) {
+        if (hardwareID.substring(0,4).equalsIgnoreCase("left")) {
             returnMotor.setDirection(DcMotor.Direction.REVERSE);
         }
         return returnMotor;
@@ -91,6 +93,7 @@ public class RoboOp extends OpMode {
         }
         leftClawPosition = leftClaw.getPosition();
         telemetry.addData("Claw position:", rightClaw.getPosition());
+        telemetry.addData("ServoController position:", servoController.getServoPosition(0));
     }
 
     protected void servoExpand(/*int leftBound, int rightBound*/){
@@ -103,5 +106,11 @@ public class RoboOp extends OpMode {
         }
         leftClawPosition = leftClaw.getPosition();
         telemetry.addData("Claw position:", rightClaw.getPosition());
+    }
+    protected void liftForward() {
+        lift.setPower(1);
+    }
+    protected void liftBack() {
+        lift.setPower(-1);
     }
 }
