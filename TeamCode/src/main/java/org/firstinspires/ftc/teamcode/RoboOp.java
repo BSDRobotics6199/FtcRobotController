@@ -14,7 +14,6 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-@TeleOp(name="RoboOp", group="Linear Opmode")
 public class RoboOp extends OpMode {
     //Note this code did not directly come from the examples but is heavily inspired by the examples
     //along with the code from last year, I have made some changes but a decent amount of the logic
