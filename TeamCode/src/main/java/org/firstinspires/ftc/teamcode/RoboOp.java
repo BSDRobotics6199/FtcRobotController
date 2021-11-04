@@ -26,14 +26,19 @@ public class RoboOp extends OpMode {
     protected DcMotor backRight;
     protected DcMotor backLeft;
     protected DcMotor lift;
+    protected DcMotor carousel;
     protected Servo leftClaw;
     protected Servo rightClaw;
     protected ServoController servoController;
     protected double leftClawPosition;
+    protected double rightClawPosition;
     protected double lastTime;
     protected double dt;
     protected double drivePower, strafePower, turnPower;
+    protected float liftPower;
     protected double x, y;
+    private double leftClawDelta;
+    private double rightClawDelta;
     @Override
     public void init() {
         //Starts the operation mode
@@ -49,6 +54,7 @@ public class RoboOp extends OpMode {
         backRight = initializeMotor("right_rear");
         backLeft = initializeMotor("left_rear");
         lift = initializeMotor("lift");
+        carousel = initializeMotor("carousel");
         leftClaw = hardwareMap.get(Servo.class, "left");
         rightClaw = hardwareMap.get(Servo.class, "right");
         rightClaw.setDirection(Servo.Direction.REVERSE);
@@ -67,6 +73,8 @@ public class RoboOp extends OpMode {
         frontLeft.setPower(Range.clip(drivePower + turnPower + strafePower, -1, 1));
         backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
 
+
+        lift.setPower((double)liftPower);
         lastTime = runtime.time();
     }
 
@@ -80,20 +88,27 @@ public class RoboOp extends OpMode {
         return returnMotor;
     }
     protected void servoSqueeze(/*int leftBound, int rightBound*/) {
-        //TODO: ignore user input when strained
+        leftClawDelta = Math.abs(leftClaw.getPosition() - leftClawPosition);
         leftClaw.setPosition(
                 Range.clip(leftClaw.getPosition() + 1*dt, 0.69, 1));
         rightClaw.setPosition(
                 Range.clip(rightClaw.getPosition() + 1*dt, 0.69, 1));
-        if (Math.abs(leftClawPosition-servoController.getServoPosition(0))<0.01) {
-            telemetry.addData("leftStrained", true);
+        telemetry.addData("Claw delta:", leftClawDelta);
+        leftClawPosition = leftClaw.getPosition();
+    }
+    protected void servoSqueeze2() {
+        //TODO: change the threshold based on normal operation
+        leftClawDelta = leftClaw.getPosition() - leftClawPosition;
+        if (leftClawDelta>0.01) {
+            leftClaw.setPosition(
+                    Range.clip(leftClaw.getPosition() - 1*dt, 0.69, 1));
+            rightClaw.setPosition(
+                    Range.clip(rightClaw.getPosition() - 1*dt, 0.69, 1));
         }
         leftClawPosition = leftClaw.getPosition();
-        telemetry.addData("Claw position:", rightClaw.getPosition());
-        telemetry.addData("ServoController position:", servoController.getServoPosition(0));
     }
-
     protected void servoExpand(/*int leftBound, int rightBound*/){
+        rightClawDelta = Math.abs(rightClaw.getPosition()-rightClawPosition);
         leftClaw.setPosition(
                 Range.clip(leftClaw.getPosition() - 1*dt, 0.69, 1));
         rightClaw.setPosition(
@@ -102,13 +117,14 @@ public class RoboOp extends OpMode {
             telemetry.addData("leftStrained" , true);
         }
         leftClawPosition = leftClaw.getPosition();
-        telemetry.addData("Claw position:", rightClaw.getPosition());
+        telemetry.addData("RClaw delta:", rightClawDelta);
+        rightClawPosition = rightClaw.getPosition();
     }
-    protected void liftForward() {
-        lift.setPower(1);
+    protected void carouselClockwise(){
+        carousel.setPower(-1);
     }
-    protected void liftBack() {
-        lift.setPower(-1);
+    protected void carouselCounterClockwise(){
+        carousel.setPower(1);
     }
     //adds lift functionality
 }

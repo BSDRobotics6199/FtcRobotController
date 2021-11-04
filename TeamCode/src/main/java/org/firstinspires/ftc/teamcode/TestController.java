@@ -35,7 +35,6 @@ public class TestController extends RoboOp {
         //So this part makes sure that the power is not too high or too low, it also makes the robot
         //actually move, so from what I understand, it makes one side move faster than the other to
         //achieve the rotation
-        super.loop();
 
         //funny it rumbles if you press circle
         if (gamepad1.circle) {
@@ -48,11 +47,13 @@ public class TestController extends RoboOp {
             servoExpand();
         }
         if (gamepad1.circle) {
-            liftForward();
+            carouselClockwise();
         }
         if (gamepad1.triangle) {
-            liftBack();
+            carouselCounterClockwise();
         }
+        liftPower = Range.clip(gamepad1.right_trigger - gamepad1.left_trigger, -1, 1);
+        super.loop();
         //
     }
 }
