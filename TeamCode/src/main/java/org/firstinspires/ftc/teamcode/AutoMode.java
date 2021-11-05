@@ -8,7 +8,13 @@ public class AutoMode extends RoboOp {
     public void init() {
         super.init();
         //Ok essentially you want to be able to set what each of the independent values to be here
-
+        /*
+        x =;
+        y =;
+        angle =;
+        turnSpeed =;
+        velocity =;
+        */
 
     }
 
