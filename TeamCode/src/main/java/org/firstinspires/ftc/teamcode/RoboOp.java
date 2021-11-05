@@ -54,7 +54,9 @@ public class RoboOp extends OpMode {
         frontLeft = initializeMotor("left_front");
         backRight = initializeMotor("right_rear");
         backLeft = initializeMotor("left_rear");
-        lift = initializeMotor("lift");
+        lift = hardwareMap.get(DcMotor.class, "lift");
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         carousel = initializeMotor("carousel");
         leftClaw = hardwareMap.get(Servo.class, "left");
         rightClaw = hardwareMap.get(Servo.class, "right");
