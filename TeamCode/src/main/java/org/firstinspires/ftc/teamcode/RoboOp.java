@@ -55,6 +55,7 @@ public class RoboOp extends OpMode {
         backRight = initializeMotor("right_rear");
         backLeft = initializeMotor("left_rear");
         lift = hardwareMap.get(DcMotor.class, "lift");
+        lift.setTargetPosition(lift.getCurrentPosition());
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         carousel = initializeMotor("carousel");
