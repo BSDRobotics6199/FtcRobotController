@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -13,6 +14,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
 
 public class RoboOp extends OpMode {
     //Note this code did not directly come from the examples but is heavily inspired by the examples
@@ -29,6 +31,8 @@ public class RoboOp extends OpMode {
     protected Servo leftClaw;
     protected Servo rightClaw;
     protected ServoController servoController;
+    protected BNO055IMU imu;
+    protected Position currentPosition;
     protected double leftClawPosition;
     protected double rightClawPosition;
     protected double lastTime;
@@ -114,9 +118,9 @@ public class RoboOp extends OpMode {
     protected void servoExpand(/*int leftBound, int rightBound*/){
         rightClawDelta = Math.abs(servoController.getServoPosition(1)-rightClawPosition);
         leftClaw.setPosition(
-                Range.clip(leftClaw.getPosition() - 1*dt, 0.69, 1));
+                1);
         rightClaw.setPosition(
-                Range.clip(rightClaw.getPosition() - 1*dt, 0.69, 1));
+                1);
         if (Math.abs(leftClawPosition-servoController.getServoPosition(0))<0.01) {
             telemetry.addData("leftStrained" , true);
         }
