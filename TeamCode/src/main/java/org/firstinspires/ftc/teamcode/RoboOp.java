@@ -107,7 +107,7 @@ public class RoboOp extends OpMode {
         leftClawPosition = leftClaw.getPosition();
     }
     protected void servoExpand(/*int leftBound, int rightBound*/){
-        rightClawDelta = Math.abs(rightClaw.getPosition()-rightClawPosition);
+        rightClawDelta = Math.abs(servoController.getServoPosition(1)-rightClawPosition);
         leftClaw.setPosition(
                 Range.clip(leftClaw.getPosition() - 1*dt, 0.69, 1));
         rightClaw.setPosition(
@@ -117,7 +117,7 @@ public class RoboOp extends OpMode {
         }
         leftClawPosition = leftClaw.getPosition();
         telemetry.addData("RClaw delta:", rightClawDelta);
-        rightClawPosition = rightClaw.getPosition();
+        rightClawPosition = servoController.getServoPosition(1);
     }
     protected void carouselClockwise(){
         carousel.setPower(-1);
