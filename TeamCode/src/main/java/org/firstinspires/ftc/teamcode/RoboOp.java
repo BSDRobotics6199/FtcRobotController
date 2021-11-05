@@ -89,9 +89,9 @@ public class RoboOp extends OpMode {
     protected void servoSqueeze(/*int leftBound, int rightBound*/) {
         leftClawDelta = Math.abs(leftClaw.getPosition() - leftClawPosition);
         leftClaw.setPosition(
-                Range.clip(leftClaw.getPosition() + 1*dt, 0.69, 1));
+                0.69);
         rightClaw.setPosition(
-                Range.clip(rightClaw.getPosition() + 1*dt, 0.69, 1));
+                0.69);
         telemetry.addData("Claw position:", leftClaw.getPosition());
         leftClawPosition = leftClaw.getPosition();
     }
@@ -100,9 +100,9 @@ public class RoboOp extends OpMode {
         leftClawDelta = leftClaw.getPosition() - leftClawPosition;
         if (leftClawDelta>0.01) {
             leftClaw.setPosition(
-                    Range.clip(leftClaw.getPosition() - 1 * dt, 0.69, 1));
+                    1);
             rightClaw.setPosition(
-                    Range.clip(rightClaw.getPosition() - 1 * dt, 0.69, 1));
+                    1);
         }
         leftClawPosition = leftClaw.getPosition();
     }
