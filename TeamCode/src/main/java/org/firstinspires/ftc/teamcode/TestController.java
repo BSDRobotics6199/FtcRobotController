@@ -48,9 +48,10 @@ public class TestController extends RoboOp {
         }
         if (gamepad1.circle) {
             carouselClockwise();
-        }
-        if (gamepad1.triangle) {
+        } else if (gamepad1.triangle) {
             carouselCounterClockwise();
+        } else {
+            carousel.setPower(0);
         }
         liftPower = Range.clip(gamepad1.right_trigger - gamepad1.left_trigger, -1, 1);
         super.loop();
