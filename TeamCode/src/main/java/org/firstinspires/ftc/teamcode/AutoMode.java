@@ -21,7 +21,6 @@ public class AutoMode extends RoboOp {
     @Override
     public void loop() {
         super.loop();
-
     }
 }
 
