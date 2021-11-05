@@ -68,6 +68,7 @@ public class RoboOp extends OpMode {
         rightClaw.setDirection(Servo.Direction.REVERSE);
         servoController = hardwareMap.getAll(ServoController.class).get(0);
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
+        liftTarget = lift.getCurrentPosition();
     }
 
     @Override
