@@ -34,7 +34,7 @@ public class RoboOp extends OpMode {
     protected double lastTime;
     protected double dt;
     protected double drivePower, strafePower, turnPower;
-    protected float liftPower;
+    protected double liftTarget;
     protected double x, y;
     protected double angle;
     protected double turnSpeed, velocity;
@@ -75,7 +75,7 @@ public class RoboOp extends OpMode {
         backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
 
 
-        lift.setPower(liftPower);
+        lift.setTargetPosition((int)liftTarget);
         lastTime = runtime.time();
     }
 

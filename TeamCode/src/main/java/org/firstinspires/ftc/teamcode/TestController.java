@@ -53,7 +53,7 @@ public class TestController extends RoboOp {
         } else {
             carousel.setPower(0);
         }
-        liftPower = Range.clip(gamepad1.right_trigger - gamepad1.left_trigger, -1, 1);
+        liftTarget = liftTarget + (gamepad1.right_trigger - gamepad1.left_trigger);
         super.loop();
         //
     }
