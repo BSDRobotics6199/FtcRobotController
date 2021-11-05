@@ -36,6 +36,8 @@ public class RoboOp extends OpMode {
     protected double drivePower, strafePower, turnPower;
     protected float liftPower;
     protected double x, y;
+    protected double angle;
+    protected double turnSpeed, velocity;
     private double leftClawDelta;
     private double rightClawDelta;
     @Override
