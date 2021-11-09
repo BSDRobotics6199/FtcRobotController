@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
+import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+
 public class AutoMode extends RoboOp {
     //TODO: Run diagnostics to get
 
@@ -21,6 +25,8 @@ public class AutoMode extends RoboOp {
     @Override
     public void loop() {
         super.loop();
+        Position position = imu.getPosition();
+        Orientation orientation = imu.getAngularOrientation();
     }
 }
 
