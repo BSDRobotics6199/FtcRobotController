@@ -82,8 +82,7 @@ public class RoboOp extends OpMode {
         telemetry.addData("left servo2: ", servoController.getServoPosition(0));
         telemetry.addData("Arm target: ",  lift.getTargetPosition());
         telemetry.addData("Arm position: ",  lift.getCurrentPosition());
-        telemetry.addData("liftTarget: " , liftTarget);
-        telemetry.addData("rightTrigger: ", gamepad1.right_trigger);
+        telemetry.addData("Position: ", imu.getPosition().x + " " + imu.getPosition().z);
     }
 
     protected DcMotor initializeMotor(String hardwareID) {
