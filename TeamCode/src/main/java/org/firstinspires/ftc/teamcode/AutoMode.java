@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.checkerframework.dataflow.qual.TerminatesExecution;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
@@ -70,8 +72,9 @@ public class AutoMode extends RoboOp {
     }
 
     public double[] getInfront(){
-        //拿到前中
-        return new double[] {Math.cos(startingAngle) * LENGTH, Math.sin(startingAngle) * LENGTH};
+        //拿到前中位置
+        Orientation orientation = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        return new double[] {Math.cos(orientation.firstAngle) * LENGTH, Math.sin(orientation.firstAngle) * LENGTH};
     }
 
 }
