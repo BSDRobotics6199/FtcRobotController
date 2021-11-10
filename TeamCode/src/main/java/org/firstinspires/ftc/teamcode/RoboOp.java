@@ -8,6 +8,9 @@ import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+
 
 public class RoboOp extends OpMode {
     //注意，这个程序的很多部分都是按照示范写的
@@ -65,6 +68,7 @@ public class RoboOp extends OpMode {
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
         liftTarget = lift.getCurrentPosition();
         imu = hardwareMap.get(BNO055IMU.class, "imu");
+
     }
 
     @Override
@@ -82,7 +86,11 @@ public class RoboOp extends OpMode {
         telemetry.addData("left servo2: ", servoController.getServoPosition(0));
         telemetry.addData("Arm target: ",  lift.getTargetPosition());
         telemetry.addData("Arm position: ",  lift.getCurrentPosition());
-        telemetry.addData("Position: ", imu.getPosition().x + " " + imu.getPosition().z);
+        //做好，修一下
+        imu.initialize(new BNO055IMU.Parameters());
+        Position position = imu.getPosition();
+        position.toUnit(DistanceUnit.METER);
+        telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);
     }
 
     protected DcMotor initializeMotor(String hardwareID) {

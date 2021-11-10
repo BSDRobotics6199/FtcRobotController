@@ -51,7 +51,7 @@ public class TestController extends RoboOp {
         lift.setTargetPosition((int)liftTarget);
         lift.setPower(Range.clip(Math.abs((gamepad1.right_trigger - gamepad1.left_trigger)), 0, 1));
         super.loop();
-        //
+        //a
         pastDpadDown = gamepad1.dpad_down;
         pastDpadUp = gamepad1.dpad_up;
     }
