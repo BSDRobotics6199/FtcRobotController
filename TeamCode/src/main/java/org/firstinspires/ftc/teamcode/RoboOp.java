@@ -41,7 +41,8 @@ public class RoboOp extends OpMode {
     private double leftClawDelta;
     private double rightClawDelta;
     //TODO: Set liftPositons array for floor then shipping hub levels behind the robot
-    private int[] liftPositions = {0, 0, 0, 0};
+    private int[] liftPositions = {246, -130, -190, -230};
+    //-130
     enum liftLevel {
         FLOOR, HUB_1, HUB_2, HUB_3
     }
@@ -75,8 +76,6 @@ public class RoboOp extends OpMode {
 
     @Override
     public void loop() {
-        lift.setTargetPosition((int)liftTarget);
-        lift.setPower(1);
         //每一回合都会设马达力量
         frontRight.setPower(Range.clip(drivePower - turnPower - strafePower, -1, 1));
         backRight.setPower(Range.clip(drivePower - turnPower + strafePower, -1, 1));
@@ -85,7 +84,6 @@ public class RoboOp extends OpMode {
         backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
 
 
-        lift.setTargetPosition((int)liftTarget);
         lastTime = runtime.time();
         telemetry.addData("left servo1: ", leftClaw.getPosition());
         telemetry.addData("left servo2: ", servoController.getServoPosition(0));
@@ -139,35 +137,45 @@ public class RoboOp extends OpMode {
     protected void setLiftLevel(liftLevel level) {
         if (level == liftLevel.FLOOR) {
             lift.setTargetPosition(liftPositions[0]);
+            lift.setPower(1);
         } else if (level == liftLevel.HUB_1) {
             lift.setTargetPosition(liftPositions[1]);
+            lift.setPower(1);
         } else if (level == liftLevel.HUB_2) {
             lift.setTargetPosition(liftPositions[1]);
+            lift.setPower(1);
         } else if (level == liftLevel.HUB_3) {
             lift.setTargetPosition(liftPositions[3]);
+            lift.setPower(1);
         }
         this.level = level;
     }
     protected void incrementLift() {
         if (level == liftLevel.FLOOR) {
             lift.setTargetPosition(liftPositions[1]);
+            lift.setPower(1);
             level = liftLevel.HUB_1;
         } else if (level == liftLevel.HUB_1) {
             lift.setTargetPosition(liftPositions[2]);
+            lift.setPower(1);
             level = liftLevel.HUB_2;
         } else if (level == liftLevel.HUB_2) {
             lift.setTargetPosition(liftPositions[3]);
+            lift.setPower(1);
             level = liftLevel.HUB_3;
         }
     }protected void decrementLift() {
         if (level == liftLevel.HUB_1) {
             lift.setTargetPosition(liftPositions[0]);
+            lift.setPower(1);
             level = liftLevel.FLOOR;
         } else if (level == liftLevel.HUB_2) {
             lift.setTargetPosition(liftPositions[1]);
+            lift.setPower(1);
             level = liftLevel.HUB_1;
         } else if (level == liftLevel.HUB_3) {
             lift.setTargetPosition(liftPositions[2]);
+            lift.setPower(1);
             level = liftLevel.HUB_2;
         }
     }
