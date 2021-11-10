@@ -40,8 +40,6 @@ public class RoboOp extends OpMode {
     protected double drivePower, strafePower, turnPower;
     protected double liftTarget;
     protected double x, y;
-    protected double angle;
-    protected double turnSpeed, velocity;
     private double leftClawDelta;
     private double rightClawDelta;
     @Override
@@ -68,6 +66,7 @@ public class RoboOp extends OpMode {
         servoController = hardwareMap.getAll(ServoController.class).get(0);
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
         liftTarget = lift.getCurrentPosition();
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
     }
 
     @Override
