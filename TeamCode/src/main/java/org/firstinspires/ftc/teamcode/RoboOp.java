@@ -17,9 +17,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 
 public class RoboOp extends OpMode {
-    //Note this code did not directly come from the examples but is heavily inspired by the examples
-    //along with the code from last year, I have made some changes but a decent amount of the logic
-    //is paraphrased, this is merely just a foundation that we will work to change later.
+    //注意，这个程序的很多部分都是按照示范写的
+    //这个程序有MIT许可证，我们没有任何责任
 
     protected ElapsedTime runtime;
     protected DcMotor frontRight;
