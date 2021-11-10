@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.automodes;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 
@@ -8,6 +8,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.teamcode.RoboOp;
+
+import java.util.ArrayList;
 
 public class AutoMode extends RoboOp {
     //尺寸， 我在用米
@@ -17,8 +20,7 @@ public class AutoMode extends RoboOp {
     public static final double WIDTH = 0.3556;
     public static final double LENGTH = 0.4572;
     //在这里设地点
-    public static double[] PARKING_SPOT = new double[]{};
-    public static double[] CAROUSEL_SPOT = new double[]{};
+    public ArrayList<double[]> places;
     @Override
     public void init() {
         super.init();
@@ -40,13 +42,12 @@ public class AutoMode extends RoboOp {
 
         //走向第一点
         try {
-            Thread runThread1 = new Thread(new MoveToPosition(CAROUSEL_SPOT[0], CAROUSEL_SPOT[1], this));
-            runThread1.start();
-            runThread1.join();
-            //走向第二点
-            Thread runThread2 = new Thread(new MoveToPosition(PARKING_SPOT[0], PARKING_SPOT[1], this));
-            runThread2.start();
-            runThread2.join();
+            Thread thread;
+            for (double[] place: places){
+                thread = new Thread(new MoveToPosition(place[0], place[1], this));
+                thread.start();
+                thread.join();
+            }
         } catch (InterruptedException ignored){
 
         }
@@ -91,18 +92,18 @@ class MoveToPosition implements Runnable {
         double[] inFront = autoMode.getInfront();
         //计算和转弯
         double turnNeeded = Math.atan(autoMode.getInfront()[1] / autoMode.getInfront()[0]);
-        autoMode.turnPower = 1;
+        autoMode.setTurnPower(1);
         while (deltaRotation < turnNeeded) {
             double[] newFront = autoMode.getInfront();
             deltaRotation = Math.atan(inFront[1] - newFront[1] / inFront[0] - newFront[0]);
         }
-        autoMode.turnPower = 0;
+        autoMode.setTurnPower(0);
         //计算和前进
-        autoMode.drivePower = 1;
+        autoMode.setDrivePower(1);
         while (Math.abs(position.x - x) < 0.025 && Math.abs(position.y - y) < 0.025) {
             position = autoMode.getImu().getPosition();
             position.toUnit(DistanceUnit.METER);
         }
-        autoMode.drivePower = 0;
+        autoMode.setDrivePower(0);
     }
 }
