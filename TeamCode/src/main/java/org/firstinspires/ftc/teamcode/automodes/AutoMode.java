@@ -24,7 +24,6 @@ public class AutoMode extends RoboOp {
     @Override
     public void init() {
         super.init();
-
         //设开始角度
         //角度从右边开始向左转
         //startingAngle =
