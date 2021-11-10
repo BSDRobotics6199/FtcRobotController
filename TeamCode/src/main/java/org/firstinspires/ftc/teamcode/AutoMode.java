@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.concurrent.Executor;
 
 public class AutoMode extends RoboOp {
-    //TODO: Run diagnostics to get
     //尺寸， 我在用米
     public static final double TILE_SIZE = 0.6096;
     public static final double TOTAL_SIZE = 3.6576;

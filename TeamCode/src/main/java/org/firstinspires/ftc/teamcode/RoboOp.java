@@ -31,7 +31,6 @@ public class RoboOp extends OpMode {
     protected Servo rightClaw;
     protected ServoController servoController;
     protected BNO055IMU imu;
-    protected Position currentPosition;
     protected double leftClawPosition;
     protected double rightClawPosition;
     protected double lastTime;
