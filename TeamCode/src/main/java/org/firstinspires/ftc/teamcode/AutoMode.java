@@ -96,6 +96,7 @@ class MoveToPosition implements Runnable {
         position = autoMode.getImu().getPosition();
         position.toUnit(DistanceUnit.METER);
         double[] inFront = autoMode.getInfront();
+        //计算和转弯
         double turnNeeded = Math.atan(autoMode.getInfront()[1] / autoMode.getInfront()[0]);
         autoMode.turnPower = 1;
         while (deltaRotation < turnNeeded) {
@@ -103,6 +104,7 @@ class MoveToPosition implements Runnable {
             deltaRotation = Math.atan(inFront[1] - newFront[1] / inFront[0] - newFront[0]);
         }
         autoMode.turnPower = 0;
+        //计算和前进
         autoMode.drivePower = 1;
         while (Math.abs(position.x - x) < 0.025 && Math.abs(position.y - y) < 0.025) {
             position = autoMode.getImu().getPosition();
