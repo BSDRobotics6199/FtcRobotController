@@ -17,10 +17,13 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @TeleOp(name="Linear Op Mode test", group="Linear Opmode")
 public class TestController extends RoboOp {
-
+    double liftTarget;
+    boolean pastDpadUp;
+    boolean pastDpadDown;
     @Override
     public void init() {
         super.init();
+        liftTarget = lift.getCurrentPosition();
     }
 
     @Override
@@ -49,13 +52,18 @@ public class TestController extends RoboOp {
         } else {
             carousel.setPower(0);
         }
-        if (gamepad1.dpad_up) {
+        if (gamepad1.dpad_up && !pastDpadUp) {
             incrementLift();
         }
-        if (gamepad1.dpad_down) {
+        if (gamepad1.dpad_down && !pastDpadDown) {
             decrementLift();
         }
+        liftTarget += (gamepad1.right_trigger - gamepad1.left_trigger);
+        lift.setTargetPosition((int)liftTarget);
+        lift.setPower(Range.clip(Math.abs((gamepad1.right_trigger - gamepad1.left_trigger)), 0, 1));
         super.loop();
         //
+        pastDpadDown = gamepad1.dpad_down;
+        pastDpadUp = gamepad1.dpad_up;
     }
 }
