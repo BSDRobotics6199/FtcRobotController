@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 import org.firstinspires.ftc.teamcode.RoboOp;
 
 import java.util.ArrayList;
@@ -67,9 +68,14 @@ public class AutoMode extends RoboOp {
         setTurnPower(0);
         //计算和前进
         setDrivePower(1);
-        while (Math.abs(position.x - x) < 0.025 && Math.abs(position.y - y) < 0.025) {
+        Velocity velocity = imu.getVelocity();
+        velocity.toUnit(DistanceUnit.METER);
+
+        while ((Math.abs(position.x - x) < 0.025 && Math.abs(position.y - y) < 0.025) || (velocity.zVeloc < 0.025 && velocity.xVeloc < 0.025)) {
             position = imu.getPosition();
             position.toUnit(DistanceUnit.METER);
+            velocity = imu.getVelocity();
+            velocity.toUnit(DistanceUnit.METER);
         }
         setDrivePower(0);
     }
