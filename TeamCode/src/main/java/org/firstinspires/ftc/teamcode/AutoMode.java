@@ -88,8 +88,6 @@ class MoveToPosition implements Runnable {
         Position position = autoMode.getImu().getPosition();
         position.toUnit(DistanceUnit.METER);
         double deltaRotation = 0;
-        position = autoMode.getImu().getPosition();
-        position.toUnit(DistanceUnit.METER);
         double[] inFront = autoMode.getInfront();
         //计算和转弯
         double turnNeeded = Math.atan(autoMode.getInfront()[1] / autoMode.getInfront()[0]);
