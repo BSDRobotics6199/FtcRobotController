@@ -44,13 +44,13 @@ public class RoboOp extends OpMode {
     private double rightClawDelta;
     @Override
     public void init() {
-        //Starts the operation mode
+        //开始， 准备变量
         runtime = new ElapsedTime();
         telemetry.addData("Status", "Started");
         telemetry.update();
 
-        //Assuming that there are four drive wheels
-        //This registers them
+        //假设有四个驾驶马达
+        //登录马达
         //TODO: add lift motor
         frontRight  = initializeMotor("right_front");
         frontLeft = initializeMotor("left_front");
@@ -72,9 +72,7 @@ public class RoboOp extends OpMode {
 
     @Override
     public void loop() {
-        //So this part makes sure that the power is not too high or too low, it also makes the robot
-        //actually move, so from what I understand, it makes one side move faster than the other to
-        //achieve the rotation
+        //每一回合都会设马达力量
         frontRight.setPower(Range.clip(drivePower - turnPower - strafePower, -1, 1));
         backRight.setPower(Range.clip(drivePower - turnPower + strafePower, -1, 1));
 
@@ -134,5 +132,5 @@ public class RoboOp extends OpMode {
     protected void carouselCounterClockwise(){
         carousel.setPower(1);
     }
-    //adds lift functionality
+    //增加升降机功能
 }

@@ -1,16 +1,11 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.automodes;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import org.checkerframework.dataflow.qual.TerminatesExecution;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.teamcode.greedy.Node;
+import org.firstinspires.ftc.teamcode.RoboOp;
 
-import java.util.ArrayList;
-
-public class AutoMode extends RoboOp {
+public class AutoA extends RoboOp {
     //TODO: Run diagnostics to get
     //尺寸， 我在用米
     public static final double TILE_SIZE = 0.6096;
@@ -39,4 +34,3 @@ public class AutoMode extends RoboOp {
     }
 
 }
-
