@@ -71,7 +71,7 @@ public class AutoMode extends RoboOp {
         Velocity velocity = imu.getVelocity();
         velocity.toUnit(DistanceUnit.METER);
 
-        while ((Math.abs(position.x - x) < 0.025 && Math.abs(position.y - y) < 0.025) || (velocity.zVeloc < 0.025 && velocity.xVeloc < 0.025)) {
+        while ((Math.abs(position.x - x) < 0.025 && Math.abs(position.z - y) < 0.025) || (velocity.zVeloc < 0.025 && velocity.xVeloc < 0.025)) {
             position = imu.getPosition();
             position.toUnit(DistanceUnit.METER);
             velocity = imu.getVelocity();
