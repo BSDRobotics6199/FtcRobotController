@@ -20,7 +20,6 @@ public class AutoMode extends RoboOp {
     public static final double WIDTH = 0.3556;
     public static final double LENGTH = 0.4572;
     //在这里设地点
-    public ArrayList<double[]> places;
     @Override
     public void init() {
         super.init();
@@ -36,23 +35,6 @@ public class AutoMode extends RoboOp {
     @Override
     public void loop(){
         super.loop();
-        Position position = imu.getPosition();
-        position.toUnit(DistanceUnit.METER);
-        Orientation orientation = imu.getAngularOrientation();
-
-        //走向第一点
-        try {
-            Thread thread;
-            for (double[] place: places){
-                thread = new Thread(new MoveToPosition(place[0], place[1], this));
-                thread.start();
-                thread.join();
-            }
-        } catch (InterruptedException ignored){
-
-        }
-        //停止
-        System.exit(0);
     }
 
     public BNO055IMU getImu(){
@@ -70,40 +52,26 @@ public class AutoMode extends RoboOp {
         return new double[] {Math.cos(orientation.firstAngle) * LENGTH, Math.sin(orientation.firstAngle) * LENGTH};
     }
 
-}
-
-class MoveToPosition implements Runnable {
-
-    private double x, y;
-    private AutoMode autoMode;
-
-    public MoveToPosition(double x, double y, AutoMode autoMode){
-        this.x = x;
-        this.y = y;
-        this.autoMode = autoMode;
-    }
-
-    @Override
-    public void run() {
-        //这个可能看起来很复杂，可是很简单，机器人会转向终点，然后会向终点走。
-        Position position = autoMode.getImu().getPosition();
+    public void moveToPoint(){
+        Position position = imu.getPosition();
         position.toUnit(DistanceUnit.METER);
         double deltaRotation = 0;
-        double[] inFront = autoMode.getInfront();
+        double[] inFront = getInfront();
         //计算和转弯
-        double turnNeeded = Math.atan(autoMode.getInfront()[1] / autoMode.getInfront()[0]);
-        autoMode.setTurnPower(1);
+        double turnNeeded = Math.atan(getInfront()[1] / getInfront()[0]);
+        setTurnPower(1);
         while (deltaRotation < turnNeeded) {
-            double[] newFront = autoMode.getInfront();
+            double[] newFront = getInfront();
             deltaRotation = Math.atan(inFront[1] - newFront[1] / inFront[0] - newFront[0]);
         }
-        autoMode.setTurnPower(0);
+        setTurnPower(0);
         //计算和前进
-        autoMode.setDrivePower(1);
+        setDrivePower(1);
         while (Math.abs(position.x - x) < 0.025 && Math.abs(position.y - y) < 0.025) {
-            position = autoMode.getImu().getPosition();
+            position = imu.getPosition();
             position.toUnit(DistanceUnit.METER);
         }
-        autoMode.setDrivePower(0);
+        setDrivePower(0);
     }
+
 }
