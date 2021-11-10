@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.greedy;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class NodeMap {
