@@ -1,20 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoController;
-import com.qualcomm.robotcore.hardware.ServoImpl;
-import com.qualcomm.robotcore.hardware.ServoImplEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
 
 public class RoboOp extends OpMode {
     //注意，这个程序的很多部分都是按照示范写的
@@ -186,4 +179,196 @@ public class RoboOp extends OpMode {
         carousel.setPower(1);
     }
     //增加升降机功能
+
+    public DcMotor getFrontRight() {
+        return frontRight;
+    }
+
+    public void setFrontRight(DcMotor frontRight) {
+        this.frontRight = frontRight;
+    }
+
+    public DcMotor getFrontLeft() {
+        return frontLeft;
+    }
+
+    public void setFrontLeft(DcMotor frontLeft) {
+        this.frontLeft = frontLeft;
+    }
+
+    public DcMotor getBackRight() {
+        return backRight;
+    }
+
+    public void setBackRight(DcMotor backRight) {
+        this.backRight = backRight;
+    }
+
+    public DcMotor getBackLeft() {
+        return backLeft;
+    }
+
+    public void setBackLeft(DcMotor backLeft) {
+        this.backLeft = backLeft;
+    }
+
+    public DcMotor getLift() {
+        return lift;
+    }
+
+    public void setLift(DcMotor lift) {
+        this.lift = lift;
+    }
+
+    public DcMotor getCarousel() {
+        return carousel;
+    }
+
+    public void setCarousel(DcMotor carousel) {
+        this.carousel = carousel;
+    }
+
+    public Servo getLeftClaw() {
+        return leftClaw;
+    }
+
+    public void setLeftClaw(Servo leftClaw) {
+        this.leftClaw = leftClaw;
+    }
+
+    public Servo getRightClaw() {
+        return rightClaw;
+    }
+
+    public void setRightClaw(Servo rightClaw) {
+        this.rightClaw = rightClaw;
+    }
+
+    public ServoController getServoController() {
+        return servoController;
+    }
+
+    public void setServoController(ServoController servoController) {
+        this.servoController = servoController;
+    }
+
+    public BNO055IMU getImu() {
+        return imu;
+    }
+
+    public void setImu(BNO055IMU imu) {
+        this.imu = imu;
+    }
+
+    public double getLeftClawPosition() {
+        return leftClawPosition;
+    }
+
+    public void setLeftClawPosition(double leftClawPosition) {
+        this.leftClawPosition = leftClawPosition;
+    }
+
+    public double getRightClawPosition() {
+        return rightClawPosition;
+    }
+
+    public void setRightClawPosition(double rightClawPosition) {
+        this.rightClawPosition = rightClawPosition;
+    }
+
+    public double getLastTime() {
+        return lastTime;
+    }
+
+    public void setLastTime(double lastTime) {
+        this.lastTime = lastTime;
+    }
+
+    public double getDt() {
+        return dt;
+    }
+
+    public void setDt(double dt) {
+        this.dt = dt;
+    }
+
+    public double getDrivePower() {
+        return drivePower;
+    }
+
+    public void setDrivePower(double drivePower) {
+        this.drivePower = drivePower;
+    }
+
+    public double getStrafePower() {
+        return strafePower;
+    }
+
+    public void setStrafePower(double strafePower) {
+        this.strafePower = strafePower;
+    }
+
+    public double getTurnPower() {
+        return turnPower;
+    }
+
+    public void setTurnPower(double turnPower) {
+        this.turnPower = turnPower;
+    }
+
+    public double getLiftTarget() {
+        return liftTarget;
+    }
+
+    public void setLiftTarget(double liftTarget) {
+        this.liftTarget = liftTarget;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public double getLeftClawDelta() {
+        return leftClawDelta;
+    }
+
+    public void setLeftClawDelta(double leftClawDelta) {
+        this.leftClawDelta = leftClawDelta;
+    }
+
+    public double getRightClawDelta() {
+        return rightClawDelta;
+    }
+
+    public void setRightClawDelta(double rightClawDelta) {
+        this.rightClawDelta = rightClawDelta;
+    }
+
+    public int[] getLiftPositions() {
+        return liftPositions;
+    }
+
+    public void setLiftPositions(int[] liftPositions) {
+        this.liftPositions = liftPositions;
+    }
+
+    public liftLevel getLevel() {
+        return level;
+    }
+
+    public void setLevel(liftLevel level) {
+        this.level = level;
+    }
 }
