@@ -59,9 +59,8 @@ public class RoboOp extends OpMode {
         backRight = initializeMotor("right_rear");
         backLeft = initializeMotor("left_rear");
         lift = hardwareMap.get(DcMotor.class, "lift");
-        lift.setTargetPosition(lift.getCurrentPosition());
+        lift.setTargetPosition(lift.getTargetPosition());
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         carousel = initializeMotor("carousel");
         leftClaw = hardwareMap.get(Servo.class, "left");
         rightClaw = hardwareMap.get(Servo.class, "right");
@@ -76,6 +75,8 @@ public class RoboOp extends OpMode {
         //So this part makes sure that the power is not too high or too low, it also makes the robot
         //actually move, so from what I understand, it makes one side move faster than the other to
         //achieve the rotation
+        lift.setTargetPosition((int)liftTarget);
+        lift.setPower(1);
         frontRight.setPower(Range.clip(drivePower - turnPower - strafePower, -1, 1));
         backRight.setPower(Range.clip(drivePower - turnPower + strafePower, -1, 1));
 
@@ -83,8 +84,13 @@ public class RoboOp extends OpMode {
         backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
 
 
-        lift.setTargetPosition((int)liftTarget);
         lastTime = runtime.time();
+        telemetry.addData("left servo1: ", leftClaw.getPosition());
+        telemetry.addData("left servo2: ", servoController.getServoPosition(0));
+        telemetry.addData("Arm target: ",  lift.getTargetPosition());
+        telemetry.addData("Arm position: ",  lift.getCurrentPosition());
+        telemetry.addData("liftTarget: " , liftTarget);
+        telemetry.addData("rightTrigger: ", gamepad1.right_trigger);
     }
 
     protected DcMotor initializeMotor(String hardwareID) {
