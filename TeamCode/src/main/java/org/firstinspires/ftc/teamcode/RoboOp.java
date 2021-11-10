@@ -72,6 +72,8 @@ public class RoboOp extends OpMode {
 
     @Override
     public void loop() {
+        lift.setTargetPosition((int)liftTarget);
+        lift.setPower(1);
         //每一回合都会设马达力量
         frontRight.setPower(Range.clip(drivePower - turnPower - strafePower, -1, 1));
         backRight.setPower(Range.clip(drivePower - turnPower + strafePower, -1, 1));
@@ -82,6 +84,12 @@ public class RoboOp extends OpMode {
 
         lift.setTargetPosition((int)liftTarget);
         lastTime = runtime.time();
+        telemetry.addData("left servo1: ", leftClaw.getPosition());
+        telemetry.addData("left servo2: ", servoController.getServoPosition(0));
+        telemetry.addData("Arm target: ",  lift.getTargetPosition());
+        telemetry.addData("Arm position: ",  lift.getCurrentPosition());
+        telemetry.addData("liftTarget: " , liftTarget);
+        telemetry.addData("rightTrigger: ", gamepad1.right_trigger);
     }
 
     protected DcMotor initializeMotor(String hardwareID) {
