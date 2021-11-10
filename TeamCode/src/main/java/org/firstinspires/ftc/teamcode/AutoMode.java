@@ -89,6 +89,7 @@ class MoveToPosition implements Runnable {
 
     @Override
     public void run() {
+        //这个可能看起来很复杂，可是很简单，机器人会转向终点，然后会向终点走。
         Position position = autoMode.getImu().getPosition();
         position.toUnit(DistanceUnit.METER);
         double deltaRotation = 0;
