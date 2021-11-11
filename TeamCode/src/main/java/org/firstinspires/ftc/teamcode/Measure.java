@@ -11,7 +11,8 @@ public class Measure extends RoboOp {
     public void init() {
         super.init();
     }
-
+    double offsetX = 0;
+    double offsetY = 0;
     @Override
     public void loop() {
         dt = runtime.time() - lastTime;
@@ -22,10 +23,8 @@ public class Measure extends RoboOp {
         turnPower = gamepad1.right_stick_x;
         strafePower = gamepad1.left_stick_x;
         if (gamepad1.triangle && !pastTriangle) {
-            BNO055IMU.CalibrationData data = new BNO055IMU.CalibrationData();
-            data.dxMag = 0;
-            data.dyMag = 0;
-            imu.writeCalibrationData(data);
+            offsetX = imu.getPosition().x;
+            offsetY = imu.getPosition().y;
         }
 
         super.loop();

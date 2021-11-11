@@ -39,6 +39,7 @@ public class RoboOp extends OpMode {
     //TODO: Set liftPositons array for floor then shipping hub levels behind the robot
     private int[] liftPositions = {246, -130, -190, -230};
     protected double liftPower = 0.1;
+    protected Position position;
     //-130
     enum liftLevel {
         FLOOR, HUB_1, HUB_2, HUB_3
@@ -69,6 +70,7 @@ public class RoboOp extends OpMode {
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
         liftTarget = lift.getCurrentPosition();
         imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu.initialize(new BNO055IMU.Parameters());
 
     }
 
@@ -81,14 +83,14 @@ public class RoboOp extends OpMode {
         frontLeft.setPower(Range.clip(drivePower + turnPower + strafePower, -1, 1));
         backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
 
-
+        position = imu.getPosition();
         lastTime = runtime.time();
         telemetry.addData("left servo1: ", leftClaw.getPosition());
         telemetry.addData("left servo2: ", servoController.getServoPosition(0));
         telemetry.addData("Arm target: ",  lift.getTargetPosition());
         telemetry.addData("Arm position: ",  lift.getCurrentPosition());
+        telemetry.addData("Arm Enum: ",  level);
         //做好，修一下
-        imu.initialize(new BNO055IMU.Parameters());
         Position position = imu.getPosition();
         position.toUnit(DistanceUnit.METER);
         telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);
