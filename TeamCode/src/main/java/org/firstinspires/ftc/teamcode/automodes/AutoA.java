@@ -17,18 +17,19 @@ public class AutoA extends RoboOp {
     @Override
     public void init() {
         super.init();
-
+        timePassed = 0;
+        drivePower = 1;
     }
 
     @Override
     public void loop() {
         super.loop();
-        timePassed = 0;
-        drivePower = 1;
-        while ((timePassed * speed) < 1.15){
+        if ((timePassed * speed) < 1.15){
             timePassed += getDt();
+        } else {
+            drivePower = 0;
+            System.exit(0);
         }
-        drivePower = 0;
-        System.exit(0);
+
     }
 }

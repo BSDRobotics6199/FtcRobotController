@@ -95,7 +95,7 @@ public class RoboOp extends OpMode {
         frontLeft.setPower(Range.clip(drivePower + turnPower + strafePower, -1, 1));
         backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
 
-        position = imu.getPosition();
+        //position = imu.getPosition();
         lastTime = runtime.time();
         telemetry.addData("left servo1: ", leftClaw.getPosition());
         telemetry.addData("left servo2: ", servoController.getServoPosition(0));
@@ -103,11 +103,11 @@ public class RoboOp extends OpMode {
         telemetry.addData("Arm position: ",  lift.getCurrentPosition());
         telemetry.addData("Arm Enum: ",  level);
         //做好，修一下
-        Position position = imu.getPosition();
-        position.toUnit(DistanceUnit.METER);
-        telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);
-        lift.setTargetPosition((int) liftTarget);
-        lift.setPower(liftPower);
+        //Position position = imu.getPosition();
+        //position.toUnit(DistanceUnit.METER);/
+        // telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);
+        /*lift.setTargetPosition((int) liftTarget);
+        lift.setPower(liftPower);*/
 
     }
 
