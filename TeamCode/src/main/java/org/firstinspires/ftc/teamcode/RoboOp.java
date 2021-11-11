@@ -77,13 +77,18 @@ public class RoboOp extends OpMode {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-        parameters.loggingEnabled = false;
+        parameters.loggingEnabled = true;
         parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
         imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
-        imu.initialize(parameters);
+        telemetry.addData("IMU INIT", imu.initialize(parameters));
 
         position = imu.getPosition();
+        telemetry.addData("IMU state", imu.getCalibrationStatus().toString());
+        while (!imu.isSystemCalibrated()){
+
+        }
+        telemetry.addData("IMU state", imu.getCalibrationStatus().toString());
     }
 
     @Override

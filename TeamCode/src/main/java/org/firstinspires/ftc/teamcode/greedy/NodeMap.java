@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.greedy;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class NodeMap {
@@ -61,5 +62,22 @@ public class NodeMap {
         }
         return neighbors;
 
+    }
+
+    public ArrayList<Node> greedyBestFirst(Node start, Node end){
+        NodeQueue openSet = new NodeQueue();
+        ArrayList<Node> closedSet = new ArrayList<>();
+
+        start.setH(Double.MAX_VALUE);
+        Node currentNode = null;
+        openSet.put(start);
+        while (currentNode != end){
+            currentNode = openSet.get();
+            ArrayList<Node> neighbors = getNeighbors(currentNode);
+            for (Node neighbor: neighbors){
+                neighbor.setH(Math.abs(neighbor.getX() - end.getX()) + Math.abs(neighbor.getY() - end.getY()));
+                if (neighbor.getH() < currentNode.getH());
+            }
+        }
     }
 }
