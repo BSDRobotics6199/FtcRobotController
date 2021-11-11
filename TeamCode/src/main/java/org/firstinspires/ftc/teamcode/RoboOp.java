@@ -76,6 +76,9 @@ public class RoboOp extends OpMode {
         parameters.loggingEnabled = false;
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
+        while(!imu.isSystemCalibrated()){
+
+        }
 
     }
 
