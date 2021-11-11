@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.RoboOp;
 @TeleOp(name="AutoA", group="Auto")
 public class AutoA extends RoboOp {
 
-    public final double speed = 312*0.001;
+    public final double speed = (312/60)*0.05*Math.PI;
     public double timePassed;
 
     @Override
