@@ -50,19 +50,19 @@ public class TestController extends RoboOp {
         if (gamepad1.dpad_down && !pastDpadDown) {
             decrementLift();
         }
-        if ((gamepad1.right_trigger<0.1) || (gamepad1.left_trigger<0.1)) {
+        //if ((gamepad1.right_trigger<0.1) || (gamepad1.left_trigger<0.1)) {
             liftTarget = lift.getTargetPosition();
             liftTarget += (gamepad1.right_trigger - gamepad1.left_trigger);
             lift.setTargetPosition((int)liftTarget);
             lift.setPower(Range.clip(Math.abs((gamepad1.right_trigger - gamepad1.left_trigger)), 0, 1));
-        }
+        //}
         if (gamepad1.right_bumper) {
             liftPower+= (dt*0.5);
         }
         if (gamepad1.left_bumper) {
             liftPower-= (dt*0.5);
         }
-        telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);
+        //telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);
         /*liftTarget += (gamepad1.right_trigger - gamepad1.left_trigger);
         lift.setTargetPosition((int)liftTarget);
         lift.setPower(Range.clip(Math.abs((gamepad1.right_trigger - gamepad1.left_trigger)), 0, 1));*/
