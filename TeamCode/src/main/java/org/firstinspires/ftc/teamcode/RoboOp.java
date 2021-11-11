@@ -76,7 +76,9 @@ public class RoboOp extends OpMode {
         parameters.loggingEnabled = false;
         imu = hardwareMap.get(BNO055IMU.class, "imu");
         imu.initialize(parameters);
-        position = imu.getPosition();
+        while(!imu.isSystemCalibrated()){
+
+        }
 
     }
 
@@ -91,13 +93,15 @@ public class RoboOp extends OpMode {
 
         position = imu.getPosition();
         lastTime = runtime.time();
-        telemetry.addData("Arm power: ", liftPower);
+        telemetry.addData("left servo1: ", leftClaw.getPosition());
+        telemetry.addData("left servo2: ", servoController.getServoPosition(0));
         telemetry.addData("Arm target: ",  lift.getTargetPosition());
         telemetry.addData("Arm position: ",  lift.getCurrentPosition());
         telemetry.addData("Arm Enum: ",  level);
         //做好，修一下
-        position = imu.getPosition();
+        Position position = imu.getPosition();
         position.toUnit(DistanceUnit.METER);
+        telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);
     }
 
     protected DcMotor initializeMotor(String hardwareID) {
