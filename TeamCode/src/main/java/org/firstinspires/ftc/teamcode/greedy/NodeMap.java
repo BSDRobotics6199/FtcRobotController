@@ -75,9 +75,26 @@ public class NodeMap {
             currentNode = openSet.get();
             ArrayList<Node> neighbors = getNeighbors(currentNode);
             for (Node neighbor: neighbors){
+                if (closedSet.contains(neighbor)){
+                    break;
+                }
                 neighbor.setH(Math.abs(neighbor.getX() - end.getX()) + Math.abs(neighbor.getY() - end.getY()));
-                if (neighbor.getH() < currentNode.getH());
+                neighbor.setPrevious(currentNode);
+                if (neighbor.getH() < currentNode.getH()){
+                    openSet.put(neighbor);
+                }
             }
+            closedSet.add(currentNode);
         }
+        ArrayList<Node> reverseSolution = new ArrayList<>();
+        ArrayList<Node> solution = new ArrayList<>();
+        while (currentNode.getPrevious() != null){
+            reverseSolution.add(currentNode);
+            currentNode = currentNode.getPrevious();
+        }
+        for (int i = 0; i < reverseSolution.size(); i++){
+            solution.set(reverseSolution.size() - i, reverseSolution.get(i));
+        }
+        return solution;
     }
 }
