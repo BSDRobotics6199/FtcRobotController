@@ -3,6 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+
 
 @TeleOp(name="Linear Op Mode test", group="Linear Opmode")
 public class TestController extends RoboOp {
@@ -59,12 +62,13 @@ public class TestController extends RoboOp {
         if (gamepad1.left_bumper) {
             liftPower-= (dt*0.5);
         }
+        telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);
         /*liftTarget += (gamepad1.right_trigger - gamepad1.left_trigger);
         lift.setTargetPosition((int)liftTarget);
         lift.setPower(Range.clip(Math.abs((gamepad1.right_trigger - gamepad1.left_trigger)), 0, 1));*/
-        super.loop();
-        //a
         pastDpadDown = gamepad1.dpad_down;
         pastDpadUp = gamepad1.dpad_up;
+        super.loop();
+        //a
     }
 }
