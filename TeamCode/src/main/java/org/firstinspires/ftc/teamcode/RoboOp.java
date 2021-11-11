@@ -38,6 +38,7 @@ public class RoboOp extends OpMode {
     private double rightClawDelta;
     //TODO: Set liftPositons array for floor then shipping hub levels behind the robot
     private int[] liftPositions = {246, -130, -190, -230};
+    protected double liftPower = 0.1;
     //-130
     enum liftLevel {
         FLOOR, HUB_1, HUB_2, HUB_3
@@ -137,45 +138,45 @@ public class RoboOp extends OpMode {
     protected void setLiftLevel(liftLevel level) {
         if (level == liftLevel.FLOOR) {
             lift.setTargetPosition(liftPositions[0]);
-            lift.setPower(1);
+            lift.setPower(liftPower);
         } else if (level == liftLevel.HUB_1) {
             lift.setTargetPosition(liftPositions[1]);
-            lift.setPower(1);
+            lift.setPower(liftPower);
         } else if (level == liftLevel.HUB_2) {
             lift.setTargetPosition(liftPositions[1]);
-            lift.setPower(1);
+            lift.setPower(liftPower);
         } else if (level == liftLevel.HUB_3) {
             lift.setTargetPosition(liftPositions[3]);
-            lift.setPower(1);
+            lift.setPower(liftPower);
         }
         this.level = level;
     }
     protected void incrementLift() {
         if (level == liftLevel.FLOOR) {
             lift.setTargetPosition(liftPositions[1]);
-            lift.setPower(1);
+            lift.setPower(liftPower);
             level = liftLevel.HUB_1;
         } else if (level == liftLevel.HUB_1) {
             lift.setTargetPosition(liftPositions[2]);
-            lift.setPower(1);
+            lift.setPower(liftPower);
             level = liftLevel.HUB_2;
         } else if (level == liftLevel.HUB_2) {
             lift.setTargetPosition(liftPositions[3]);
-            lift.setPower(1);
+            lift.setPower(liftPower);
             level = liftLevel.HUB_3;
         }
     }protected void decrementLift() {
         if (level == liftLevel.HUB_1) {
             lift.setTargetPosition(liftPositions[0]);
-            lift.setPower(1);
+            lift.setPower(liftPower);
             level = liftLevel.FLOOR;
         } else if (level == liftLevel.HUB_2) {
             lift.setTargetPosition(liftPositions[1]);
-            lift.setPower(1);
+            lift.setPower(liftPower);
             level = liftLevel.HUB_1;
         } else if (level == liftLevel.HUB_3) {
             lift.setTargetPosition(liftPositions[2]);
-            lift.setPower(1);
+            lift.setPower(liftPower);
             level = liftLevel.HUB_2;
         }
     }
