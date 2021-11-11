@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 
 public class RoboOp extends OpMode {
@@ -79,9 +80,10 @@ public class RoboOp extends OpMode {
         parameters.loggingEnabled = false;
         parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+        imu.startAccelerationIntegration(new Position(), new Velocity(), 1000);
 
         imu.initialize(parameters);
-
+        position = imu.getPosition();
     }
 
     @Override
