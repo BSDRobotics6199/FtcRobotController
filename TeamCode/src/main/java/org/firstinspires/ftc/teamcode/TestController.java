@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name="Linear Op Mode test", group="Linear Opmode")
 public class TestController extends RoboOp {
-    double liftTarget;
     boolean pastDpadUp;
     boolean pastDpadDown;
     int count = 0;
