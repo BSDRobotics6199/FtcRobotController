@@ -40,10 +40,10 @@ public class TestController extends RoboOp {
             gamepad1.rumble(1000);
         }
         if (gamepad1.cross) {
-            servoSqueeze();
+            servoSqueeze2();
         }
         if (gamepad1.square) {
-            servoExpand();
+            servoExpand2();
         }
         if (gamepad1.circle) {
             carouselClockwise();

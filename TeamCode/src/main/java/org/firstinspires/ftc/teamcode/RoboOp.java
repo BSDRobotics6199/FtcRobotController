@@ -42,6 +42,7 @@ public class RoboOp extends OpMode {
     private int[] liftPositions = new int[4];
     protected double liftPower = 0.5;
     protected Position position;
+    protected double servoPosition;
     //-130
     enum liftLevel {
         FLOOR, HUB_1, HUB_2, HUB_3
@@ -72,6 +73,7 @@ public class RoboOp extends OpMode {
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
         liftTarget = lift.getCurrentPosition();
         liftPositions = new int[]{(int) liftTarget, (int) liftTarget - 376, (int) liftTarget - 436, (int) liftTarget - 476};
+        servoPosition = leftClaw.getPosition();
         //准备imu
 //        imu = hardwareMap.get(BNO055IMU.class, "imu");
 //        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -131,13 +133,12 @@ public class RoboOp extends OpMode {
         leftClawPosition = leftClaw.getPosition();
     }
     protected void servoSqueeze2() {
-        leftClawDelta = leftClaw.getPosition() - leftClawPosition;
-        if (leftClawDelta>0.01) {
-            leftClaw.setPosition(
-                    1);
-            rightClaw.setPosition(
-                    1);
-        }
+        servoPosition = Range.clip(servoPosition - (0.1*dt), 0, 1);
+        leftClaw.setPosition(
+                servoPosition);
+        rightClaw.setPosition(
+                servoPosition);
+        telemetry.addData("Claw position:", leftClaw.getPosition());
         leftClawPosition = leftClaw.getPosition();
     }
     protected void servoExpand(/*int leftBound, int rightBound*/){
@@ -152,6 +153,15 @@ public class RoboOp extends OpMode {
         leftClawPosition = leftClaw.getPosition();
         telemetry.addData("Right claw position:", servoController.getServoPosition(1));
         rightClawPosition = servoController.getServoPosition(1);
+    }
+    protected void servoExpand2() {
+        servoPosition = Range.clip(servoPosition + (0.1*dt), 0, 1);
+        leftClaw.setPosition(
+                servoPosition);
+        rightClaw.setPosition(
+                servoPosition);
+        telemetry.addData("Claw position:", leftClaw.getPosition());
+        leftClawPosition = leftClaw.getPosition();
     }
     protected void setLiftLevel(liftLevel level) {
         if (level == liftLevel.FLOOR) {
