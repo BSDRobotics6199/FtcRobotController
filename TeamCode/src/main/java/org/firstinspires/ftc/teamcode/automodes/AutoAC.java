@@ -13,22 +13,28 @@ public class AutoAC extends RoboOp {
 
     public final double speed = (312/60)*0.05*Math.PI;
     public double timePassed;
+    public boolean one;
 
     @Override
     public void init() {
         super.init();
         timePassed = 0;
-        drivePower = 1;
+        drivePower = 0;
+        one = false;
     }
 
     @Override
     public void loop() {
         super.loop();
-        if ((timePassed * speed) < 1.25){
-            timePassed += dt;
-        } else {
-            drivePower = 0;
-            System.exit(0);
+        if (!one) {
+            drivePower = 1;
+            if ((timePassed * speed) < 1.25) {
+                timePassed += dt;
+            } else {
+                drivePower = 0;
+                timePassed = 0;
+                one = true;
+            }
         }
 
     }
