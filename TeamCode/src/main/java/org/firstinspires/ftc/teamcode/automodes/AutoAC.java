@@ -8,8 +8,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.teamcode.RoboOp;
 
-@TeleOp(name="AutoA", group="Auto")
-public class AutoA extends RoboOp {
+@TeleOp(name="AutoAC", group="Auto")
+public class AutoAC extends RoboOp {
 
     public final double speed = (312/60)*0.05*Math.PI;
     public double timePassed;
@@ -24,8 +24,8 @@ public class AutoA extends RoboOp {
     @Override
     public void loop() {
         super.loop();
-        if ((timePassed * speed) < 1.15){
-            timePassed += getDt();
+        if ((timePassed * speed) < 1.25){
+            timePassed += dt;
         } else {
             drivePower = 0;
             System.exit(0);
