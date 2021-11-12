@@ -7,9 +7,10 @@ import org.firstinspires.ftc.teamcode.RoboOp;
 @TeleOp(name="AutoAC", group="Auto")
 public class AutoAC extends RoboOp {
 
-    public final double speed = (312.0f/60.0f)*0.05*Math.PI;
+    public final double speed = (312.0f/60.0f)*0.0100*Math.PI;
     public double timePassed;
     public boolean one;
+    public static final double TILE_SIZE = 0.6096;
 
     @Override
     public void init() {
@@ -25,7 +26,7 @@ public class AutoAC extends RoboOp {
         //向前走
         if (!one) {
             drivePower = 1;
-            if ((timePassed * speed) < 1.25) {
+            if ((timePassed * speed) < 1.25*TILE_SIZE) {
                 timePassed += dt;
             } else {
                 drivePower = 0;
