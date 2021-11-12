@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.RoboOp;
 @TeleOp(name="AutoD", group="Auto")
 public class AutoD extends RoboOp {
 
-    public final double speed = (312.0f/60.0f)*0.05*Math.PI;
+    public final double speed = (312.0f/60.0f)*2.54*Math.PI/2;
     public double timePassed;
     public boolean one, two, three;
 
