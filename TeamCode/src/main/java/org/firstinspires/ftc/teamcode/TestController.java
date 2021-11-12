@@ -8,8 +8,10 @@ public class TestController extends RoboOp {
     double liftTarget;
     boolean pastDpadUp;
     boolean pastDpadDown;
+    int count = 0;
     @Override
     public void init() {
+
         super.init();
         liftTarget = lift.getCurrentPosition();
         liftTarget -= 30;/*
@@ -24,6 +26,10 @@ public class TestController extends RoboOp {
 
     @Override
     public void loop() {
+        if (count==0) {
+            leftClaw.setPosition(0);
+            rightClaw.setPosition(0);
+        }
         telemetry.addData("DeltaTime", dt);
 
         //在这里设能量
@@ -66,6 +72,7 @@ public class TestController extends RoboOp {
         //telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);\
         pastDpadDown = gamepad1.dpad_down;
         pastDpadUp = gamepad1.dpad_up;
+        count++;
         super.loop();
         //a
     }
