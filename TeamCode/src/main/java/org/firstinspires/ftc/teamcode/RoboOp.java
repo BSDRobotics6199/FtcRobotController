@@ -68,7 +68,7 @@ public class RoboOp extends OpMode {
         carousel = initializeMotor("carousel");
         leftClaw = hardwareMap.get(Servo.class, "left");
         rightClaw = hardwareMap.get(Servo.class, "right");
-        rightClaw.setDirection(Servo.Direction.REVERSE);
+        //rightClaw.setDirection(Servo.Direction.REVERSE);
         servoController = hardwareMap.getAll(ServoController.class).get(0);
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
         liftTarget = lift.getCurrentPosition();
@@ -137,7 +137,7 @@ public class RoboOp extends OpMode {
         leftClaw.setPosition(
                 servoPosition);
         rightClaw.setPosition(
-                servoPosition);
+                1-servoPosition);
         telemetry.addData("Claw position:", leftClaw.getPosition());
         leftClawPosition = leftClaw.getPosition();
     }
@@ -159,7 +159,7 @@ public class RoboOp extends OpMode {
         leftClaw.setPosition(
                 servoPosition);
         rightClaw.setPosition(
-                servoPosition);
+                1-servoPosition);
         telemetry.addData("Claw position:", leftClaw.getPosition());
         leftClawPosition = leftClaw.getPosition();
     }

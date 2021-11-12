@@ -25,10 +25,6 @@ public class TestController extends RoboOp {
 
     @Override
     public void loop() {
-        if (count==0) {
-            leftClaw.setPosition(0);
-            rightClaw.setPosition(0);
-        }
         telemetry.addData("DeltaTime", dt);
 
         //在这里设能量
