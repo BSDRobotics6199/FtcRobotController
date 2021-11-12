@@ -98,7 +98,7 @@ public class RoboOp extends OpMode {
         //position = imu.getPosition();
         lastTime = runtime.time();
         telemetry.addData("left servo1: ", leftClaw.getPosition());
-        telemetry.addData("left servo2: ", servoController.getServoPosition(0));
+        telemetry.addData("Lift power: ", liftPower);
         telemetry.addData("Arm target: ",  lift.getTargetPosition());
         telemetry.addData("Arm position: ",  lift.getCurrentPosition());
         telemetry.addData("Arm Enum: ",  level);
