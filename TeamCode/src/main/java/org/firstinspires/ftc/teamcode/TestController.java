@@ -12,11 +12,18 @@ public class TestController extends RoboOp {
     public void init() {
         super.init();
         liftTarget = lift.getCurrentPosition();
+        liftTarget -= 30;/*
+        leftClaw.setPosition(0);
+        try {
+            wait(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        rightClaw.setPosition(0);*/
     }
 
     @Override
     public void loop() {
-        dt = runtime.time() - lastTime;
         telemetry.addData("DeltaTime", dt);
 
         //在这里设能量
@@ -56,10 +63,7 @@ public class TestController extends RoboOp {
             liftPower-= (dt*0.5);
         }
         //imu不工作
-        //telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);
-        /*liftTarget += (gamepad1.right_trigger - gamepad1.left_trigger);
-        lift.setTargetPosition((int)liftTarget);
-        lift.setPower(Range.clip(Math.abs((gamepad1.right_trigger - gamepad1.left_trigger)), 0, 1));*/
+        //telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);\
         pastDpadDown = gamepad1.dpad_down;
         pastDpadUp = gamepad1.dpad_up;
         super.loop();
