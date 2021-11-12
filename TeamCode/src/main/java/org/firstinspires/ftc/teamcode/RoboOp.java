@@ -39,7 +39,7 @@ public class RoboOp extends OpMode {
     private double leftClawDelta;
     private double rightClawDelta;
     //TODO: Set liftPositons array for floor then shipping hub levels behind the robot
-    private int[] liftPositions = {246, -130, -190, -230};
+    private int[] liftPositions = new int[4];
     protected double liftPower = 0.5;
     protected Position position;
     //-130
@@ -71,7 +71,7 @@ public class RoboOp extends OpMode {
         servoController = hardwareMap.getAll(ServoController.class).get(0);
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
         liftTarget = lift.getCurrentPosition();
-
+        liftPositions = new int[]{(int) liftTarget, (int) liftTarget - 376, (int) liftTarget - 436, (int) liftTarget - 476};
         //准备imu
 //        imu = hardwareMap.get(BNO055IMU.class, "imu");
 //        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -106,8 +106,8 @@ public class RoboOp extends OpMode {
         //Position position = imu.getPosition();
         //position.toUnit(DistanceUnit.METER);/
         // telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);
-        /*lift.setTargetPosition((int) liftTarget);
-        lift.setPower(liftPower);*/
+        lift.setTargetPosition((int) liftTarget);
+        lift.setPower(liftPower);
 
     }
 
@@ -188,202 +188,10 @@ public class RoboOp extends OpMode {
         }
     }
     protected void carouselClockwise(){
-        carousel.setPower(-1);
+        carousel.setPower(-0.25);
     }
     protected void carouselCounterClockwise(){
-        carousel.setPower(1);
+        carousel.setPower(0.25);
     }
     //增加升降机功能
-
-    public DcMotor getFrontRight() {
-        return frontRight;
-    }
-
-    public void setFrontRight(DcMotor frontRight) {
-        this.frontRight = frontRight;
-    }
-
-    public DcMotor getFrontLeft() {
-        return frontLeft;
-    }
-
-    public void setFrontLeft(DcMotor frontLeft) {
-        this.frontLeft = frontLeft;
-    }
-
-    public DcMotor getBackRight() {
-        return backRight;
-    }
-
-    public void setBackRight(DcMotor backRight) {
-        this.backRight = backRight;
-    }
-
-    public DcMotor getBackLeft() {
-        return backLeft;
-    }
-
-    public void setBackLeft(DcMotor backLeft) {
-        this.backLeft = backLeft;
-    }
-
-    public DcMotor getLift() {
-        return lift;
-    }
-
-    public void setLift(DcMotor lift) {
-        this.lift = lift;
-    }
-
-    public DcMotor getCarousel() {
-        return carousel;
-    }
-
-    public void setCarousel(DcMotor carousel) {
-        this.carousel = carousel;
-    }
-
-    public Servo getLeftClaw() {
-        return leftClaw;
-    }
-
-    public void setLeftClaw(Servo leftClaw) {
-        this.leftClaw = leftClaw;
-    }
-
-    public Servo getRightClaw() {
-        return rightClaw;
-    }
-
-    public void setRightClaw(Servo rightClaw) {
-        this.rightClaw = rightClaw;
-    }
-
-    public ServoController getServoController() {
-        return servoController;
-    }
-
-    public void setServoController(ServoController servoController) {
-        this.servoController = servoController;
-    }
-
-    public BNO055IMU getImu() {
-        return imu;
-    }
-
-    public void setImu(BNO055IMU imu) {
-        this.imu = imu;
-    }
-
-    public double getLeftClawPosition() {
-        return leftClawPosition;
-    }
-
-    public void setLeftClawPosition(double leftClawPosition) {
-        this.leftClawPosition = leftClawPosition;
-    }
-
-    public double getRightClawPosition() {
-        return rightClawPosition;
-    }
-
-    public void setRightClawPosition(double rightClawPosition) {
-        this.rightClawPosition = rightClawPosition;
-    }
-
-    public double getLastTime() {
-        return lastTime;
-    }
-
-    public void setLastTime(double lastTime) {
-        this.lastTime = lastTime;
-    }
-
-    public double getDt() {
-        return dt;
-    }
-
-    public void setDt(double dt) {
-        this.dt = dt;
-    }
-
-    public double getDrivePower() {
-        return drivePower;
-    }
-
-    public void setDrivePower(double drivePower) {
-        this.drivePower = drivePower;
-    }
-
-    public double getStrafePower() {
-        return strafePower;
-    }
-
-    public void setStrafePower(double strafePower) {
-        this.strafePower = strafePower;
-    }
-
-    public double getTurnPower() {
-        return turnPower;
-    }
-
-    public void setTurnPower(double turnPower) {
-        this.turnPower = turnPower;
-    }
-
-    public double getLiftTarget() {
-        return liftTarget;
-    }
-
-    public void setLiftTarget(double liftTarget) {
-        this.liftTarget = liftTarget;
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public double getLeftClawDelta() {
-        return leftClawDelta;
-    }
-
-    public void setLeftClawDelta(double leftClawDelta) {
-        this.leftClawDelta = leftClawDelta;
-    }
-
-    public double getRightClawDelta() {
-        return rightClawDelta;
-    }
-
-    public void setRightClawDelta(double rightClawDelta) {
-        this.rightClawDelta = rightClawDelta;
-    }
-
-    public int[] getLiftPositions() {
-        return liftPositions;
-    }
-
-    public void setLiftPositions(int[] liftPositions) {
-        this.liftPositions = liftPositions;
-    }
-
-    public liftLevel getLevel() {
-        return level;
-    }
-
-    public void setLevel(liftLevel level) {
-        this.level = level;
-    }
 }
