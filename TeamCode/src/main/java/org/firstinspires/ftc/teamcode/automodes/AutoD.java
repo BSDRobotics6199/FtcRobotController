@@ -32,7 +32,7 @@ public class AutoD extends RoboOp {
             } else {
                 strafePower = 0;
                 timePassed = 0;
-                three = true;
+                one = true;
             }
             return;
         }
@@ -58,7 +58,7 @@ public class AutoD extends RoboOp {
             } else {
                 drivePower = 0;
                 timePassed = 0;
-                one = true;
+                three = true;
             }
             return;
 
