@@ -21,7 +21,7 @@ public class NodeQueue {
                 lowest = node;
             }
         }
-        queue.remove(queue.indexOf(lowest));
+        queue.remove(lowest);
         return lowest;
     }
 }
