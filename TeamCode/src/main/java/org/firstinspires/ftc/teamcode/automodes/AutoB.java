@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.RoboOp;
 @TeleOp(name="AutoB", group="Auto")
 public class AutoB extends RoboOp {
 
-    public final double speed = (312/60)*0.05*Math.PI;
+    public final double speed = (312.0f/60.0f)*0.05*Math.PI;
     public double timePassed;
     public boolean one, two, three;
 
@@ -28,6 +28,7 @@ public class AutoB extends RoboOp {
     @Override
     public void loop() {
         super.loop();
+        //向后走
         if (!one) {
             drivePower = -1;
             if ((timePassed * speed) < 1.25) {
@@ -40,6 +41,7 @@ public class AutoB extends RoboOp {
             return;
         }
 
+        //转盘
         if (!two) {
             carousel.setPower(0.25);
             if ((timePassed) < 2) {
@@ -52,6 +54,7 @@ public class AutoB extends RoboOp {
             return;
         }
 
+        //向右走
         if (!three) {
             strafePower = 1;
             if ((timePassed * speed) < 1.25) {
