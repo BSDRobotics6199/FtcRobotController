@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.RoboOp;
 @TeleOp(name="AutoB", group="Auto")
 public class AutoB extends RoboOp {
 
-    public final double speed = 0.2;
+    public final double speed = 0.69;
     public double timePassed;
     public boolean one, two, three;
     public static final double TILE_SIZE = 0.6096;
@@ -26,8 +26,8 @@ public class AutoB extends RoboOp {
         super.loop();
         //向后走
         if (!one) {
-            drivePower = -1;
-            if ((timePassed * speed) < 1.25*TILE_SIZE) {
+            drivePower = -0.5;
+            if ((timePassed * speed) < 1.5*TILE_SIZE) {
                 timePassed += dt;
             } else {
                 drivePower = 0;
@@ -52,8 +52,8 @@ public class AutoB extends RoboOp {
 
         //向右走
         if (!three) {
-            strafePower = 1;
-            if ((timePassed * speed) < 1.25*TILE_SIZE) {
+            strafePower = 0.5;
+            if ((timePassed * speed) < 1.5*TILE_SIZE) {
                 timePassed += dt;
             } else {
                 strafePower = 0;
