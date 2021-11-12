@@ -30,7 +30,7 @@ public class AutoB extends RoboOp {
         super.loop();
         if (!one) {
             drivePower = -1;
-            if ((timePassed * speed) < 1.15) {
+            if ((timePassed * speed) < 1.25) {
                 timePassed += dt;
             } else {
                 drivePower = 0;
@@ -54,7 +54,7 @@ public class AutoB extends RoboOp {
 
         if (!three) {
             strafePower = 1;
-            if ((timePassed * speed) < 1.15) {
+            if ((timePassed * speed) < 1.25) {
                 timePassed += dt;
             } else {
                 strafePower = 0;
