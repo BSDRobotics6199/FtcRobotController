@@ -12,6 +12,7 @@ public class AutoD extends RoboOp {
     public double timePassed;
     public boolean one, two, three;
     public static final double TILE_SIZE = 0.6096;
+    public boolean clawSetup;
     public double offset;
     public double timer;
 
@@ -21,7 +22,7 @@ public class AutoD extends RoboOp {
         drivePower = 0;
         timer = runtime.time();
         offset = 0;
-
+        clawSetup  = false;
         one = false;
         two = false;
         three = false;
@@ -33,7 +34,15 @@ public class AutoD extends RoboOp {
         timePassed = runtime.time() - offset;
 
         //向左走
-        if (!one) {
+        if (!clawSetup) {
+            servoExpand();
+            if (timePassed > 2) {
+                offset = timePassed;
+                clawSetup = true;
+            }
+            return;
+        }
+        if (!one && clawSetup) {
             strafePower = -0.5;
             if ((timePassed * speed) < 1.5*TILE_SIZE) {
                 timePassed += dt;

@@ -14,6 +14,7 @@ public class AutoB extends RoboOp {
     public double timer;
     public double offset;
     public static final double TILE_SIZE = 0.6096;
+    public boolean clawSetup;
 
     @Override
     public void init() {
@@ -21,7 +22,7 @@ public class AutoB extends RoboOp {
         timer = runtime.time();
         offset = 0;
         drivePower = 0;
-
+        clawSetup = false;
         one = false;
         two = false;
         three = false;
@@ -32,12 +33,18 @@ public class AutoB extends RoboOp {
         super.loop();
         timePassed = runtime.time() - offset;
 
-        //向左走
+        //向后走
+        if (!clawSetup) {
+            servoExpand();
+            if (timePassed > 2) {
+                offset = timePassed;
+                clawSetup = true;
+            }
+            return;
+        }
         if (!one) {
             drivePower = -0.5;
-            if ((timePassed * speed) < 1.5*TILE_SIZE) {
-                timePassed += dt;
-            } else {
+            if ((timePassed * speed) > 1.5*TILE_SIZE) {
                 drivePower = 0;
                 offset = runtime.time();
                 one = true;
@@ -48,9 +55,7 @@ public class AutoB extends RoboOp {
         //转盘
         if (!two) {
             carousel.setPower(0.1);
-            if ((timePassed) < 2) {
-                timePassed += dt;
-            } else {
+            if ((timePassed) > 2) {
                 carousel.setPower(0);
                 offset = runtime.time();
                 two = true;
@@ -61,9 +66,7 @@ public class AutoB extends RoboOp {
         //向右走
         if (!three) {
             strafePower = 0.5;
-            if ((timePassed * speed) < 1.5*TILE_SIZE) {
-                timePassed += dt;
-            } else {
+            if ((timePassed * speed) > 1.5*TILE_SIZE) {
                 strafePower = 0;
                 offset = runtime.time();
                 three = true;

@@ -14,6 +14,7 @@ public class AutoA extends RoboOp {
     public double timer;
     public double offset;
     public static final double TILE_SIZE = 0.6096;
+    public boolean clawSetup;
 
     @Override
     public void init() {
@@ -21,7 +22,7 @@ public class AutoA extends RoboOp {
         timer = runtime.time();
         offset = 0;
         drivePower = 0;
-
+        clawSetup = false;
         one = false;
     }
 
@@ -32,7 +33,14 @@ public class AutoA extends RoboOp {
         timePassed = runtime.time() - offset;
 
         //向前走
-
+        if (!clawSetup) {
+            servoExpand();
+            if (timePassed > 2) {
+                offset = timePassed;
+                clawSetup = true;
+            }
+            return;
+        }
         if (!one) {
             drivePower = 0.5;
             if ((timePassed * speed) > 1.5*TILE_SIZE) {
@@ -40,10 +48,8 @@ public class AutoA extends RoboOp {
                 offset = runtime.time();
                 one = true;
             }
+            return;
         }
-        telemetry.addData("AutoDT", timePassed);
-        telemetry.addData("Distance", timePassed * speed);
-        telemetry.addData("one", one);
 
     }
 }
