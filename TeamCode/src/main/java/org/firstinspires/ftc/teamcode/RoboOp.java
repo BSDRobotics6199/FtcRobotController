@@ -137,14 +137,6 @@ public class RoboOp extends OpMode {
         telemetry.addData("Claw position:", leftClaw.getPosition());
         leftClawPosition = leftClaw.getPosition();
     }
-    protected void servoSqueeze2() {
-        leftClaw.setPosition(
-                leftClaw.getPosition() - (0.1*dt));
-        rightClaw.setPosition(
-                rightClaw.getPosition() - (0.1*dt));
-        telemetry.addData("Claw position:", leftClaw.getPosition());
-        leftClawPosition = leftClaw.getPosition();
-    }
     protected void servoExpand(/*int leftBound, int rightBound*/){
         rightClawDelta = Math.abs(servoController.getServoPosition(1)-rightClawPosition);
         leftClaw.setPosition(
@@ -157,15 +149,6 @@ public class RoboOp extends OpMode {
         leftClawPosition = leftClaw.getPosition();
         telemetry.addData("Right claw position:", servoController.getServoPosition(1));
         rightClawPosition = servoController.getServoPosition(1);
-    }
-    protected void servoExpand2() {
-        servoPosition = Range.clip(servoPosition + (0.1*dt), 0, 1);
-        leftClaw.setPosition(
-                leftClaw.getPosition() + (0.1*dt));
-        rightClaw.setPosition(
-                rightClaw.getPosition() + (0.1*dt));
-        telemetry.addData("Claw position:", leftClaw.getPosition());
-        leftClawPosition = leftClaw.getPosition();
     }
     protected void setLiftLevel(liftLevel level) {
         if (level == liftLevel.FLOOR) {
