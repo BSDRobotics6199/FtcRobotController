@@ -84,7 +84,7 @@ public class AutoB extends RoboOp {
         //向右走
         if (!three) {
             strafePower = 0.5;
-            if ((timePassed * speed) > 1.4*TILE_SIZE) {
+            if ((timePassed * speed) > 1.5*TILE_SIZE) {
                 strafePower = 0;
                 offset = runtime.time();
                 three = true;

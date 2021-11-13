@@ -90,7 +90,7 @@ public class AutoD extends RoboOp {
         //向前走
         if (!three) {
             drivePower = 0.5;
-            if ((timePassed * speed) < 1.4*TILE_SIZE) {
+            if ((timePassed * speed) < 1.5*TILE_SIZE) {
                 timePassed += dt;
             } else {
                 drivePower = 0;
