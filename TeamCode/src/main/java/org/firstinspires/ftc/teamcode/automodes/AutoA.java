@@ -13,7 +13,6 @@ public class AutoA extends RoboOp {
     public double timer;
     public double offset;
     public static final double TILE_SIZE = 0.6096;
-    public int clawSetup;
 
     @Override
     public void init() {

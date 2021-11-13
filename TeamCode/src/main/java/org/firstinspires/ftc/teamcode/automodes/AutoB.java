@@ -13,7 +13,6 @@ public class AutoB extends RoboOp {
     public double timer;
     public double offset;
     public static final double TILE_SIZE = 0.6096;
-    public int clawSetup;
 
     @Override
     public void init() {
@@ -32,7 +31,7 @@ public class AutoB extends RoboOp {
         super.loop();
         timePassed = runtime.time() - offset;
 
-        //向后走
+        //向左走
         if (!one) {
             drivePower = -0.5;
             if ((timePassed * speed) < 1.5*TILE_SIZE) {

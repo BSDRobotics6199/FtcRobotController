@@ -11,7 +11,6 @@ public class AutoD extends RoboOp {
     public double timePassed;
     public boolean one, two, three;
     public static final double TILE_SIZE = 0.6096;
-    public int clawSetup;
     public double offset;
     public double timer;
 

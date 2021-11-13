@@ -13,7 +13,6 @@ public class AutoC extends RoboOp {
     public double timer;
     public double offset;
     public static final double TILE_SIZE = 0.6096;
-    public int clawSetup;
 
     @Override
     public void init() {
@@ -39,9 +38,6 @@ public class AutoC extends RoboOp {
                 one = true;
             }
         }
-        telemetry.addData("AutoDT", timePassed);
-        telemetry.addData("Distance", timePassed * speed);
-        telemetry.addData("one", one);
 
     }
 }
