@@ -15,6 +15,7 @@ public class AutoD extends RoboOp {
     public boolean clawSetup;
     public double offset;
     public double timer;
+    public boolean claw;
 
     @Override
     public void init() {
@@ -26,6 +27,7 @@ public class AutoD extends RoboOp {
         one = false;
         two = false;
         three = false;
+        claw  = false;
     }
 
     @Override
@@ -35,14 +37,23 @@ public class AutoD extends RoboOp {
 
         //向左走
         if (!clawSetup) {
-            servoExpand();
-            if (timePassed > 2) {
+            if (timePassed > 3) {
                 offset = timePassed;
                 clawSetup = true;
+            } else if (timePassed > 2) {
+                leftClaw.setPosition(0.45);
+            } else {
+                rightClaw.setPosition(0.45);
             }
+            if (!claw) {
+                leftClaw.setPosition(0.45);
+                rightClaw.setPosition(0.45);
+                claw = true;
+            }
+
             return;
         }
-        if (!one && clawSetup) {
+        if (!one) {
             strafePower = -0.5;
             if ((timePassed * speed) < 1.5*TILE_SIZE) {
                 timePassed += dt;

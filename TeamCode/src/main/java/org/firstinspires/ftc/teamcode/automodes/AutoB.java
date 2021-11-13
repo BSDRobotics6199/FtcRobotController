@@ -15,6 +15,7 @@ public class AutoB extends RoboOp {
     public double offset;
     public static final double TILE_SIZE = 0.6096;
     public boolean clawSetup;
+    public boolean claw;
 
     @Override
     public void init() {
@@ -26,6 +27,7 @@ public class AutoB extends RoboOp {
         one = false;
         two = false;
         three = false;
+        claw = false;
     }
 
     @Override
@@ -35,11 +37,20 @@ public class AutoB extends RoboOp {
 
         //向后走
         if (!clawSetup) {
-            servoExpand();
-            if (timePassed > 2) {
+            if (timePassed > 3) {
                 offset = timePassed;
                 clawSetup = true;
+            } else if (timePassed > 2) {
+                leftClaw.setPosition(0.45);
+            } else {
+                rightClaw.setPosition(0.45);
             }
+            if (!claw) {
+                leftClaw.setPosition(0.45);
+                rightClaw.setPosition(0.45);
+                claw = true;
+            }
+
             return;
         }
         if (!one) {
