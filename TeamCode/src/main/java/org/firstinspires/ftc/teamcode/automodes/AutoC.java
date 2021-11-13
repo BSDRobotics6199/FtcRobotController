@@ -28,6 +28,7 @@ public class AutoC extends RoboOp {
     @Override
     public void loop() {
         super.loop();
+        timePassed = runtime.time() - offset;
 
         //向前走
         if (!one) {
