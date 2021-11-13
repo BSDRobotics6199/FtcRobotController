@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 
 @TeleOp(name="Linear Op Mode test", group="Linear Opmode")
@@ -10,7 +11,6 @@ public class TestController extends RoboOp {
     int count = 0;
     @Override
     public void init() {
-
         super.init();
         liftTarget = lift.getCurrentPosition();
         liftTarget -= 30;/*
@@ -40,9 +40,10 @@ public class TestController extends RoboOp {
         }
         if (gamepad1.triangle) {
             carouselCounterClockwise();
-        }
-        if (gamepad1.circle){
+        }else if (gamepad1.circle){
             carouselClockwise();
+        } else {
+            carousel.setPower(0);
         }
         if (gamepad1.dpad_up && !pastDpadUp) {
             incrementLift();
@@ -54,10 +55,10 @@ public class TestController extends RoboOp {
             liftTarget += (gamepad1.right_trigger - gamepad1.left_trigger);
         //}
         if (gamepad1.right_bumper) {
-            liftPower+= (dt*0.5);
+            carouselSpeed+= (dt*0.1);
         }
         if (gamepad1.left_bumper) {
-            liftPower-= (dt*0.5);
+            carouselSpeed-= (dt*0.1);
         }
         //imu不工作
         //telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);\

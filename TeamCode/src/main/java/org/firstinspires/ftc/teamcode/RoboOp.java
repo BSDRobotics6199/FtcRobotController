@@ -39,13 +39,14 @@ public class RoboOp extends OpMode {
     private double leftClawDelta;
     private double rightClawDelta;
     //TODO: Set liftPositons array for floor then shipping hub levels behind the robot
-    private int[] liftPositions = new int[4];
-    protected double liftPower = 0.5;
+    private int[] liftPositions = new int[5];
+    protected double liftPower;
     protected Position position;
     protected double servoPosition;
+    protected double carouselSpeed;
     //-130
     enum liftLevel {
-        FLOOR, HUB_1, HUB_2, HUB_3
+        FLOOR, IDLE, HUB_1, HUB_2, HUB_3
     }
     liftLevel level = liftLevel.FLOOR;
     @Override
@@ -65,15 +66,19 @@ public class RoboOp extends OpMode {
         lift.setTargetPosition(lift.getCurrentPosition());
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        carousel = initializeMotor("carousel");
+        carousel = hardwareMap.get(DcMotor.class, "carousel");
+        carousel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        carousel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         leftClaw = hardwareMap.get(Servo.class, "left");
         rightClaw = hardwareMap.get(Servo.class, "right");
         rightClaw.setDirection(Servo.Direction.REVERSE);
         servoController = hardwareMap.getAll(ServoController.class).get(0);
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
         liftTarget = lift.getCurrentPosition();
-        liftPositions = new int[]{(int) liftTarget, (int) liftTarget - 376, (int) liftTarget - 436, (int) liftTarget - 476};
+        liftPositions = new int[]{(int) liftTarget, (int) liftTarget - 80, (int) liftTarget - 376, (int) liftTarget - 426, (int) liftTarget - 476};
         servoPosition = 0.9;
+        liftPower = 0.1;
+        carouselSpeed = 1;
         //准备imu
 //        imu = hardwareMap.get(BNO055IMU.class, "imu");
 //        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -177,31 +182,37 @@ public class RoboOp extends OpMode {
     protected void incrementLift() {
         if (level == liftLevel.FLOOR) {
             liftTarget = liftPositions[1];
+            level = liftLevel.IDLE;
+        } else if (level == liftLevel.IDLE) {
+            liftTarget = liftPositions[2];
             level = liftLevel.HUB_1;
         } else if (level == liftLevel.HUB_1) {
-            liftTarget = liftPositions[2];
+            liftTarget = liftPositions[3];
             level = liftLevel.HUB_2;
         } else if (level == liftLevel.HUB_2) {
-            liftTarget = liftPositions[3];
+            liftTarget = liftPositions[4];
             level = liftLevel.HUB_3;
         }
     }protected void decrementLift() {
-        if (level == liftLevel.HUB_1) {
+        if (level== liftLevel.IDLE) {
             liftTarget = liftPositions[0];
             level = liftLevel.FLOOR;
-        } else if (level == liftLevel.HUB_2) {
+        } else if (level == liftLevel.HUB_1) {
             liftTarget = liftPositions[1];
+            level = liftLevel.IDLE;
+        } else if (level == liftLevel.HUB_2) {
+            liftTarget = liftPositions[2];
             level = liftLevel.HUB_1;
         } else if (level == liftLevel.HUB_3) {
-            liftTarget = liftPositions[2];
+            liftTarget = liftPositions[3];
             level = liftLevel.HUB_2;
         }
     }
     protected void carouselClockwise(){
-        carousel.setPower(-0.25);
+        carousel.setPower(-1*carouselSpeed);
     }
     protected void carouselCounterClockwise(){
-        carousel.setPower(0.25);
+        carousel.setPower(carouselSpeed);
     }
     //增加升降机功能
 }
