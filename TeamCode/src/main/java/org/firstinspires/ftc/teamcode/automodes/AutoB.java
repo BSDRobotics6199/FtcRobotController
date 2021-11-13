@@ -57,7 +57,7 @@ public class AutoB extends RoboOp {
         }
 
         //回到墙
-        if (clawSetup == 0) {
+        if (clawSetup == 2) {
             strafePower = -0.5;
             if ((timePassed * speed) < 0.5*TILE_SIZE) {
                 timePassed += dt;
