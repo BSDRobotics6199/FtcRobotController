@@ -32,21 +32,17 @@ public class TestController extends RoboOp {
         turnPower = gamepad1.right_stick_x;
         strafePower = gamepad1.left_stick_x;
 
-        if (gamepad1.circle) {
-            gamepad1.rumble(1000);
-        }
         if (gamepad1.cross) {
-            servoSqueeze2();
+            servoSqueeze();
         }
         if (gamepad1.square) {
-            servoExpand2();
+            servoExpand();
         }
-        if (gamepad1.circle) {
-            carouselClockwise();
-        } else if (gamepad1.triangle) {
+        if (gamepad1.triangle) {
             carouselCounterClockwise();
-        } else {
-            carousel.setPower(0);
+        }
+        if (gamepad1.circle){
+            carouselClockwise();
         }
         if (gamepad1.dpad_up && !pastDpadUp) {
             incrementLift();

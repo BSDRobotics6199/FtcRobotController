@@ -68,12 +68,12 @@ public class RoboOp extends OpMode {
         carousel = initializeMotor("carousel");
         leftClaw = hardwareMap.get(Servo.class, "left");
         rightClaw = hardwareMap.get(Servo.class, "right");
-        //rightClaw.setDirection(Servo.Direction.REVERSE);
+        rightClaw.setDirection(Servo.Direction.REVERSE);
         servoController = hardwareMap.getAll(ServoController.class).get(0);
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
         liftTarget = lift.getCurrentPosition();
         liftPositions = new int[]{(int) liftTarget, (int) liftTarget - 376, (int) liftTarget - 436, (int) liftTarget - 476};
-        servoPosition = leftClaw.getPosition();
+        servoPosition = 0.9;
         //准备imu
 //        imu = hardwareMap.get(BNO055IMU.class, "imu");
 //        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -126,27 +126,26 @@ public class RoboOp extends OpMode {
     protected void servoSqueeze(/*int leftBound, int rightBound*/) {
         leftClawDelta = Math.abs(leftClaw.getPosition() - leftClawPosition);
         leftClaw.setPosition(
-                0.69);
+                0.36);
         rightClaw.setPosition(
-                0.69);
+                0.36);
         telemetry.addData("Claw position:", leftClaw.getPosition());
         leftClawPosition = leftClaw.getPosition();
     }
     protected void servoSqueeze2() {
-        servoPosition = Range.clip(servoPosition - (0.1*dt), 0, 1);
         leftClaw.setPosition(
-                servoPosition);
+                leftClaw.getPosition() - (0.1*dt));
         rightClaw.setPosition(
-                1-servoPosition);
+                rightClaw.getPosition() - (0.1*dt));
         telemetry.addData("Claw position:", leftClaw.getPosition());
         leftClawPosition = leftClaw.getPosition();
     }
     protected void servoExpand(/*int leftBound, int rightBound*/){
         rightClawDelta = Math.abs(servoController.getServoPosition(1)-rightClawPosition);
         leftClaw.setPosition(
-                1);
+                0.45);
         rightClaw.setPosition(
-                1);
+                0.45);
         if (Math.abs(leftClawPosition-servoController.getServoPosition(0))<0.01) {
             telemetry.addData("leftStrained" , true);
         }
@@ -157,9 +156,9 @@ public class RoboOp extends OpMode {
     protected void servoExpand2() {
         servoPosition = Range.clip(servoPosition + (0.1*dt), 0, 1);
         leftClaw.setPosition(
-                servoPosition);
+                leftClaw.getPosition() + (0.1*dt));
         rightClaw.setPosition(
-                1-servoPosition);
+                rightClaw.getPosition() + (0.1*dt));
         telemetry.addData("Claw position:", leftClaw.getPosition());
         leftClawPosition = leftClaw.getPosition();
     }
