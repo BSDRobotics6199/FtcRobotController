@@ -75,7 +75,8 @@ public class RoboOp extends OpMode {
         servoController = hardwareMap.getAll(ServoController.class).get(0);
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
         liftTarget = lift.getCurrentPosition();
-        liftPositions = new int[]{(int) liftTarget, (int) liftTarget - 80, (int) liftTarget - 376, (int) liftTarget - 426, (int) liftTarget - 476};
+        liftPositions = new int[]{(int) liftTarget, (int) liftTarget - 80, (int) liftTarget - 376, (int) liftTarget - 426,
+                (int) liftTarget - 476};
         servoPosition = 0.9;
         liftPower = 0.1;
         carouselSpeed = 1;
@@ -114,8 +115,10 @@ public class RoboOp extends OpMode {
         //Position position = imu.getPosition();
         //position.toUnit(DistanceUnit.METER);/
         // telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);
-        lift.setTargetPosition((int) liftTarget);
-        lift.setPower(liftPower);
+        if (level!=liftLevel.FLOOR) {
+            lift.setTargetPosition((int) liftTarget);
+            lift.setPower(liftPower);
+        }
 
     }
 
@@ -166,6 +169,10 @@ public class RoboOp extends OpMode {
     }
     protected void incrementLift() {
         if (level == liftLevel.FLOOR) {
+            liftTarget = lift.getCurrentPosition();
+            liftPositions = new int[]{(int) liftTarget, (int) liftTarget - 80, (int) liftTarget - 376, (int) liftTarget - 426,
+                    (int) liftTarget - 476};
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             liftTarget = liftPositions[1];
             level = liftLevel.IDLE;
         } else if (level == liftLevel.IDLE) {
@@ -180,7 +187,8 @@ public class RoboOp extends OpMode {
         }
     }protected void decrementLift() {
         if (level== liftLevel.IDLE) {
-            liftTarget = liftPositions[0];
+            lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            lift.setPower(0.1);
             level = liftLevel.FLOOR;
         } else if (level == liftLevel.HUB_1) {
             liftTarget = liftPositions[1];
