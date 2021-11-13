@@ -12,12 +12,15 @@ public class AutoD extends RoboOp {
     public boolean one, two, three;
     public static final double TILE_SIZE = 0.6096;
     public int clawSetup;
+    public double offset;
+    public double timer;
 
     @Override
     public void init() {
         super.init();
-        timePassed = 0;
         drivePower = 0;
+        timer = runtime.time();
+        offset = 0;
 
         one = false;
         two = false;
@@ -27,6 +30,7 @@ public class AutoD extends RoboOp {
     @Override
     public void loop() {
         super.loop();
+        timePassed = runtime.time() - offset;
 
         //向左走
         if (!one) {
@@ -35,7 +39,7 @@ public class AutoD extends RoboOp {
                 timePassed += dt;
             } else {
                 strafePower = 0;
-                timePassed = 0;
+                offset = runtime.time();
                 one = true;
             }
             return;
@@ -48,7 +52,7 @@ public class AutoD extends RoboOp {
                 timePassed += dt;
             } else {
                 carousel.setPower(0);
-                timePassed = 0;
+                offset = runtime.time();
                 two = true;
             }
             return;
@@ -61,7 +65,7 @@ public class AutoD extends RoboOp {
                 timePassed += dt;
             } else {
                 drivePower = 0;
-                timePassed = 0;
+                offset = runtime.time();
                 three = true;
             }
             return;

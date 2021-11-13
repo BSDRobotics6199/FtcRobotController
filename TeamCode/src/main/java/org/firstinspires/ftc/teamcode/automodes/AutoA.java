@@ -29,26 +29,15 @@ public class AutoA extends RoboOp {
     public void loop() {
         super.loop();
 
-        //回到墙
-        if (clawSetup == 3) {
-            strafePower = -0.5;
-            if ((timePassed * speed) < 0.5*TILE_SIZE) {
-                timePassed += dt;
-            } else {
-                strafePower = 0;
-                timePassed = 0;
-                clawSetup++;
-            }
-            return;
-        }
+        timePassed = runtime.time() - offset;
 
         //向前走
-        timePassed = runtime.time() - offset;
+
         if (!one) {
             drivePower = 0.5;
             if ((timePassed * speed) > 1.5*TILE_SIZE) {
                 drivePower = 0;
-                timePassed = 0;
+                offset = runtime.time();
                 one = true;
             }
         }

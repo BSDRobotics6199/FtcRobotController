@@ -30,12 +30,11 @@ public class AutoC extends RoboOp {
         super.loop();
 
         //向前走
-        timePassed = runtime.time() - offset;
         if (!one) {
             drivePower = 0.5;
             if ((timePassed * speed) > 1.5*TILE_SIZE) {
                 drivePower = 0;
-                timePassed = 0;
+                offset = runtime.time();
                 one = true;
             }
         }
