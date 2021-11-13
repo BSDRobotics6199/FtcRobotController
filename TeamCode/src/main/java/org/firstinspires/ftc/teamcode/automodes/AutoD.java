@@ -16,6 +16,7 @@ public class AutoD extends RoboOp {
     public double offset;
     public double timer;
     public boolean claw;
+    public boolean start;
 
     @Override
     public void init() {
@@ -28,11 +29,19 @@ public class AutoD extends RoboOp {
         two = false;
         three = false;
         claw  = false;
+        start = false;
     }
 
     @Override
     public void loop() {
         super.loop();
+
+        if (!start){
+            start = true;
+            offset = runtime.time();
+        }
+        timePassed = runtime.time() - offset;
+
         timePassed = runtime.time() - offset;
 
         //向左走

@@ -16,6 +16,7 @@ public class AutoB extends RoboOp {
     public static final double TILE_SIZE = 0.6096;
     public boolean clawSetup;
     public boolean claw;
+    public boolean start;
 
     @Override
     public void init() {
@@ -28,11 +29,17 @@ public class AutoB extends RoboOp {
         two = false;
         three = false;
         claw = false;
+        start = false;
+
     }
 
     @Override
     public void loop() {
         super.loop();
+        if (!start){
+            start = true;
+            offset = runtime.time();
+        }
         timePassed = runtime.time() - offset;
 
         //向后走
