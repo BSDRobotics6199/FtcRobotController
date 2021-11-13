@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.automodes;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.RoboOp;
 
-@TeleOp(name="AutoD", group="Auto")
+@Autonomous(name="AutoD", group="Auto")
 public class AutoD extends RoboOp {
 
     public final double speed = 0.69;
