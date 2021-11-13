@@ -39,13 +39,13 @@ public class RoboOp extends OpMode {
     private double leftClawDelta;
     private double rightClawDelta;
     //TODO: Set liftPositons array for floor then shipping hub levels behind the robot
-    private int[] liftPositions = new int[5];
+    protected int[] liftPositions = new int[5];
     protected double liftPower;
     protected Position position;
     protected double servoPosition;
     protected double carouselSpeed;
     //-130
-    enum liftLevel {
+    protected enum liftLevel {
         FLOOR, IDLE, HUB_1, HUB_2, HUB_3
     }
     liftLevel level = liftLevel.FLOOR;
@@ -170,12 +170,14 @@ public class RoboOp extends OpMode {
     protected void setLiftLevel(liftLevel level) {
         if (level == liftLevel.FLOOR) {
             liftTarget = liftPositions[0];
-        } else if (level == liftLevel.HUB_1) {
+        } else if (level == liftLevel.IDLE) {
             liftTarget = liftPositions[1];
-        } else if (level == liftLevel.HUB_2) {
+        } else if (level == liftLevel.HUB_1) {
             liftTarget = liftPositions[2];
-        } else if (level == liftLevel.HUB_3) {
+        } else if (level == liftLevel.HUB_2) {
             liftTarget = liftPositions[3];
+        } else if (level == liftLevel.HUB_3) {
+            liftTarget = liftPositions[4];
         }
         this.level = level;
     }

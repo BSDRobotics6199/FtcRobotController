@@ -22,8 +22,6 @@ public class AutoA extends RoboOp {
         offset = 0;
         drivePower = 0;
 
-        //零是要离开墙，一是要张开爪，二是要回到墙，三是完成
-        clawSetup = 0;
         one = false;
     }
 
@@ -31,34 +29,8 @@ public class AutoA extends RoboOp {
     public void loop() {
         super.loop();
 
-        //离开墙
-        if (clawSetup == 0) {
-            strafePower = 0.5;
-            if ((timePassed * speed) < 0.5*TILE_SIZE) {
-                timePassed += dt;
-            } else {
-                strafePower = 0;
-                timePassed = 0;
-                clawSetup++;
-            }
-            return;
-        }
-
-        //张开爪
-        if (clawSetup == 1) {
-            leftClaw.setPosition(0.45);
-            rightClaw.setPosition(0.45);
-            if (timePassed < 2) {
-                timePassed += dt;
-            } else {
-                timePassed = 0;
-                clawSetup++;
-            }
-            return;
-        }
-
         //回到墙
-        if (clawSetup == 2) {
+        if (clawSetup == 3) {
             strafePower = -0.5;
             if ((timePassed * speed) < 0.5*TILE_SIZE) {
                 timePassed += dt;
