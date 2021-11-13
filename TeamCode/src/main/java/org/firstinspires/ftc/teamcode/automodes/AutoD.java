@@ -67,7 +67,7 @@ public class AutoD extends RoboOp {
 
         //转盘
         if (!two) {
-            carousel.setPower(-0.1);
+            carousel.setPower(-0.08);
             if ((timePassed) < 2) {
                 timePassed += dt;
             } else {

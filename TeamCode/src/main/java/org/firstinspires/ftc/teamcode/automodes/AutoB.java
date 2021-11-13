@@ -65,7 +65,7 @@ public class AutoB extends RoboOp {
 
         //转盘
         if (!two) {
-            carousel.setPower(0.1);
+            carousel.setPower(0.08);
             if ((timePassed) > 2) {
                 carousel.setPower(0);
                 offset = runtime.time();
