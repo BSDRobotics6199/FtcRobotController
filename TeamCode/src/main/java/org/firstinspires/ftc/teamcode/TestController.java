@@ -29,8 +29,12 @@ public class TestController extends RoboOp {
 
         //在这里设能量
         drivePower = gamepad1.left_stick_y;
-        turnPower = gamepad1.right_stick_x;
         strafePower = -gamepad1.left_stick_x;
+        if (level == liftLevel.FLOOR) {
+            turnPower = 0.1*gamepad1.right_stick_x;
+        } else {
+            turnPower = gamepad1.right_stick_x
+        }
 
         if (gamepad1.cross) {
             servoSqueeze();
