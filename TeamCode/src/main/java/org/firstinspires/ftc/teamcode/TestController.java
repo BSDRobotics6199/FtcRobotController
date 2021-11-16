@@ -28,9 +28,9 @@ public class TestController extends RoboOp {
         telemetry.addData("DeltaTime", dt);
 
         //在这里设能量
-        drivePower = -gamepad1.left_stick_y;
+        drivePower = gamepad1.left_stick_y;
         turnPower = gamepad1.right_stick_x;
-        strafePower = gamepad1.left_stick_x;
+        strafePower = -gamepad1.left_stick_x;
 
         if (gamepad1.cross) {
             servoSqueeze();
