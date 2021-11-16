@@ -49,10 +49,6 @@ public class AutoD extends RoboOp {
             if (timePassed > 3) {
                 offset = timePassed;
                 clawSetup = true;
-            } else if (timePassed > 2) {
-                leftClaw.setPosition(0.45);
-            } else {
-                rightClaw.setPosition(0.45);
             }
             if (!claw) {
                 leftClaw.setPosition(0.45);
@@ -64,9 +60,7 @@ public class AutoD extends RoboOp {
         }
         if (!one) {
             strafePower = -0.5;
-            if ((timePassed * speed) < 1.5*TILE_SIZE) {
-                timePassed += dt;
-            } else {
+            if ((timePassed * speed) > 1.5*TILE_SIZE) {
                 strafePower = 0;
                 offset = runtime.time();
                 one = true;
@@ -77,9 +71,7 @@ public class AutoD extends RoboOp {
         //转盘
         if (!two) {
             carousel.setPower(-0.04);
-            if ((timePassed) < 4) {
-                timePassed += dt;
-            } else {
+            if ((timePassed) > 4) {
                 carousel.setPower(0);
                 offset = runtime.time();
                 two = true;
@@ -90,9 +82,7 @@ public class AutoD extends RoboOp {
         //向前走
         if (!three) {
             drivePower = 0.5;
-            if ((timePassed * speed) < 1.5*TILE_SIZE) {
-                timePassed += dt;
-            } else {
+            if ((timePassed * speed) > 1.5*TILE_SIZE) {
                 drivePower = 0;
                 offset = runtime.time();
                 three = true;

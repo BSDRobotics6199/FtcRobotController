@@ -36,7 +36,7 @@ public class AutoB extends RoboOp {
     @Override
     public void loop() {
         super.loop();
-        if (!start){
+        if (!start) {
             start = true;
             offset = runtime.time();
         }
@@ -47,22 +47,19 @@ public class AutoB extends RoboOp {
             if (timePassed > 3) {
                 offset = timePassed;
                 clawSetup = true;
-            } else if (timePassed > 2) {
-                leftClaw.setPosition(0.45);
-            } else {
-                rightClaw.setPosition(0.45);
-            }
-            if (!claw) {
-                leftClaw.setPosition(0.45);
-                rightClaw.setPosition(0.45);
-                claw = true;
-            }
 
-            return;
+                if (!claw) {
+                    leftClaw.setPosition(0.45);
+                    rightClaw.setPosition(0.45);
+                    claw = true;
+                }
+
+                return;
+            }
         }
         if (!one) {
             drivePower = -0.5;
-            if ((timePassed * speed) > 1.5*TILE_SIZE) {
+            if ((timePassed * speed) > 1.5 * TILE_SIZE) {
                 drivePower = 0;
                 offset = runtime.time();
                 one = true;
@@ -84,7 +81,7 @@ public class AutoB extends RoboOp {
         //向右走
         if (!three) {
             strafePower = 0.5;
-            if ((timePassed * speed) > 1.5*TILE_SIZE) {
+            if ((timePassed * speed) > 1.5 * TILE_SIZE) {
                 strafePower = 0;
                 offset = runtime.time();
                 three = true;
