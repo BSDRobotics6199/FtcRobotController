@@ -28,12 +28,12 @@ public class TestController extends RoboOp {
         telemetry.addData("DeltaTime", dt);
 
         //在这里设能量
-        drivePower = gamepad1.left_stick_y;
-        strafePower = -gamepad1.left_stick_x;
+        drivePower = -gamepad1.left_stick_y;
+        strafePower = gamepad1.left_stick_x;
         if (level == liftLevel.FLOOR) {
-            turnPower = 0.1*gamepad1.right_stick_x;
+            turnPower = 0.3*gamepad1.right_stick_x;
         } else {
-            turnPower = gamepad1.right_stick_x
+            turnPower = gamepad1.right_stick_x;
         }
 
         if (gamepad1.cross) {
@@ -56,7 +56,7 @@ public class TestController extends RoboOp {
             decrementLift();
         }
         //if ((gamepad1.right_trigger<0.1) || (gamepad1.left_trigger<0.1)) {
-            liftTarget += (gamepad1.right_trigger - gamepad1.left_trigger);
+        incdec += (gamepad1.right_trigger - gamepad1.left_trigger);
         //}
         if (gamepad1.right_bumper) {
             carouselSpeed+= (dt*0.1);

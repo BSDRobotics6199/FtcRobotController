@@ -35,6 +35,7 @@ public class RoboOp extends OpMode {
     protected double dt;
     protected double drivePower, strafePower, turnPower;
     protected double liftTarget;
+    protected double liftTarget2;
     protected double x, y;
     private double leftClawDelta;
     private double rightClawDelta;
@@ -44,6 +45,7 @@ public class RoboOp extends OpMode {
     protected Position position;
     protected double servoPosition;
     protected double carouselSpeed;
+    protected int incdec;
     //-130
     protected enum liftLevel {
         FLOOR, IDLE, HUB_1, HUB_2, HUB_3
@@ -75,11 +77,13 @@ public class RoboOp extends OpMode {
         servoController = hardwareMap.getAll(ServoController.class).get(0);
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
         liftTarget = lift.getCurrentPosition();
+        liftTarget2 = lift.getCurrentPosition();
         liftPositions = new int[]{(int) liftTarget, (int) liftTarget - 80, (int) liftTarget - 376, (
                 int) liftTarget - 426, (int) liftTarget - 476};
         servoPosition = 0.9;
         liftPower = 0.1;
         carouselSpeed = 1;
+        incdec = 1;
         //准备imu
 //        imu = hardwareMap.get(BNO055IMU.class, "imu");
 //        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -107,7 +111,7 @@ public class RoboOp extends OpMode {
         //position = imu.getPosition();
         lastTime = runtime.time();
         telemetry.addData("left servo1: ", leftClaw.getPosition());
-        telemetry.addData("Lift power: ", liftPower);
+        telemetry.addData("Lift target: ", liftTarget);
         telemetry.addData("Arm target: ",  lift.getTargetPosition());
         telemetry.addData("Arm position: ",  lift.getCurrentPosition());
         telemetry.addData("Arm Enum: ",  level);
@@ -116,10 +120,14 @@ public class RoboOp extends OpMode {
         //position.toUnit(DistanceUnit.METER);/
         // telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);
         if (level != liftLevel.FLOOR) {
-            lift.setTargetPosition((int) liftTarget);
+            if (Math.abs(lift.getTargetPosition() - (int)liftTarget)>5) {
+                liftTarget2 = lift.getTargetPosition() + incdec;
+            } else {
+                liftTarget2 = liftTarget;
+            }
+            lift.setTargetPosition((int) liftTarget2);
             lift.setPower(liftPower);
         }
-
     }
 
     protected DcMotor initializeMotor(String hardwareID) {
@@ -168,6 +176,7 @@ public class RoboOp extends OpMode {
         this.level = level;
     }
     protected void incrementLift() {
+        incdec = -1;
         if (level == liftLevel.FLOOR) {
             liftTarget = lift.getCurrentPosition();
             liftPositions = new int[]{(int) liftTarget, (int) liftTarget - 80, (int) liftTarget - 376, (
@@ -185,8 +194,10 @@ public class RoboOp extends OpMode {
             liftTarget = liftPositions[4];
             level = liftLevel.HUB_3;
         }
+        lift.setTargetPosition((int)liftTarget);
     }
     protected void decrementLift() {
+        incdec = 1;
         if (level== liftLevel.IDLE) {
             liftTarget = liftPositions[0];
             level = liftLevel.FLOOR;
@@ -202,6 +213,7 @@ public class RoboOp extends OpMode {
             liftTarget = liftPositions[3];
             level = liftLevel.HUB_2;
         }
+        lift.setTargetPosition((int)liftTarget);
     }
     protected void carouselClockwise(){
         carousel.setPower(-1*carouselSpeed);
