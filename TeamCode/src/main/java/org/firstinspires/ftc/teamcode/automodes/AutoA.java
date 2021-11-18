@@ -1,74 +1,39 @@
 package org.firstinspires.ftc.teamcode.automodes;
 
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.RoboOp;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+
+import java.util.ArrayList;
 
 @Autonomous(name="AutoA", group="Auto")
 public class AutoA extends RoboOp {
 
-    public final double speed = 0.69;
-    public double timePassed;
-    public boolean one;
-    public double timer;
-    public double offset;
-    public static final double TILE_SIZE = 0.6096;
-    public boolean clawSetup;
-    public boolean claw;
-    public boolean start;
+    SampleMecanumDrive drive;
+    ArrayList<Trajectory> trajectories = new ArrayList<>();
+    ArrayList<Vector2d> locations;
 
     @Override
     public void init() {
         super.init();
-        timer = runtime.time();
-        offset = 0;
-        drivePower = 0;
-        clawSetup = false;
-        one = false;
-        claw = false;
-        start = false;
+        drive = new SampleMecanumDrive(hardwareMap);
+        for (Vector2d location: locations){
+            drive.updatePoseEstimate();
+            trajectories.add(
+                    drive.trajectoryBuilder(drive.getPoseEstimate()).lineTo(location).build()
+            );
+        }
     }
 
     @Override
     public void loop() {
         super.loop();
-
-        if (!start){
-            start = true;
-            offset = runtime.time();
+        if (!drive.isBusy()) {
+            drive.followTrajectory(trajectories.get(0));
+            trajectories.remove(0);
         }
-        timePassed = runtime.time() - offset;
-
-        timePassed = runtime.time() - offset;
-
-        //向前走
-        if (!clawSetup) {
-            if (timePassed > 3) {
-                offset = timePassed;
-                clawSetup = true;
-            } else if (timePassed > 2) {
-                leftClaw.setPosition(0.45);
-            } else {
-                rightClaw.setPosition(0.45);
-            }
-            if (!claw) {
-                leftClaw.setPosition(0.45);
-                rightClaw.setPosition(0.45);
-                claw = true;
-            }
-
-            return;
-        }
-        if (!one) {
-            drivePower = 0.5;
-            if ((timePassed * speed) > 1.5*TILE_SIZE) {
-                drivePower = 0;
-                offset = runtime.time();
-                one = true;
-            }
-            return;
-        }
-
     }
 }
