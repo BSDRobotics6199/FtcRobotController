@@ -14,28 +14,32 @@ import java.util.ArrayList;
 public class AutoA extends RoboOp {
 
     SampleMecanumDrive drive;
-    ArrayList<Trajectory> trajectories = new ArrayList<>();
-    ArrayList<Vector2d> locations;
+
+    public static final double METER_PER_INCH = 0.0254;
+    public static final double METER_PER_TILE = 0.6096;
+
+    private boolean tasks;
 
     @Override
     public void init() {
         super.init();
         drive = new SampleMecanumDrive(hardwareMap);
         drive.setPoseEstimate(new Pose2d());
-        for (Vector2d location: locations){
-            drive.updatePoseEstimate();
-            trajectories.add(
-                    drive.trajectoryBuilder(drive.getPoseEstimate()).lineTo(location).build()
-            );
-        }
+
+        tasks = false;
     }
 
     @Override
     public void loop() {
-        super.loop();
-        if (!drive.isBusy()) {
-            drive.followTrajectory(trajectories.get(0));
-            trajectories.remove(0);
+        if (!tasks){
+            doTasks();
+            tasks = true;
         }
+    }
+
+    public void doTasks(){
+        drive.followTrajectory(
+                drive.trajectoryBuilder(drive.getPoseEstimate()).forward((METER_PER_TILE*1.5)/METER_PER_INCH).build()
+        );
     }
 }
