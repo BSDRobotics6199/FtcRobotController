@@ -28,8 +28,8 @@ public class TestController extends RoboOp {
         telemetry.addData("DeltaTime", dt);
 
         //在这里设能量
-        drivePower = -gamepad1.left_stick_y;
-        strafePower = gamepad1.left_stick_x;
+        drivePower = curve(-gamepad1.left_stick_y);
+        strafePower = curve(gamepad1.left_stick_x);
         if (level == liftLevel.FLOOR) {
             turnPower = 0.3*gamepad1.right_stick_x;
         } else {
@@ -71,5 +71,9 @@ public class TestController extends RoboOp {
         count++;
         super.loop();
         //a
+    }
+
+    public double curve(double value){
+        return 2/(1+Math.pow(Math.E, -5*value))-1;
     }
 }
