@@ -74,6 +74,6 @@ public class TestController extends RoboOp {
     }
 
     public double curve(double value){
-        return 2/(1+Math.pow(Math.E, -5*value))-1;
+        return 2f/(1f+Math.pow(Math.E, -5f*value))-1f;
     }
 }
