@@ -44,7 +44,6 @@ public class AutoB extends RoboOp {
                 drive.trajectoryBuilder(drive.getPoseEstimate()).back((METER_PER_TILE/2)/METER_PER_INCH).build()
         );
 
-        while (drive.isBusy()){}
         carousel.setPower(0.6);
         try {
             Thread.sleep(4000);
@@ -57,7 +56,6 @@ public class AutoB extends RoboOp {
                 drive.trajectoryBuilder(drive.getPoseEstimate()).strafeRight(METER_PER_TILE/METER_PER_INCH).build()
         );
 
-        while (drive.isBusy()){}
         drive.followTrajectory(
                 drive.trajectoryBuilder(drive.getPoseEstimate()).back((METER_PER_TILE/2)/METER_PER_INCH).build()
         );
