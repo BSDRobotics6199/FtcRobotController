@@ -39,7 +39,7 @@ public class AutoD extends RoboOp {
                 drive.trajectoryBuilder(drive.getPoseEstimate()).strafeLeft((METER_PER_TILE/2)/METER_PER_INCH).build()
         );
 
-        carousel.setPower(0.6);
+        carousel.setPower(-0.6);
         try {
             Thread.sleep(4000);
         } catch (InterruptedException e) {
