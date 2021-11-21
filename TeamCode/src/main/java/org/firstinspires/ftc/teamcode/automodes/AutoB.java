@@ -40,9 +40,60 @@ public class AutoB extends RoboOp {
     }
 
     public void doTasks(){
+
+        servoSqueeze();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        drive.followTrajectory(
+                drive.trajectoryBuilder(drive.getPoseEstimate()).forward((METER_PER_TILE/2)/METER_PER_INCH).build()
+        );
+
+        drive.turn(Math.PI);
+
+        setLiftLevel(liftLevel.HUB_1);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        drive.followTrajectory(
+                drive.trajectoryBuilder(drive.getPoseEstimate()).strafeLeft((METER_PER_TILE)/METER_PER_INCH).build()
+        );
+
+        servoExpand();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
         drive.followTrajectory(
                 drive.trajectoryBuilder(drive.getPoseEstimate()).back((METER_PER_TILE/2)/METER_PER_INCH).build()
         );
+
+        setLiftLevel(liftLevel.IDLE);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        drive.turn(3*Math.PI/2);
+
+        drive.followTrajectory(
+                drive.trajectoryBuilder(drive.getPoseEstimate()).strafeLeft((METER_PER_TILE/2)/METER_PER_INCH).build()
+        );
+
+        drive.followTrajectory(
+                drive.trajectoryBuilder(drive.getPoseEstimate()).back((3*METER_PER_TILE/2)/METER_PER_INCH).build()
+        );
+
         carousel.setPower(0.6);
         try {
             Thread.sleep(4000);
@@ -50,9 +101,11 @@ public class AutoB extends RoboOp {
             e.printStackTrace();
         }
         carousel.setPower(0);
+
         drive.followTrajectory(
                 drive.trajectoryBuilder(drive.getPoseEstimate()).strafeRight(METER_PER_TILE/METER_PER_INCH).build()
         );
+
         drive.followTrajectory(
                 drive.trajectoryBuilder(drive.getPoseEstimate()).back((METER_PER_TILE/2)/METER_PER_INCH).build()
         );
