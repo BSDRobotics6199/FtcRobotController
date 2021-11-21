@@ -30,17 +30,18 @@ public class TestController extends RoboOp {
         //在这里设能量
         drivePower = curve(-gamepad1.left_stick_y);
         strafePower = curve(gamepad1.left_stick_x);
-        if (level == liftLevel.FLOOR) {
+        if (level == liftLevel.RECEIVE) {
             turnPower = 0.3*gamepad1.right_stick_x;
         } else {
             turnPower = gamepad1.right_stick_x;
         }
 
         if (gamepad1.cross) {
-            servoSqueeze();
-        }
-        if (gamepad1.square) {
-            servoExpand();
+            intake.setPower(liftPower);
+        } else if (gamepad1.square) {
+            intake.setPower(liftPower*-1);
+        } else {
+            intake.setPower(0);
         }
         if (gamepad1.triangle) {
             carouselCounterClockwise();
@@ -56,13 +57,13 @@ public class TestController extends RoboOp {
             decrementLift();
         }
         //if ((gamepad1.right_trigger<0.1) || (gamepad1.left_trigger<0.1)) {
-        incdec += (gamepad1.right_trigger - gamepad1.left_trigger);
+        lift.setPower((gamepad1.right_trigger - gamepad1.left_trigger));
         //}
         if (gamepad1.right_bumper) {
-            carouselSpeed+= (dt*0.1);
+            liftPower+= (dt*0.1);
         }
         if (gamepad1.left_bumper) {
-            carouselSpeed-= (dt*0.1);
+            liftPower-= (dt*0.1);
         }
         //imu不工作
         //telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);\
