@@ -25,32 +25,26 @@ public class RoboOp extends OpMode {
     protected DcMotor backLeft;
     protected DcMotor lift;
     protected DcMotor carousel;
-    protected Servo leftClaw;
-    protected Servo rightClaw;
+    protected DcMotor intake;
     protected ServoController servoController;
     protected BNO055IMU imu;
-    protected double leftClawPosition;
-    protected double rightClawPosition;
     protected double lastTime;
     protected double dt;
     protected double drivePower, strafePower, turnPower;
     protected double liftTarget;
     protected double liftTarget2;
     protected double x, y;
-    private double leftClawDelta;
-    private double rightClawDelta;
     //TODO: Set liftPositons array for floor then shipping hub levels behind the robot
-    protected int[] liftPositions = new int[5];
+    protected int[] liftPositions = new int[4];
     protected double liftPower;
     protected Position position;
     protected double servoPosition;
     protected double carouselSpeed;
-    protected int incdec;
     //-130
-    protected enum liftLevel {
-        FLOOR, IDLE, HUB_1, HUB_2, HUB_3
+    protected enum liftLevel { //TODO: attach ints to values
+        RECEIVE, HUB_1, HUB_2, HUB_3
     }
-    liftLevel level = liftLevel.FLOOR;
+    liftLevel level = liftLevel.RECEIVE;
     @Override
     public void init() {
         //开始， 准备变量
@@ -71,19 +65,14 @@ public class RoboOp extends OpMode {
         carousel = hardwareMap.get(DcMotor.class, "carousel");
         carousel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         carousel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        leftClaw = hardwareMap.get(Servo.class, "left");
-        rightClaw = hardwareMap.get(Servo.class, "right");
-        rightClaw.setDirection(Servo.Direction.REVERSE);
-        servoController = hardwareMap.getAll(ServoController.class).get(0);
+        intake = initializeMotor("compliance");
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
         liftTarget = lift.getCurrentPosition();
         liftTarget2 = lift.getCurrentPosition();
-        liftPositions = new int[]{(int) liftTarget, (int) liftTarget - 80, (int) liftTarget - 376, (
-                int) liftTarget - 426, (int) liftTarget - 476};
+        liftPositions = new int[]{0, 1, 2, 3}; //TODO: set slide lift levels
         servoPosition = 0.9;
         liftPower = 0.1;
         carouselSpeed = 1;
-        incdec = 1;
         //准备imu
 //        imu = hardwareMap.get(BNO055IMU.class, "imu");
 //        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -110,16 +99,12 @@ public class RoboOp extends OpMode {
 
         //position = imu.getPosition();
         lastTime = runtime.time();
-        telemetry.addData("left servo1: ", leftClaw.getPosition());
-        telemetry.addData("Lift target: ", liftTarget);
-        telemetry.addData("Arm target: ",  lift.getTargetPosition());
-        telemetry.addData("Arm position: ",  lift.getCurrentPosition());
-        telemetry.addData("Arm Enum: ",  level);
+        //TODO: add compliance + slide data outputs
         //做好，修一下
         //Position position = imu.getPosition();
         //position.toUnit(DistanceUnit.METER);/
         // telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);
-        if (level != liftLevel.FLOOR) {
+        /*if (level != liftLevel.RECEIVE) {
             if (Math.abs(lift.getTargetPosition() - (int)liftTarget)>5) {
                 liftTarget2 = lift.getTargetPosition() + incdec;
             } else {
@@ -127,7 +112,7 @@ public class RoboOp extends OpMode {
             }
             lift.setTargetPosition((int) liftTarget2);
             lift.setPower(liftPower);
-        }
+        }*/
     }
 
     protected DcMotor initializeMotor(String hardwareID) {
@@ -139,81 +124,55 @@ public class RoboOp extends OpMode {
         }
         return returnMotor;
     }
-    protected void servoSqueeze(/*int leftBound, int rightBound*/) {
-        leftClawDelta = Math.abs(leftClaw.getPosition() - leftClawPosition);
-        leftClaw.setPosition(
-                0.36);
-        rightClaw.setPosition(
-                0.36);
-        telemetry.addData("Claw position:", leftClaw.getPosition());
-        leftClawPosition = leftClaw.getPosition();
-    }
-    protected void servoExpand(/*int leftBound, int rightBound*/){
-        rightClawDelta = Math.abs(servoController.getServoPosition(1)-rightClawPosition);
-        leftClaw.setPosition(
-                0.45);
-        rightClaw.setPosition(
-                0.45);
-        if (Math.abs(leftClawPosition-servoController.getServoPosition(0))<0.01) {
-            telemetry.addData("leftStrained" , true);
-        }
-        leftClawPosition = leftClaw.getPosition();
-        telemetry.addData("Right claw position:", servoController.getServoPosition(1));
-        rightClawPosition = servoController.getServoPosition(1);
-    }
     protected void setLiftLevel(liftLevel level) {
-        if (level == liftLevel.FLOOR) {
+        if (level == liftLevel.RECEIVE) {
             liftTarget = liftPositions[0];
-        } else if (level == liftLevel.IDLE) {
-            liftTarget = liftPositions[1];
         } else if (level == liftLevel.HUB_1) {
-            liftTarget = liftPositions[2];
+            liftTarget = liftPositions[1];
         } else if (level == liftLevel.HUB_2) {
-            liftTarget = liftPositions[3];
+            liftTarget = liftPositions[2];
         } else if (level == liftLevel.HUB_3) {
-            liftTarget = liftPositions[4];
+            liftTarget = liftPositions[3];
         }
         this.level = level;
     }
     protected void incrementLift() {
-        incdec = -1;
-        if (level == liftLevel.FLOOR) {
+        if (level == liftLevel.RECEIVE) {
             liftTarget = lift.getCurrentPosition();
             liftPositions = new int[]{(int) liftTarget, (int) liftTarget - 80, (int) liftTarget - 376, (
                     int) liftTarget - 426, (int) liftTarget - 476};
             lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             liftTarget = liftPositions[1];
-            level = liftLevel.IDLE;
-        } else if (level == liftLevel.IDLE) {
-            liftTarget = liftPositions[2];
             level = liftLevel.HUB_1;
         } else if (level == liftLevel.HUB_1) {
-            liftTarget = liftPositions[3];
+            liftTarget = liftPositions[2];
             level = liftLevel.HUB_2;
         } else if (level == liftLevel.HUB_2) {
-            liftTarget = liftPositions[4];
+            liftTarget = liftPositions[3];
             level = liftLevel.HUB_3;
         }
         lift.setTargetPosition((int)liftTarget);
     }
     protected void decrementLift() {
-        incdec = 1;
-        if (level== liftLevel.IDLE) {
+        if (level== liftLevel.HUB_1) {
             liftTarget = liftPositions[0];
-            level = liftLevel.FLOOR;
+            level = liftLevel.RECEIVE;
             lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             lift.setPower(0.1);
-        } else if (level == liftLevel.HUB_1) {
-            liftTarget = liftPositions[1];
-            level = liftLevel.IDLE;
         } else if (level == liftLevel.HUB_2) {
-            liftTarget = liftPositions[2];
+            liftTarget = liftPositions[1];
             level = liftLevel.HUB_1;
         } else if (level == liftLevel.HUB_3) {
-            liftTarget = liftPositions[3];
+            liftTarget = liftPositions[2];
             level = liftLevel.HUB_2;
         }
         lift.setTargetPosition((int)liftTarget);
+    }
+    protected void intakeClockwise() {
+        carousel.setPower(liftPower);
+    }
+    protected void intakeCounterClockwise() {
+        carousel.setPower(-1*liftPower);
     }
     protected void carouselClockwise(){
         carousel.setPower(-1*carouselSpeed);
