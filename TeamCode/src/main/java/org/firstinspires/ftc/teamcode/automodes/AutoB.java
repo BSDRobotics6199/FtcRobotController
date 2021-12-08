@@ -18,38 +18,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import java.util.ArrayList;
 
 @Autonomous(name="AutoB", group="Auto")
-public class AutoB extends RoboOp {
-
-    SampleMecanumDrive drive;
-
-    public static final double METER_PER_INCH = 0.0254;
-    public static final double METER_PER_TILE = 0.6096;
-
-    public enum Direction {
-        FORWARD,
-        LEFT,
-        RIGHT,
-        BACK
-    }
-
-    private boolean tasks;
-
-    @Override
-    public void init() {
-        super.init();
-        drive = new SampleMecanumDrive(hardwareMap);
-        drive.setPoseEstimate(new Pose2d());
-
-        tasks = false;
-    }
-
-    @Override
-    public void loop() {
-        if (!tasks){
-            doTasks();
-            tasks = true;
-        }
-    }
+public class AutoB extends AutoTest {
 
     public void doTasks(){
         drive.followTrajectory(
@@ -68,25 +37,5 @@ public class AutoB extends RoboOp {
         drive.followTrajectory(
                 drive.trajectoryBuilder(drive.getPoseEstimate()).back((METER_PER_TILE/2)/METER_PER_INCH).build()
         );
-    }
-
-    public void move(double tiles, Direction direction){
-        TrajectoryBuilder builder = drive.trajectoryBuilder(drive.getPoseEstimate());
-        switch (direction){
-            case FORWARD:
-                builder.forward(tiles*METER_PER_TILE/METER_PER_TILE);
-                break;
-            case LEFT:
-                builder.strafeLeft(tiles*METER_PER_TILE/METER_PER_TILE);
-                break;
-            case RIGHT:
-                builder.strafeRight(tiles*METER_PER_TILE/METER_PER_TILE);
-                break;
-            case BACK:
-                builder.back(tiles*METER_PER_TILE/METER_PER_TILE);
-                break;
-
-        }
-        drive.followTrajectory(builder.build());
     }
 }

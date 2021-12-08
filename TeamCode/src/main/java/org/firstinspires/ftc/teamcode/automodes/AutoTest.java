@@ -1,61 +1,75 @@
 package org.firstinspires.ftc.teamcode.automodes;
 
+import android.hardware.camera2.params.MeteringRectangle;
+
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.sun.tools.javac.tree.JCTree;
 
 import org.firstinspires.ftc.teamcode.RoboOp;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-@Autonomous(name="AutoTest", group="Auto")
-public class AutoTest extends RoboOp {
+import java.util.ArrayList;
 
-    public final double speed = 0.69;
-    public double timePassed;
-    public boolean one;
-    public double timer;
-    public double offset;
-    public static final double TILE_SIZE = 0.6096;
-    public boolean clawSetup;
-    public boolean claw;
+@Autonomous(name="AutoB", group="Auto")
+public abstract class AutoTest extends RoboOp {
+
+    SampleMecanumDrive drive;
+
+    public static final double METER_PER_INCH = 0.0254;
+    public static final double METER_PER_TILE = 0.6096;
+
+    public enum Direction {
+        FORWARD,
+        LEFT,
+        RIGHT,
+        BACK
+    }
+
+    private boolean tasks;
 
     @Override
     public void init() {
         super.init();
-        timer = runtime.time();
-        offset = 0;
-        drivePower = 0;
-        clawSetup = false;
-        one = false;
-        claw = false;
+        drive = new SampleMecanumDrive(hardwareMap);
+        drive.setPoseEstimate(new Pose2d());
+
+        tasks = false;
     }
 
     @Override
     public void loop() {
-        super.loop();
-
-        timePassed = runtime.time() - offset;
-
-        //向前走
-        if (!clawSetup) {
-            if (timePassed > 3 && leftClaw.getPosition()==0.45 && rightClaw.getPosition()==0.45) {
-                offset = timePassed;
-                clawSetup = true;
-            } else if (timePassed > 2 && leftClaw.getPosition()!=0.45) {
-                leftClaw.setPosition(0.45);
-            } else if (rightClaw.getPosition()!=0.45){
-                rightClaw.setPosition(0.45);
-            }
-
-            return;
+        if (!tasks){
+            doTasks();
+            tasks = true;
         }
-        if (!one) {
-            drivePower = 0.5;
-            if ((timePassed * speed) > 1.5*TILE_SIZE) {
-                drivePower = 0;
-                offset = runtime.time();
-                one = true;
-            }
-            return;
-        }
+    }
 
+    public abstract void doTasks();
+
+    public void move(double tiles, Direction direction){
+        TrajectoryBuilder builder = drive.trajectoryBuilder(drive.getPoseEstimate());
+        switch (direction){
+            case FORWARD:
+                builder.forward(tiles*METER_PER_TILE/METER_PER_INCH);
+                break;
+            case LEFT:
+                builder.strafeLeft(tiles*METER_PER_TILE/METER_PER_INCH);
+                break;
+            case RIGHT:
+                builder.strafeRight(tiles*METER_PER_TILE/METER_PER_INCH);
+                break;
+            case BACK:
+                builder.back(tiles*METER_PER_TILE/METER_PER_INCH);
+                break;
+
+        }
+        drive.followTrajectory(builder.build());
     }
 }
