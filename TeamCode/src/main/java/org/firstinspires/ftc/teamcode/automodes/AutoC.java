@@ -11,8 +11,6 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 public class AutoC extends AutoTest {
 
     public void doTasks(){
-        drive.followTrajectory(
-                drive.trajectoryBuilder(drive.getPoseEstimate()).forward((METER_PER_TILE*1.5)/METER_PER_INCH).build()
-        );
+
     }
 }

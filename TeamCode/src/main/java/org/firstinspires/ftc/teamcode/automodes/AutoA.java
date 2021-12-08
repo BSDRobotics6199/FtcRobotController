@@ -14,6 +14,6 @@ import java.util.ArrayList;
 public class AutoA extends AutoTest {
 
     public void doTasks(){
-        move(1.5, Direction.FORWARD);
+
     }
 }

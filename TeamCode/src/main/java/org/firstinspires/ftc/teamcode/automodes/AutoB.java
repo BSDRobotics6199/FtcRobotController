@@ -21,21 +21,6 @@ import java.util.ArrayList;
 public class AutoB extends AutoTest {
 
     public void doTasks(){
-        drive.followTrajectory(
-                drive.trajectoryBuilder(drive.getPoseEstimate()).back((METER_PER_TILE/2)/METER_PER_INCH).build()
-        );
-        carousel.setPower(0.6);
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        carousel.setPower(0);
-        drive.followTrajectory(
-                drive.trajectoryBuilder(drive.getPoseEstimate()).strafeRight(METER_PER_TILE/METER_PER_INCH).build()
-        );
-        drive.followTrajectory(
-                drive.trajectoryBuilder(drive.getPoseEstimate()).back((METER_PER_TILE/2)/METER_PER_INCH).build()
-        );
+
     }
 }

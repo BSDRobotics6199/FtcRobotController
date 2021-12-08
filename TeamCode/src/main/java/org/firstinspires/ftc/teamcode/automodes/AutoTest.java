@@ -72,4 +72,12 @@ public abstract class AutoTest extends RoboOp {
         }
         drive.followTrajectory(builder.build());
     }
+
+    public void stall(long milliseconds){
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
