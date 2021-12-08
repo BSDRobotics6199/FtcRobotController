@@ -73,6 +73,10 @@ public abstract class AutoTest extends RoboOp {
         drive.followTrajectory(builder.build());
     }
 
+    public void turn(double angle){
+        drive.turn(angle);
+    }
+
     public void stall(long milliseconds){
         try {
             Thread.sleep(milliseconds);
