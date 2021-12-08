@@ -74,16 +74,16 @@ public class AutoB extends RoboOp {
         TrajectoryBuilder builder = drive.trajectoryBuilder(drive.getPoseEstimate());
         switch (direction){
             case FORWARD:
-                builder.forward(tiles*METER_PER_TILE/METER_PER_INCH);
+                builder.forward(tiles*METER_PER_TILE/METER_PER_TILE);
                 break;
             case LEFT:
-                builder.strafeLeft(tiles*METER_PER_TILE/METER_PER_INCH);
+                builder.strafeLeft(tiles*METER_PER_TILE/METER_PER_TILE);
                 break;
             case RIGHT:
-                builder.strafeRight(tiles*METER_PER_TILE/METER_PER_INCH);
+                builder.strafeRight(tiles*METER_PER_TILE/METER_PER_TILE);
                 break;
             case BACK:
-                builder.back(tiles*METER_PER_TILE/METER_PER_INCH);
+                builder.back(tiles*METER_PER_TILE/METER_PER_TILE);
                 break;
 
         }
