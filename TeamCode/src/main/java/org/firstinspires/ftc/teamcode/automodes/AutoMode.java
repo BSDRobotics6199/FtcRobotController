@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import java.util.ArrayList;
 
 @Autonomous(name="AutoB", group="Auto")
-public abstract class AutoTest extends RoboOp {
+public abstract class AutoMode extends RoboOp {
 
     SampleMecanumDrive drive;
 
