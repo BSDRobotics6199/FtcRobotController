@@ -68,8 +68,15 @@ public abstract class AutoMode extends OpMode {
         drive.followTrajectory(builder.build());
     }
 
-    public void turn(double angle){
-        drive.turn(angle*Math.PI/180);
+    public void turn(double angle, Direction direction){
+        switch (direction) {
+            case COUNTER_CLOCKWISE:
+                drive.turn(-angle * Math.PI / 180);
+                break;
+            case CLOCKWISE:
+                drive.turn(angle * Math.PI / 180);
+                break;
+        }
     }
 
     public void carousel(long milliseconds, Direction direction){
@@ -83,11 +90,11 @@ public abstract class AutoMode extends OpMode {
             default:
                 return;
         }
-        stall(milliseconds);
+        delay(milliseconds);
         carousel.setPower(0);
     }
 
-    public void stall(long milliseconds){
+    public void delay(long milliseconds){
         try {
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
