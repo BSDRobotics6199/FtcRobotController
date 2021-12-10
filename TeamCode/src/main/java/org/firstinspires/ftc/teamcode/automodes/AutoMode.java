@@ -101,4 +101,224 @@ public abstract class AutoMode extends OpMode {
             e.printStackTrace();
         }
     }
+
+    public void spin(double times, Direction direction){
+        turn(times*360, direction);
+    }
+
+    public void dot(){
+        carousel(500, Direction.CLOCKWISE);
+    }
+    public void pause(){
+        delay(500);
+    }
+
+    public void dash(){
+        carousel(1500, Direction.CLOCKWISE);
+    }
+
+    public void playString(String string){
+
+        for (char letter: string.toCharArray()){
+            switch (letter){
+                case 'A':
+                    dot();
+                    pause();
+                    dash();
+                    break;
+                case 'B':
+                    dash();
+                    pause();
+                    dot();
+                    pause();
+                    dot();
+                    pause();
+                    dot();
+                   break;
+                case 'C':
+                    dash();
+                    pause();
+                    dot();
+                    pause();
+                    dash();
+                    pause();
+                    dot();
+                    break;
+                case 'D':
+                    dash();
+                    pause();
+                    dot();
+                    pause();
+                    dot();
+                    break;
+                case 'E':
+                    dot();
+                    break;
+                case 'F':
+                    dot();
+                    pause();
+                    dot();
+                    pause();
+                    dash();
+                    pause();
+                    dot();
+                    break;
+                case 'G':
+                    dash();
+                    pause();
+                    dash();
+                    pause();
+                    dot();
+                    break;
+                case 'H':
+                    dot();
+                    pause();
+                    dot();
+                    pause();
+                    dot();
+                    pause();
+                    dot();
+                    break;
+                case 'I':
+                    dot();
+                    pause();
+                    dot();
+                    break;
+                case 'J':
+                    dot();
+                    pause();
+                    dash();
+                    pause();
+                    dash();
+                    pause();
+                    dash();
+                    break;
+                case 'K':
+                    dash();
+                    pause();
+                    dot();
+                    pause();
+                    dash();
+                    break;
+                case 'L':
+                    dot();
+                    pause();
+                    dash();
+                    pause();
+                    dot();
+                    pause();
+                    dot();
+                    break;
+                case 'M':
+                    dash();
+                    pause();
+                    dash();
+                    break;
+                case 'N':
+                    dash();
+                    pause();
+                    break;
+                case 'O':
+                    dash();
+                    pause();
+                    dash();
+                    pause();
+                    dash();
+                    break;
+                case 'P':
+                    dot();
+                    pause();
+                    dash();
+                    pause();
+                    dash();
+                    pause();
+                    dot();
+                    break;
+                case 'Q':
+                    dash();
+                    pause();
+                    dash();
+                    pause();
+                    dot();
+                    pause();
+                    dash();
+                    break;
+                case 'R':
+                    dot();
+                    pause();
+                    dash();
+                    pause();
+                    dot();
+                    break;
+                case 'S':
+                    dot();
+                    pause();
+                    dot();
+                    pause();
+                    dot();
+                    break;
+                case 'T':
+                    dash();
+                    break;
+                case 'U':
+                    dot();
+                    pause();
+                    dot();
+                    pause();
+                    dash();
+                    break;
+                case 'V':
+                    dot();
+                    pause();
+                    dot();
+                    pause();
+                    dot();
+                    dash();
+                    break;
+                case 'W':
+                    dot();
+                    pause();
+                    dash();
+                    pause();
+                    dash();
+                    break;
+                case 'X':
+                    dash();
+                    pause();
+                    dot();
+                    pause();
+                    dot();
+                    pause();
+                    dash();
+                    break;
+                case 'Y':
+                    dash();
+                    pause();
+                    dot();
+                    pause();
+                    dash();
+                    pause();
+                    dash();
+                    break;
+                case 'Z':
+                    dash();
+                    pause();
+                    dash();
+                    pause();
+                    dot();
+                    pause();
+                    dot();
+                    break;
+                case ' ':
+                    pause();
+                    pause();
+                    pause();
+                    pause();
+            }
+            pause();
+            pause();
+            pause();
+        }
+    }
+
 }
