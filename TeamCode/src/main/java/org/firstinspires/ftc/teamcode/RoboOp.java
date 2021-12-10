@@ -4,11 +4,13 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorImplEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
@@ -26,6 +28,7 @@ public class RoboOp extends OpMode {
     protected DcMotor lift;
     protected DcMotor carousel;
     protected DcMotor intake;
+    protected Servo flip;
     protected ServoController servoController;
     protected BNO055IMU imu;
     protected double lastTime;
@@ -59,6 +62,7 @@ public class RoboOp extends OpMode {
         backRight = initializeMotor("right_rear");
         backLeft = initializeMotor("left_rear");
         lift = hardwareMap.get(DcMotor.class, "lift");
+        flip = hardwareMap.get(Servo.class, "flip");
         lift.setTargetPosition(lift.getCurrentPosition());
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -71,7 +75,7 @@ public class RoboOp extends OpMode {
         liftTarget2 = lift.getCurrentPosition();
         liftPositions = new int[]{0, 1, 2, 3}; //TODO: set slide lift levels
         servoPosition = 0.9;
-        liftPower = 0.1;
+        //liftPower = 0.1;
         carouselSpeed = 1;
         //准备imu
 //        imu = hardwareMap.get(BNO055IMU.class, "imu");
@@ -113,6 +117,8 @@ public class RoboOp extends OpMode {
             lift.setTargetPosition((int) liftTarget2);
             lift.setPower(liftPower);
         }*/
+        lift.setTargetPosition((int)liftTarget);
+        lift.setPower(1);
     }
 
     protected DcMotor initializeMotor(String hardwareID) {
@@ -174,11 +180,7 @@ public class RoboOp extends OpMode {
     protected void intakeCounterClockwise() {
         carousel.setPower(-1*liftPower);
     }
-    protected void carouselClockwise(){
-        carousel.setPower(-1*carouselSpeed);
-    }
-    protected void carouselCounterClockwise(){
-        carousel.setPower(carouselSpeed);
-    }
+    protected void carouselClockwise(){ carousel.setPower(liftPower); }
+    protected void carouselCounterClockwise(){ carousel.setPower(liftPower*-1); }
     //增加升降机功能
 }
