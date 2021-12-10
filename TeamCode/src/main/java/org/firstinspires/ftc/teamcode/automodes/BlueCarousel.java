@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 public class BlueCarousel extends AutoMode {
 
     public void doTasks(){
-
+        move(1, Direction.BACK);
+        carousel(5000, Direction.COUNTER_CLOCKWISE);
+        move(1, Direction.RIGHT);
     }
 }

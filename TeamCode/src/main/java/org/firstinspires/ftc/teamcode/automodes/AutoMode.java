@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
@@ -15,11 +16,15 @@ public abstract class AutoMode extends OpMode {
     public static final double METER_PER_INCH = 0.0254;
     public static final double METER_PER_TILE = 0.6096;
 
+    public DcMotor carousel;
+
     public enum Direction {
         FORWARD,
         LEFT,
         RIGHT,
-        BACK
+        BACK,
+        CLOCKWISE,
+        COUNTER_CLOCKWISE
     }
 
     private boolean tasks;
@@ -29,6 +34,7 @@ public abstract class AutoMode extends OpMode {
         drive = new SampleMecanumDrive(hardwareMap);
         drive.setPoseEstimate(new Pose2d());
 
+        carousel = hardwareMap.get(DcMotor.class, "YourMother");
         tasks = false;
     }
 
@@ -63,7 +69,22 @@ public abstract class AutoMode extends OpMode {
     }
 
     public void turn(double angle){
-        drive.turn(angle);
+        drive.turn(angle*Math.PI/180);
+    }
+
+    public void carousel(long milliseconds, Direction direction){
+        switch (direction){
+            case CLOCKWISE:
+                carousel.setPower(0.25);
+                break;
+            case COUNTER_CLOCKWISE:
+                carousel.setPower(-0.25);
+                break;
+            default:
+                return;
+        }
+        stall(milliseconds);
+        carousel.setPower(0);
     }
 
     public void stall(long milliseconds){

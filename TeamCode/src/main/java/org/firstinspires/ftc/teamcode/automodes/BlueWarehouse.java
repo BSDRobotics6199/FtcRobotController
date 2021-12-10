@@ -7,5 +7,8 @@ public class BlueWarehouse extends AutoMode {
 
     public void doTasks(){
         move(1.25, Direction.FORWARD);
+        move(1, Direction.RIGHT);
+        move(1, Direction.FORWARD);
+        turn(90);
     }
 }
