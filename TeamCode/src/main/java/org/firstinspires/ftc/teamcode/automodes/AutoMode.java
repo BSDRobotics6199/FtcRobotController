@@ -106,14 +106,14 @@ public abstract class AutoMode extends OpMode {
         turn(times*360, direction);
     }
 
-    public void dot(){
+    private void dot(){
         carousel(500, Direction.CLOCKWISE);
     }
-    public void pause(){
+    private void pause(){
         delay(500);
     }
 
-    public void dash(){
+    private void dash(){
         carousel(1500, Direction.CLOCKWISE);
     }
 
