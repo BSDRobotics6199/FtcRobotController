@@ -57,12 +57,11 @@ public class RoboOp extends OpMode {
 
         //假设有四个驾驶马达
         //登录马达
-        frontRight  = initializeMotor("right_front");
-        frontLeft = initializeMotor("left_front");
-        backRight = initializeMotor("right_rear");
-        backLeft = initializeMotor("left_rear");
+        frontRight  = initializeMotor("frontRight");
+        frontLeft = initializeMotor("frontLeft");
+        backRight = initializeMotor("rearRight");
+        backLeft = initializeMotor("rearLefts");
         lift = hardwareMap.get(DcMotor.class, "lift");
-        flip = hardwareMap.get(Servo.class, "flip");
         lift.setTargetPosition(lift.getCurrentPosition());
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
