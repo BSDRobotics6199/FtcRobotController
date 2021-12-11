@@ -9,7 +9,5 @@ public class RedCarousel extends AutoMode {
         move(1, Direction.BACK);
         carousel(10000, Direction.COUNTER_CLOCKWISE);
         move(1, Direction.LEFT);
-
-        playString("That sounds like a skill issue ");
     }
 }
