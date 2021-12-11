@@ -5,9 +5,17 @@ import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 
+import org.checkerframework.checker.units.qual.C;
+import org.firstinspires.ftc.teamcode.RoboOp;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 @Autonomous(name="AutoB", group="Auto")
 public abstract class AutoMode extends LinearOpMode {
@@ -18,7 +26,9 @@ public abstract class AutoMode extends LinearOpMode {
     public static final double METER_PER_TILE = 0.6096;
 
     public DcMotor carousel;
-
+    public DcMotor lift;
+    public CRServo intake;
+    public double liftTarget;
     public enum Direction {
         FORWARD,
         LEFT,
@@ -28,6 +38,14 @@ public abstract class AutoMode extends LinearOpMode {
         COUNTER_CLOCKWISE
     }
 
+    public enum liftLevel{
+        RECEIVE,
+        HUB_1,
+        HUB_2,
+        HUB_3,
+    }
+    liftLevel level = liftLevel.RECEIVE;
+    protected int[] liftPositions = new int[]{5, 730, 1250, 2200};
     private boolean tasks;
 
     @Override
@@ -36,7 +54,11 @@ public abstract class AutoMode extends LinearOpMode {
         drive.setPoseEstimate(new Pose2d());
 
         carousel = hardwareMap.get(DcMotor.class, "carousel");
+        lift = hardwareMap.get(DcMotor.class, "lift");
+        intake = hardwareMap.get(CRServo.class, "intake");
+
         tasks = false;
+
 
         waitForStart();
 
@@ -47,6 +69,36 @@ public abstract class AutoMode extends LinearOpMode {
     }
 
     public abstract void doTasks();
+
+    public void setLiftLevel(liftLevel newLevel) {
+        if (level == liftLevel.RECEIVE) {
+            liftTarget = liftPositions[0];
+        } else if (level == liftLevel.HUB_1) {
+            liftTarget = liftPositions[1];
+        } else if (level == liftLevel.HUB_2) {
+            liftTarget = liftPositions[2];
+        } else if (level == liftLevel.HUB_3) {
+            liftTarget = liftPositions[3];
+        }
+        level = newLevel;
+        while (Math.abs(lift.getCurrentPosition() - (int)liftTarget) > 3) {
+            lift.setTargetPosition((int)liftTarget);
+            lift.setPower(1);
+        }
+    }
+
+    public void intake(long milliseconds, Direction direction){
+        switch (direction){
+            case BACK:
+                intake.setPower(-1);
+                break;
+            case FORWARD:
+                intake.setPower(1);
+                break;
+        }
+
+        delay(milliseconds);
+    }
 
     public void move(double tiles, Direction direction){
         TrajectoryBuilder builder = drive.trajectoryBuilder(drive.getPoseEstimate());
@@ -96,7 +148,7 @@ public abstract class AutoMode extends LinearOpMode {
 
     public void delay(long milliseconds){
         try {
-            Thread.sleep(milliseconds);
+            TimeUnit.MILLISECONDS.sleep(milliseconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -319,6 +371,10 @@ public abstract class AutoMode extends LinearOpMode {
             pause();
             pause();
         }
+    }
+
+    public void liftTo(){
+
     }
 
 }

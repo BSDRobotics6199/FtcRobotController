@@ -6,9 +6,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 public class RedCarousel extends AutoMode {
 
     public void doTasks(){
-        move(1, Direction.LEFT);
+        move(1, Direction.BACK);
         carousel(5000, Direction.COUNTER_CLOCKWISE);
-        move(1, Direction.FORWARD);
-        playString("That sounds likes a skill issue ");
+        move(1, Direction.LEFT);
+
+        playString("That sounds like a skill issue ");
     }
 }
