@@ -52,16 +52,16 @@ public abstract class AutoMode extends LinearOpMode {
         TrajectoryBuilder builder = drive.trajectoryBuilder(drive.getPoseEstimate());
         switch (direction){
             case FORWARD:
-                builder.forward(tiles*METER_PER_TILE/METER_PER_INCH);
+                builder.forward(tiles*24);
                 break;
             case LEFT:
-                builder.strafeLeft(tiles*METER_PER_TILE/METER_PER_INCH);
+                builder.strafeLeft(tiles*24);
                 break;
             case RIGHT:
-                builder.strafeRight(tiles*METER_PER_TILE/METER_PER_INCH);
+                builder.strafeRight(tiles*24);
                 break;
             case BACK:
-                builder.back(tiles*METER_PER_TILE/METER_PER_INCH);
+                builder.back(tiles*24);
                 break;
 
         }
