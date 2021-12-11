@@ -16,6 +16,5 @@ public class RedWarehouse extends AutoMode {
         move(1, Direction.FORWARD);
         turn(90, Direction.CLOCKWISE);
 
-        playString("That sounds like a skill issue ");
     }
 }
