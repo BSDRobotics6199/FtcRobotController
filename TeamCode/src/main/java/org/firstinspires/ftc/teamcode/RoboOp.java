@@ -117,16 +117,17 @@ public class RoboOp extends OpMode {
             lift.setTargetPosition((int) liftTarget2);
             lift.setPower(liftPower);
         }*/
-        if (Math.abs(liftTarget - lift.getCurrentPosition()) > 5) {
+        if ((Math.abs(liftTarget - lift.getCurrentPosition()) > 5)) {
             lift.setTargetPosition((int)liftTarget);
             lift.setPower(1);
         }
-        if (((lastLift - lift.getCurrentPosition())==0)&&((lift.getCurrentPosition()-liftTarget)>10)) {
-            lift.setTargetPosition(lift.getCurrentPosition());
-            lift.setPower(1);
-        } //update delta every 200 ms and if it won't move and we're trying to, then kill it
-        if ((runtime.time()%0.2) < 0.02) {
-            lastLift = lift.getCurrentPosition();
+        if (liftTarget<50) {
+            liftTarget = 5.0;
+            lift.setTargetPosition(5);
+        }
+        if (liftTarget>2500) {
+            liftTarget = 2500.0;
+            lift.setTargetPosition(2500);
         }
     }
 

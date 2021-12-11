@@ -65,7 +65,7 @@ public class TestController extends RoboOp {
         if (gamepad1.left_bumper) {
             liftPower-= (dt*0.1);
         }
-        liftTarget += 5*(gamepad1.right_trigger - gamepad1.left_trigger);
+        liftTarget += 10*(gamepad1.right_trigger - gamepad1.left_trigger);
         //imu他妈的没用肥沃
         //telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);\
         pastDpadDown = gamepad1.dpad_down;
