@@ -3,13 +3,14 @@ package org.firstinspires.ftc.teamcode.automodes;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
 @Autonomous(name="AutoB", group="Auto")
-public abstract class AutoMode extends OpMode {
+public abstract class AutoMode extends LinearOpMode {
 
     SampleMecanumDrive drive;
 
@@ -30,16 +31,15 @@ public abstract class AutoMode extends OpMode {
     private boolean tasks;
 
     @Override
-    public void init() {
+    public void runOpMode() throws InterruptedException {
         drive = new SampleMecanumDrive(hardwareMap);
         drive.setPoseEstimate(new Pose2d());
 
         carousel = hardwareMap.get(DcMotor.class, "carousel");
         tasks = false;
-    }
 
-    @Override
-    public void loop() {
+        waitForStart();
+
         if (!tasks){
             doTasks();
             tasks = true;
