@@ -34,7 +34,7 @@ public abstract class AutoMode extends OpMode {
         drive = new SampleMecanumDrive(hardwareMap);
         drive.setPoseEstimate(new Pose2d());
 
-        carousel = hardwareMap.get(DcMotor.class, "YourMother");
+        carousel = hardwareMap.get(DcMotor.class, "carousel");
         tasks = false;
     }
 

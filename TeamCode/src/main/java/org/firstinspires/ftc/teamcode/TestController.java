@@ -37,15 +37,9 @@ public class TestController extends RoboOp {
         }
 
         if (gamepad1.cross) {
-            if (level == liftLevel.RECEIVE)
-                intake.setPower(liftPower);
-            else
-                flip.setPosition(0);
+            intake.setPower(liftPower);
         } else if (gamepad1.square) {
-            if (level == liftLevel.RECEIVE)
-                intake.setPower(-1*liftPower);
-            else
-                flip.setPosition(1);
+            intake.setPower(-1*liftPower);
         } else {
             intake.setPower(0);
         }

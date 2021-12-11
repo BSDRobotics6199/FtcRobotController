@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorImplEx;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -27,8 +28,7 @@ public class RoboOp extends OpMode {
     protected DcMotor backLeft;
     protected DcMotor lift;
     protected DcMotor carousel;
-    protected DcMotor intake;
-    protected Servo flip;
+    protected CRServo intake;
     protected ServoController servoController;
     protected BNO055IMU imu;
     protected double lastTime;
@@ -60,7 +60,7 @@ public class RoboOp extends OpMode {
         frontRight  = initializeMotor("frontRight");
         frontLeft = initializeMotor("frontLeft");
         backRight = initializeMotor("rearRight");
-        backLeft = initializeMotor("rearLefts");
+        backLeft = initializeMotor("rearLeft");
         lift = hardwareMap.get(DcMotor.class, "lift");
         lift.setTargetPosition(lift.getCurrentPosition());
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -68,13 +68,13 @@ public class RoboOp extends OpMode {
         carousel = hardwareMap.get(DcMotor.class, "carousel");
         carousel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         carousel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        intake = initializeMotor("compliance");
+        intake = hardwareMap.get(CRServo.class, "intake");
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
         liftTarget = lift.getCurrentPosition();
         liftTarget2 = lift.getCurrentPosition();
         liftPositions = new int[]{0, 1, 2, 3}; //TODO: set slide lift levels
         servoPosition = 0.9;
-        //liftPower = 0.1;
+        liftPower = 0.1;
         carouselSpeed = 1;
         //准备imu
 //        imu = hardwareMap.get(BNO055IMU.class, "imu");
@@ -94,12 +94,13 @@ public class RoboOp extends OpMode {
     public void loop() {
         dt = runtime.time() - lastTime;
         //每一回合都会设马达力量
-        frontRight.setPower(Range.clip(drivePower - turnPower - strafePower, -1, 1));
-        backRight.setPower(Range.clip(drivePower - turnPower + strafePower, -1, 1));
+        frontRight.setPower(Range.clip(-1*drivePower + turnPower + strafePower, -1, 1));
+        backRight.setPower(Range.clip(-1*drivePower + turnPower - strafePower, -1, 1));
 
-        frontLeft.setPower(Range.clip(drivePower + turnPower + strafePower, -1, 1));
-        backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
-
+        frontLeft.setPower(Range.clip(-1*drivePower - turnPower - strafePower, -1, 1));
+        backLeft.setPower(Range.clip(-1*drivePower - turnPower + strafePower, -1, 1));
+        telemetry.addData("Lift target: ", lift.getTargetPosition());
+        telemetry.addData("Liftpower: ", liftPower);
         //position = imu.getPosition();
         lastTime = runtime.time();
         //TODO: add compliance + slide data outputs
