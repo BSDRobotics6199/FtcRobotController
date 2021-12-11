@@ -6,8 +6,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 public class RedWarehouse extends AutoMode {
 
     public void doTasks(){
-        move(1.25, Direction.FORWARD);
+        setLiftLevel(liftLevel.HUB_1);
         move(1, Direction.LEFT);
+        move(1, Direction.FORWARD);
+        intake(2000, Direction.BACK);
+
+        move(1, Direction.BACK);
+        move(2.25, Direction.RIGHT);
         move(1, Direction.FORWARD);
         turn(90, Direction.CLOCKWISE);
     }
