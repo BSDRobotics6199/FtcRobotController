@@ -39,9 +39,9 @@ public class RoboOp extends OpMode {
     protected int lastLift;
     protected double x, y;
     //TODO: Set liftPositons array for floor then shipping hub levels behind the robot
-    protected int[] liftPositions = new int[4];
     protected double liftPower;
     protected Position position;
+    protected int[] liftPositions = new int[4];
     protected double servoPosition;
     protected double carouselSpeed;
     //-130
