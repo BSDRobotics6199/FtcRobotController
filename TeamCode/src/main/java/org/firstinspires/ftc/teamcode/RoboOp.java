@@ -117,6 +117,13 @@ public class RoboOp extends OpMode {
             lift.setTargetPosition((int) liftTarget2);
             lift.setPower(liftPower);
         }*/
+        if ((Math.abs(liftTarget - lift.getCurrentPosition()) > 5)) {
+            lift.setTargetPosition((int)liftTarget);
+            lift.setPower(1);
+        }
+        if (lift.getCurrentPosition()<50) {
+            lift.setTargetPosition(5);
+        }
     }
 
     protected DcMotor initializeMotor(String hardwareID) {
