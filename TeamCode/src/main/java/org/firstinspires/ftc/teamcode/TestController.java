@@ -30,51 +30,37 @@ public class TestController extends RoboOp {
         drivePower = curve(-gamepad1.left_stick_y);
         strafePower = curve(gamepad1.left_stick_x);
         if (level == liftLevel.RECEIVE) {
-            turnPower = 0.3*gamepad1.right_stick_x;
+            turnPower = 0.3*(gamepad1.right_stick_x + gamepad2.right_stick_x);
         } else {
             turnPower = gamepad1.right_stick_x;
         }
 
-        if (gamepad1.right_stick_y>0.9) {
-            capstone.setPosition(0.49);
-        } else if (gamepad1.right_stick_y < -0.9) {
-            capstone.setPosition(0.184);
-        } else {
-            capstone.setPosition(0.73);
-        }
 
-        if (gamepad1.cross) {
-            intake.setPower(1);
-            telemetry.addData("yes", "");
-        } else if (gamepad1.square) {
-            intake.setPower(-1);
-        } else {
-            intake.setPower(0);
-        }
-        if (gamepad1.triangle) {
+        intake.setPower(-1*gamepad2.left_stick_y);
+        if (gamepad2.triangle) {
             carouselCounterClockwise();
-        }else if (gamepad1.circle){
+        }else if (gamepad2.circle){
             carouselClockwise();
         } else {
             carousel.setPower(0);
         }
-        if (gamepad1.dpad_down)
+        if (gamepad2.dpad_down)
             setLiftLevel(liftLevel.RECEIVE);
-        else if (gamepad1.dpad_left)
+        else if (gamepad2.dpad_left)
             setLiftLevel(liftLevel.HUB_1);
-        else if (gamepad1.dpad_up)
+        else if (gamepad2.dpad_up)
             setLiftLevel(liftLevel.HUB_2);
-        else if (gamepad1.dpad_right)
+        else if (gamepad2.dpad_right)
             setLiftLevel(liftLevel.HUB_3);
         //if ((gamepad1.right_trigger<0.1) || (gamepad1.left_trigger<0.1)) {
         //}
-        if (gamepad1.right_bumper) {
+        if (gamepad2.right_bumper) {
             liftPower+= (dt*0.1);
         }
-        if (gamepad1.left_bumper) {
+        if (gamepad2.left_bumper) {
             liftPower-= (dt*0.1);
         }
-        liftTarget += 10*(gamepad1.right_trigger - gamepad1.left_trigger);
+        liftTarget += 10*(gamepad2.right_trigger - gamepad2.left_trigger);
         //imu他妈的没用肥沃
         //telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);\
         pastDpadDown = gamepad1.dpad_down;

@@ -75,7 +75,7 @@ public class RoboOp extends OpMode {
         liftTarget = lift.getCurrentPosition();
         liftPositions = new int[]{5, 730, 1250, 2200};
         servoPosition = 0.9;
-        //liftPower = 0.1;
+        liftPower = 0.5;
         carouselSpeed = 1;
         //准备imu
 //        imu = hardwareMap.get(BNO055IMU.class, "imu");
