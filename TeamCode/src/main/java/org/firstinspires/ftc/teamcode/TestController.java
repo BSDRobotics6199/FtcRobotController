@@ -50,14 +50,14 @@ public class TestController extends RoboOp {
         } else {
             carousel.setPower(0);
         }
-        if (gamepad1.dpad_down)
+        /*if (gamepad1.dpad_down)
             setLiftLevel(liftLevel.RECEIVE);
         else if (gamepad1.dpad_left)
             setLiftLevel(liftLevel.HUB_1);
         else if (gamepad1.dpad_up)
             setLiftLevel(liftLevel.HUB_2);
         else if (gamepad1.dpad_right)
-            setLiftLevel(liftLevel.HUB_3);
+            setLiftLevel(liftLevel.HUB_3);*/
         //if ((gamepad1.right_trigger<0.1) || (gamepad1.left_trigger<0.1)) {
         //}
         if (gamepad1.right_bumper) {
@@ -66,7 +66,7 @@ public class TestController extends RoboOp {
         if (gamepad1.left_bumper) {
             liftPower-= (dt*0.1);
         }
-        liftTarget += gamepad1.right_trigger - gamepad1.left_trigger;
+        liftTarget += 5*(gamepad1.right_trigger - gamepad1.left_trigger);
         //imu他妈的没用肥沃
         //telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);\
         pastDpadDown = gamepad1.dpad_down;
