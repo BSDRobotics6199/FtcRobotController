@@ -94,11 +94,16 @@ public class RoboOp extends OpMode {
     public void loop() {
         dt = runtime.time() - lastTime;
         //每一回合都会设马达力量
-        frontRight.setPower(Range.clip(drivePower - turnPower - strafePower, -1, 1));
+        /*
+        frontRight.setPower(Range.clip(drivePower - turnPower + strafePower, -1, 1));
         backRight.setPower(Range.clip(drivePower - turnPower - strafePower, -1, 1));
 
-        frontLeft.setPower(Range.clip(-1*drivePower - turnPower + strafePower, -1, 1));
-        backLeft.setPower(Range.clip(-1*drivePower - turnPower + strafePower, -1, 1));
+        frontLeft.setPower(Range.clip(-1*drivePower - turnPower - strafePower, -1, 1));
+        backLeft.setPower(Range.clip(-1*drivePower - turnPower + strafePower, -1, 1));*/
+        frontRight.setPower(gamepad1.left_stick_y);
+        backRight.setPower(gamepad1.left_stick_x);
+        frontLeft.setPower(gamepad1.right_stick_y);
+        backLeft.setPower(gamepad1.right_stick_x);
         telemetry.addData("Lift target: ", lift.getTargetPosition());
         telemetry.addData("Liftpower: ", liftPower);
         //position = imu.getPosition();
