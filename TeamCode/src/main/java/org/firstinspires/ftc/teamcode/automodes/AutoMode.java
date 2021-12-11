@@ -107,14 +107,14 @@ public abstract class AutoMode extends LinearOpMode {
     }
 
     private void dot(){
-        carousel(1000, Direction.CLOCKWISE);
+        carousel(2000, Direction.CLOCKWISE);
     }
     private void pause(){
-        delay(1000);
+        delay(2000);
     }
 
     private void dash(){
-        carousel(3000, Direction.CLOCKWISE);
+        carousel(6000, Direction.CLOCKWISE);
     }
 
     public void playString(String string){
