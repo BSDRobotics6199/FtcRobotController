@@ -44,9 +44,10 @@ public class TestController extends RoboOp {
         }
 
         if (gamepad1.cross) {
-            intake.setPower(liftPower);
+            intake.setPower(1);
+            telemetry.addData("yes", "");
         } else if (gamepad1.square) {
-            intake.setPower(-1*liftPower);
+            intake.setPower(-1);
         } else {
             intake.setPower(0);
         }
