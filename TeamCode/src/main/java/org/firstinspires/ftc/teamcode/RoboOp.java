@@ -29,6 +29,7 @@ public class RoboOp extends OpMode {
     protected DcMotor lift;
     protected DcMotor carousel;
     protected CRServo intake;
+    protected Servo capstone;
     protected ServoController servoController;
     protected BNO055IMU imu;
     protected double lastTime;
@@ -65,13 +66,14 @@ public class RoboOp extends OpMode {
         lift.setTargetPosition(lift.getCurrentPosition());
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        capstone = hardwareMap.get(Servo.class, "capstone");
         carousel = hardwareMap.get(DcMotor.class, "carousel");
         carousel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         carousel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         intake = hardwareMap.get(CRServo.class, "intake");
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
         liftTarget = lift.getCurrentPosition();
-        liftPositions = new int[]{0, 1, 2, 3}; //TODO: set slide lift levels
+        liftPositions = new int[]{5, 730, 1250, 2200};
         servoPosition = 0.9;
         //liftPower = 0.1;
         carouselSpeed = 1;
@@ -101,6 +103,7 @@ public class RoboOp extends OpMode {
         telemetry.addData("Lift position: ", lift.getCurrentPosition());
         telemetry.addData("Delta: ", lift.getCurrentPosition()-lastLift);
         telemetry.addData("LiftTarget", liftTarget);
+        telemetry.addData("Capstone Position: ", capstone.getPosition());
         //position = imu.getPosition();
         lastTime = runtime.time();
         //TODO: add compliance + slide data outputs

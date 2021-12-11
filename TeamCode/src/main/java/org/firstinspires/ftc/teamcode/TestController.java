@@ -35,6 +35,13 @@ public class TestController extends RoboOp {
             turnPower = gamepad1.right_stick_x;
         }
 
+        if (gamepad1.right_stick_y>0.9) {
+            capstone.setPosition(capstone.getPosition() + dt);
+        }
+        if (gamepad1.right_stick_y < -0.9) {
+            capstone.setPosition(capstone.getPosition() - dt);
+        }
+
         if (gamepad1.cross) {
             intake.setPower(liftPower);
         } else if (gamepad1.square) {
