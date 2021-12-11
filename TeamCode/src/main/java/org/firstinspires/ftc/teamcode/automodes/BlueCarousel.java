@@ -8,12 +8,12 @@ public class BlueCarousel extends AutoMode {
     public void doTasks(){
         setLiftLevel(liftLevel.HUB_1);
         move(1, Direction.LEFT);
-        move(1, Direction.FORWARD);
+        move(1.5, Direction.FORWARD);
         intake(2000, Direction.BACK);
 
         move(1, Direction.BACK);
         move(2, Direction.RIGHT);
-        carousel(2000, Direction.CLOCKWISE);
+        carousel(10000, Direction.CLOCKWISE);
 
         playString("That sounds like a skill issue ");
     }
