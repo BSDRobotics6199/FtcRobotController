@@ -12,8 +12,7 @@ public class TestController extends RoboOp {
     @Override
     public void init() {
         super.init();
-        liftTarget = lift.getCurrentPosition();
-        liftTarget -= 30;/*
+        liftTarget = lift.getCurrentPosition();/*
         leftClaw.setPosition(0);
         try {
             wait(1000);

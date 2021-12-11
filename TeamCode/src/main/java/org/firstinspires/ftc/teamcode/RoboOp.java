@@ -98,8 +98,9 @@ public class RoboOp extends OpMode {
 
         frontLeft.setPower(Range.clip(drivePower + turnPower + strafePower, -1, 1));
         backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
-        telemetry.addData("Lift target: ", lift.getCurrentPosition());
-        telemetry.addData("LastLift: ", lastLift);
+        telemetry.addData("Lift position: ", lift.getCurrentPosition());
+        telemetry.addData("Delta: ", lift.getCurrentPosition()-lastLift);
+        telemetry.addData("LiftTarget", liftTarget);
         //position = imu.getPosition();
         lastTime = runtime.time();
         //TODO: add compliance + slide data outputs
@@ -124,7 +125,7 @@ public class RoboOp extends OpMode {
             lift.setTargetPosition(lift.getCurrentPosition());
             lift.setPower(1);
         } //update delta every 200 ms and if it won't move and we're trying to, then kill it
-        if (runtime.time()%0.2 < 0.2) {
+        if ((runtime.time()%0.2) < 0.02) {
             lastLift = lift.getCurrentPosition();
         }
     }
