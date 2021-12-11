@@ -121,8 +121,13 @@ public class RoboOp extends OpMode {
             lift.setTargetPosition((int)liftTarget);
             lift.setPower(1);
         }
-        if (lift.getCurrentPosition()<50) {
+        if (liftTarget<50) {
+            liftTarget = 5.0;
             lift.setTargetPosition(5);
+        }
+        if (liftTarget>2500) {
+            liftTarget = 2500.0;
+            lift.setTargetPosition(2500);
         }
     }
 
