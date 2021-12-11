@@ -4,18 +4,11 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import org.checkerframework.checker.units.qual.C;
-import org.firstinspires.ftc.teamcode.RoboOp;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 @Autonomous(name="AutoB", group="Auto")
 public abstract class AutoMode extends LinearOpMode {
@@ -148,7 +141,7 @@ public abstract class AutoMode extends LinearOpMode {
 
     public void delay(long milliseconds){
         try {
-            TimeUnit.MILLISECONDS.sleep(milliseconds);
+            Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
