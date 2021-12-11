@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
-@TeleOp(name="Linear Op Mode test", group="Linear Opmode")
+@TeleOp(name="DriverControl", group="Linear Opmode")
 public class TestController extends RoboOp {
     boolean pastDpadUp;
     boolean pastDpadDown;
