@@ -14,5 +14,7 @@ public class BlueCarousel extends AutoMode {
         move(1, Direction.BACK);
         move(2, Direction.RIGHT);
         carousel(2000, Direction.CLOCKWISE);
+
+        playString("That sounds like a skill issue ");
     }
 }

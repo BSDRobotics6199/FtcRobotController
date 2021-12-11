@@ -15,5 +15,7 @@ public class BlueWarehouse extends AutoMode {
         move(2.25, Direction.LEFT);
         move(1, Direction.FORWARD);
         turn(90, Direction.COUNTER_CLOCKWISE);
+
+        playString("That sounds like a skill issue ");
     }
 }
