@@ -30,7 +30,7 @@ public class TestController extends RoboOp {
         drivePower = curve(-gamepad1.left_stick_y);
         strafePower = curve(gamepad1.left_stick_x);
         if (level == liftLevel.RECEIVE) {
-            turnPower = 0.3*(gamepad1.right_stick_x + gamepad2.right_stick_x);
+            turnPower = 0.3*(gamepad1.right_stick_x + 0.7*gamepad2.right_stick_x);
         } else {
             turnPower = gamepad1.right_stick_x;
         }
