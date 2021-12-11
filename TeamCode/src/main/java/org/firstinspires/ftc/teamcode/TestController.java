@@ -36,10 +36,11 @@ public class TestController extends RoboOp {
         }
 
         if (gamepad1.right_stick_y>0.9) {
-            capstone.setPosition(capstone.getPosition() + dt);
-        }
-        if (gamepad1.right_stick_y < -0.9) {
-            capstone.setPosition(capstone.getPosition() - dt);
+            capstone.setPosition(0.49);
+        } else if (gamepad1.right_stick_y < -0.9) {
+            capstone.setPosition(0.184);
+        } else {
+            capstone.setPosition(0.73);
         }
 
         if (gamepad1.cross) {
