@@ -35,7 +35,7 @@ public class RoboOp extends OpMode {
     protected double dt;
     protected double drivePower, strafePower, turnPower;
     protected double liftTarget;
-    protected double liftTarget2;
+    protected int lastLift;
     protected double x, y;
     //TODO: Set liftPositons array for floor then shipping hub levels behind the robot
     protected int[] liftPositions = new int[4];
@@ -71,10 +71,9 @@ public class RoboOp extends OpMode {
         intake = hardwareMap.get(CRServo.class, "intake");
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
         liftTarget = lift.getCurrentPosition();
-        liftTarget2 = lift.getCurrentPosition();
         liftPositions = new int[]{0, 1, 2, 3}; //TODO: set slide lift levels
         servoPosition = 0.9;
-        liftPower = 0.1;
+        //liftPower = 0.1;
         carouselSpeed = 1;
         //准备imu
 //        imu = hardwareMap.get(BNO055IMU.class, "imu");
@@ -99,8 +98,8 @@ public class RoboOp extends OpMode {
 
         frontLeft.setPower(Range.clip(drivePower + turnPower + strafePower, -1, 1));
         backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
-        telemetry.addData("Lift target: ", lift.getTargetPosition());
-        telemetry.addData("Liftpower: ", liftPower);
+        telemetry.addData("Lift target: ", lift.getCurrentPosition());
+        telemetry.addData("LastLift: ", lastLift);
         //position = imu.getPosition();
         lastTime = runtime.time();
         //TODO: add compliance + slide data outputs
@@ -117,8 +116,17 @@ public class RoboOp extends OpMode {
             lift.setTargetPosition((int) liftTarget2);
             lift.setPower(liftPower);
         }*/
-        lift.setTargetPosition((int)liftTarget);
-        lift.setPower(1);
+        if (Math.abs(liftTarget - lift.getCurrentPosition()) > 5) {
+            lift.setTargetPosition((int)liftTarget);
+            lift.setPower(1);
+        }
+        if (((lastLift - lift.getCurrentPosition())==0)&&((lift.getCurrentPosition()-liftTarget)>10)) {
+            lift.setTargetPosition(lift.getCurrentPosition());
+            lift.setPower(1);
+        } //update delta every 200 ms and if it won't move and we're trying to, then kill it
+        if (runtime.time()%0.2 < 0.2) {
+            lastLift = lift.getCurrentPosition();
+        }
     }
 
     protected DcMotor initializeMotor(String hardwareID) {
