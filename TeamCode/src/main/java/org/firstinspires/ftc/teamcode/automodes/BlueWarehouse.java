@@ -8,7 +8,7 @@ public class BlueWarehouse extends AutoMode {
     public void doTasks(){
         setLiftLevel(liftLevel.HUB_1);
         move(1, Direction.RIGHT);
-        move(1, Direction.FORWARD);
+        move(1.5, Direction.FORWARD);
         intake(2000, Direction.BACK);
 
         move(1, Direction.BACK);
