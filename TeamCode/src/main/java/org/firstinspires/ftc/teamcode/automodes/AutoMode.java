@@ -74,10 +74,23 @@ public abstract class AutoMode extends LinearOpMode {
             liftTarget = liftPositions[3];
         }
         level = newLevel;
-        while (Math.abs(lift.getCurrentPosition() - (int)liftTarget) > 3) {
-            lift.setTargetPosition((int)liftTarget);
-            lift.setPower(1);
+        lift.setTargetPosition((int)liftTarget);
+        lift.setPower(1);
+        while (Math.abs(lift.getCurrentPosition() - (int)liftTarget) > 10) {
+            if ((Math.abs(liftTarget - lift.getCurrentPosition()) > 5)) {
+                lift.setTargetPosition((int)liftTarget);
+                lift.setPower(1);
+            }
+            if (liftTarget<5) {
+                liftTarget = 5.0;
+                lift.setTargetPosition(5);
+            }
+            if (liftTarget>2500) {
+                liftTarget = 2500.0;
+                lift.setTargetPosition(2500);
+            }
         }
+        lift.setPower(0);
     }
 
     public void intake(long milliseconds, Direction direction){
