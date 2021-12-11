@@ -123,7 +123,7 @@ public class RoboOp extends OpMode {
         if (((lastLift - lift.getCurrentPosition())==0)&&((lift.getCurrentPosition()-liftTarget)>10)) {
             lift.setTargetPosition(lift.getCurrentPosition());
             lift.setPower(1);
-        }
+        } //update delta every 200 ms and if it won't move and we're trying to, then kill it
         if (runtime.time()%0.2 < 0.2) {
             lastLift = lift.getCurrentPosition();
         }
