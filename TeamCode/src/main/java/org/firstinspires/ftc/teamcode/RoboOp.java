@@ -30,8 +30,9 @@ public class RoboOp extends OpMode {
     protected DcMotor carousel;
     protected CRServo intake;
     protected Servo capstone;
-    protected ServoController servoController;
-    protected BNO055IMU imu;
+    protected Servo box;
+    //protected ServoController servoController;
+    //protected BNO055IMU imu;
     protected double lastTime;
     protected double dt;
     protected double drivePower, strafePower, turnPower;
@@ -45,10 +46,10 @@ public class RoboOp extends OpMode {
     protected double servoPosition;
     protected double carouselSpeed;
     //-130
-    protected enum liftLevel { //TODO: attach ints to values
-        RECEIVE, HUB_1, HUB_2, HUB_3
-    }
-    liftLevel level = liftLevel.RECEIVE;
+    //protected enum liftLevel { //TODO: attach ints to values
+    //    RECEIVE, HUB_1, HUB_2, HUB_3
+    //}
+    //liftLevel level = liftLevel.RECEIVE;
     @Override
     public void init() {
         //开始， 准备变量
@@ -66,14 +67,15 @@ public class RoboOp extends OpMode {
         lift.setTargetPosition(lift.getCurrentPosition());
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        capstone = hardwareMap.get(Servo.class, "capstone");
+        box = hardwareMap.get(Servo.class, "box");
         carousel = hardwareMap.get(DcMotor.class, "carousel");
         carousel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         carousel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         intake = hardwareMap.get(CRServo.class, "intake");
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
-        liftTarget = lift.getCurrentPosition();
-        liftPositions = new int[]{5, 730, 1250, 2200};
+
+        //liftTarget = lift.getCurrentPosition();
+        //liftPositions = new int[]{5, 730, 1250, 2200};
         servoPosition = 0.9;
         liftPower = 0.5;
         carouselSpeed = 1;
@@ -111,7 +113,8 @@ public class RoboOp extends OpMode {
         //Position position = imu.getPosition();
         //position.toUnit(DistanceUnit.METER);/
         // telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);
-        /*if (level != liftLevel.RECEIVE) {
+        /*
+        if (level != liftLevel.RECEIVE) {
             if (Math.abs(lift.getTargetPosition() - (int)liftTarget)>5) {
                 liftTarget2 = lift.getTargetPosition() + incdec;
             } else {
@@ -120,6 +123,8 @@ public class RoboOp extends OpMode {
             lift.setTargetPosition((int) liftTarget2);
             lift.setPower(liftPower);
         }*/
+
+        /*
         if ((Math.abs(liftTarget - lift.getCurrentPosition()) > 5)) {
             lift.setTargetPosition((int)liftTarget);
             lift.setPower(1);
@@ -132,6 +137,7 @@ public class RoboOp extends OpMode {
             liftTarget = 2500.0;
             lift.setTargetPosition(2500);
         }
+         */
     }
 
     protected DcMotor initializeMotor(String hardwareID) {
@@ -143,57 +149,62 @@ public class RoboOp extends OpMode {
         }
         return returnMotor;
     }
-    protected void setLiftLevel(liftLevel level) {
-        if (level == liftLevel.RECEIVE) {
-            liftTarget = liftPositions[0];
-        } else if (level == liftLevel.HUB_1) {
-            liftTarget = liftPositions[1];
-        } else if (level == liftLevel.HUB_2) {
-            liftTarget = liftPositions[2];
-        } else if (level == liftLevel.HUB_3) {
-            liftTarget = liftPositions[3];
-        }
-        this.level = level;
+
+    /*
+protected void setLiftLevel(liftLevel level) {
+    if (level == liftLevel.RECEIVE) {
+        liftTarget = liftPositions[0];
+    } else if (level == liftLevel.HUB_1) {
+        liftTarget = liftPositions[1];
+    } else if (level == liftLevel.HUB_2) {
+        liftTarget = liftPositions[2];
+    } else if (level == liftLevel.HUB_3) {
+        liftTarget = liftPositions[3];
     }
-    protected void incrementLift() {
-        if (level == liftLevel.RECEIVE) {
-            liftTarget = lift.getCurrentPosition();
-            liftPositions = new int[]{(int) liftTarget, (int) liftTarget - 80, (int) liftTarget - 376, (
-                    int) liftTarget - 426, (int) liftTarget - 476};
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            liftTarget = liftPositions[1];
-            level = liftLevel.HUB_1;
-        } else if (level == liftLevel.HUB_1) {
-            liftTarget = liftPositions[2];
-            level = liftLevel.HUB_2;
-        } else if (level == liftLevel.HUB_2) {
-            liftTarget = liftPositions[3];
-            level = liftLevel.HUB_3;
-        }
-        lift.setTargetPosition((int)liftTarget);
+    this.level = level;
+}
+
+protected void incrementLift() {
+    if (level == liftLevel.RECEIVE) {
+        liftTarget = lift.getCurrentPosition();
+        liftPositions = new int[]{(int) liftTarget, (int) liftTarget - 80, (int) liftTarget - 376, (
+                int) liftTarget - 426, (int) liftTarget - 476};
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        liftTarget = liftPositions[1];
+        level = liftLevel.HUB_1;
+    } else if (level == liftLevel.HUB_1) {
+        liftTarget = liftPositions[2];
+        level = liftLevel.HUB_2;
+    } else if (level == liftLevel.HUB_2) {
+        liftTarget = liftPositions[3];
+        level = liftLevel.HUB_3;
     }
-    protected void decrementLift() {
-        if (level== liftLevel.HUB_1) {
-            liftTarget = liftPositions[0];
-            level = liftLevel.RECEIVE;
-            lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            lift.setPower(0.1);
-        } else if (level == liftLevel.HUB_2) {
-            liftTarget = liftPositions[1];
-            level = liftLevel.HUB_1;
-        } else if (level == liftLevel.HUB_3) {
-            liftTarget = liftPositions[2];
-            level = liftLevel.HUB_2;
-        }
-        lift.setTargetPosition((int)liftTarget);
+    lift.setTargetPosition((int)liftTarget);
+}
+
+protected void decrementLift() {
+    if (level== liftLevel.HUB_1) {
+        liftTarget = liftPositions[0];
+        level = liftLevel.RECEIVE;
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift.setPower(0.1);
+    } else if (level == liftLevel.HUB_2) {
+        liftTarget = liftPositions[1];
+        level = liftLevel.HUB_1;
+    } else if (level == liftLevel.HUB_3) {
+        liftTarget = liftPositions[2];
+        level = liftLevel.HUB_2;
     }
+    lift.setTargetPosition((int)liftTarget);
+}
+ */
     protected void intakeClockwise() {
         carousel.setPower(liftPower);
     }
     protected void intakeCounterClockwise() {
         carousel.setPower(-1*liftPower);
     }
-    protected void carouselClockwise(){ carousel.setPower(liftPower); }
-    protected void carouselCounterClockwise(){ carousel.setPower(liftPower*-1); }
+    protected void carouselClockwise(){ carousel.setPower(0.4); }
+    protected void carouselCounterClockwise(){ carousel.setPower(-0.4); }
     //增加升降机功能
 }

@@ -29,11 +29,12 @@ public class TestController extends RoboOp {
         //在这里设能量
         drivePower = curve(-gamepad1.left_stick_y);
         strafePower = curve(gamepad1.left_stick_x);
-        if (level == liftLevel.RECEIVE) {
-            turnPower = (0.7*gamepad1.right_stick_x + 0.3*gamepad2.right_stick_x);
-        } else {
-            turnPower = gamepad1.right_stick_x;
-        }
+        lift.setPower(0.4);
+//        if (level == liftLevel.RECEIVE) {
+//            turnPower = (0.7*gamepad1.right_stick_x + 0.3*gamepad2.right_stick_x);
+//        } else {
+//            turnPower = gamepad1.right_stick_x;
+//        }
 
 
         intake.setPower(-1*gamepad2.left_stick_y);
@@ -44,22 +45,20 @@ public class TestController extends RoboOp {
         } else {
             carousel.setPower(0);
         }
-        if (gamepad2.dpad_down)
-            setLiftLevel(liftLevel.RECEIVE);
-        else if (gamepad2.dpad_left)
-            setLiftLevel(liftLevel.HUB_1);
-        else if (gamepad2.dpad_up)
-            setLiftLevel(liftLevel.HUB_2);
-        else if (gamepad2.dpad_right)
-            setLiftLevel(liftLevel.HUB_3);
-        //if ((gamepad1.right_trigger<0.1) || (gamepad1.left_trigger<0.1)) {
-        //}
-        if (gamepad2.right_bumper) {
-            liftPower+= (dt*0.1);
+
+        if (gamepad1.left_trigger > 0) {
+            lift.setTargetPosition(lift.getTargetPosition() + 10);
+        } else if (gamepad1.left_bumper){
+            lift.setTargetPosition(lift.getTargetPosition() - 10);
         }
-        if (gamepad2.left_bumper) {
-            liftPower-= (dt*0.1);
+
+        if (gamepad1.left_trigger > 0) {
+            box.setPosition(box.getPosition() + 5);
+        } else if (gamepad1.left_bumper){
+            box.setPosition(box.getPosition() - 5);
         }
+
+
         liftTarget += 10*(gamepad2.right_trigger - gamepad2.left_trigger);
         //imu他妈的没用肥沃
         //telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);\
