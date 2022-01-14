@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 
 @TeleOp(name="DriverControl", group="Linear Opmode")
@@ -12,14 +13,16 @@ public class TestController extends RoboOp {
     @Override
     public void init() {
         super.init();
-        liftTarget = lift.getCurrentPosition();/*
+        liftTarget = lift.getCurrentPosition();
+        /*
         leftClaw.setPosition(0);
         try {
             wait(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        rightClaw.setPosition(0);*/
+        rightClaw.setPosition(0);
+        */
     }
 
     @Override
@@ -66,7 +69,6 @@ public class TestController extends RoboOp {
 
         //Uncomment this section to use the box
 
-        /*
         if (gamepad1.triangle) {
             box.setPosition(0.7650);
         }
@@ -79,9 +81,9 @@ public class TestController extends RoboOp {
             box.setPosition(0.2260);
         }
 
-        */
 
         //This code is purely for testing purposes
+        /*
         if (gamepad1.triangle) {
             reverseMotor(frontLeft);
         }
@@ -97,6 +99,7 @@ public class TestController extends RoboOp {
         if (gamepad1.square){
             reverseMotor(backLeft);
         }
+        */
 
 
         liftTarget += 10*(gamepad2.right_trigger - gamepad2.left_trigger);

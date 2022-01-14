@@ -104,10 +104,10 @@ public class RoboOp extends OpMode {
     public void loop() {
         dt = runtime.time() - lastTime;
         //每一回合都会设马达力量
-        frontRight.setPower(Range.clip(-1*drivePower + turnPower + strafePower, -1, 1));
-        backRight.setPower(Range.clip(-1*drivePower + turnPower - strafePower, -1, 1));
+        frontRight.setPower(Range.clip(drivePower - turnPower - strafePower, -1, 1));
+        backRight.setPower(Range.clip(-drivePower + turnPower - strafePower, -1, 1));
 
-        frontLeft.setPower(Range.clip(drivePower + turnPower + strafePower, -1, 1));
+        frontLeft.setPower(Range.clip(-drivePower - turnPower - strafePower, -1, 1));
         backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
 
         /*
