@@ -45,17 +45,19 @@ public class TestController extends RoboOp {
         }
         //
         if (gamepad1.left_trigger > 0) {
-            int newPos = lift.getTargetPosition() + 15;
-            if (newPos <= 22) {
-                lift.setTargetPosition(newPos);
+            int newPos = lift.getTargetPosition() + 25;
+            if (newPos > 22) {
+                newPos = 22;
             }
+            lift.setTargetPosition(newPos);
             lift.setPower(0.4);
 
         } else if (gamepad1.left_bumper){
-            int newPos = lift.getTargetPosition() - 15;
-            if (newPos >= -1902) {
-                lift.setTargetPosition(newPos);
+            int newPos = lift.getTargetPosition() - 25;
+            if (newPos < -1902) {
+                newPos = -1902;
             }
+            lift.setTargetPosition(newPos);
             lift.setPower(0.4);
         }
         //0.228333333
@@ -71,7 +73,7 @@ public class TestController extends RoboOp {
         }
 
         if (gamepad1.cross){
-            box.setPosition(0.2270);
+            box.setPosition(0.2260);
         }
 
 
