@@ -45,16 +45,16 @@ public class TestController extends RoboOp {
         } else {
             carousel.setPower(0);
         }
-
+        //
         if (gamepad1.right_trigger > 0) {
             int newPos = lift.getTargetPosition() - 15;
-            if (newPos >= -245) {
+            if (newPos >= -1902) {
                 lift.setTargetPosition(newPos);
             }
             lift.setPower(0.4);
         } else if (gamepad1.right_bumper){
             int newPos = lift.getTargetPosition() + 15;
-            if (newPos <= 1715) {
+            if (newPos <= 22) {
                 lift.setTargetPosition(newPos);
             }
 
