@@ -37,7 +37,7 @@ public class TestController extends RoboOp {
 //        }
 
 
-        intake.setPower(-1*gamepad2.left_stick_y);
+        //intake.setPower(-1*gamepad2.left_stick_y);
         if (gamepad2.triangle) {
             carouselCounterClockwise();
         }else if (gamepad2.circle){
@@ -46,16 +46,25 @@ public class TestController extends RoboOp {
             carousel.setPower(0);
         }
 
-        if (gamepad1.left_trigger > 0) {
-            lift.setTargetPosition(lift.getTargetPosition() + 10);
-        } else if (gamepad1.left_bumper){
-            lift.setTargetPosition(lift.getTargetPosition() - 10);
+        if (gamepad1.right_trigger > 0) {
+            int newPos = lift.getTargetPosition() - 15;
+            if (newPos >= -245) {
+                lift.setTargetPosition(newPos);
+            }
+            lift.setPower(0.4);
+        } else if (gamepad1.right_bumper){
+            int newPos = lift.getTargetPosition() + 15;
+            if (newPos <= 1715) {
+                lift.setTargetPosition(newPos);
+            }
+
+            lift.setPower(0.4);
         }
 
         if (gamepad1.left_trigger > 0) {
-            box.setPosition(box.getPosition() + 5);
+            box.setPosition(box.getPosition() + 0.01);
         } else if (gamepad1.left_bumper){
-            box.setPosition(box.getPosition() - 5);
+            box.setPosition(box.getPosition() - 0.01);
         }
 
 

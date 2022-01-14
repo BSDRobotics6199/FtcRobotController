@@ -28,8 +28,7 @@ public class RoboOp extends OpMode {
     protected DcMotor backLeft;
     protected DcMotor lift;
     protected DcMotor carousel;
-    protected CRServo intake;
-    protected Servo capstone;
+    //protected DcMotor intake;
     protected Servo box;
     //protected ServoController servoController;
     //protected BNO055IMU imu;
@@ -71,7 +70,7 @@ public class RoboOp extends OpMode {
         carousel = hardwareMap.get(DcMotor.class, "carousel");
         carousel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         carousel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        intake = hardwareMap.get(CRServo.class, "intake");
+        //intake = hardwareMap.get(DcMotor.class, "intake");
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
 
         //liftTarget = lift.getCurrentPosition();
@@ -104,8 +103,7 @@ public class RoboOp extends OpMode {
         backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
         telemetry.addData("Lift position: ", lift.getCurrentPosition());
         telemetry.addData("Delta: ", lift.getCurrentPosition()-lastLift);
-        telemetry.addData("LiftTarget", liftTarget);
-        telemetry.addData("Capstone Position: ", capstone.getPosition());
+        telemetry.addData("BoxPosition", box.getPosition());
         //position = imu.getPosition();
         lastTime = runtime.time();
         //TODO: add compliance + slide data outputs
