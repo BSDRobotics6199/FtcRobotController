@@ -71,7 +71,7 @@ public class TestController extends RoboOp {
         }
 
         if (gamepad1.cross){
-            box.setPosition(0.2290);
+            box.setPosition(0.2270);
         }
 
 
