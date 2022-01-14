@@ -64,6 +64,9 @@ public class TestController extends RoboOp {
         //0.305
         //0.765
 
+        //Uncomment this section to use the box
+
+        /*
         if (gamepad1.triangle) {
             box.setPosition(0.7650);
         }
@@ -74,6 +77,24 @@ public class TestController extends RoboOp {
 
         if (gamepad1.cross){
             box.setPosition(0.2260);
+        }
+
+        */
+
+        if (gamepad1.triangle) {
+            reverseMotor(frontLeft);
+        }
+
+        if (gamepad1.circle){
+            reverseMotor(frontRight);
+        }
+
+        if (gamepad1.cross){
+            reverseMotor(backRight);
+        }
+
+        if (gamepad1.square){
+            reverseMotor(backLeft);
         }
 
 

@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorImplEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoController;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -58,10 +59,17 @@ public class RoboOp extends OpMode {
 
         //假设有四个驾驶马达
         //登录马达
-        frontRight  = initializeMotor("frontRight");
-        frontLeft = initializeMotor("frontLeft");
-        backRight = initializeMotor("rearRight");
-        backLeft = initializeMotor("rearLeft");
+        frontRight  = hardwareMap.get(DcMotor.class, "frontRight");
+        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+        backRight = hardwareMap.get(DcMotor.class,"rearRight");
+        backLeft = hardwareMap.get(DcMotor.class, "rearLeft");
+
+        //Reverse the motors here
+        frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        backRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+
         lift = hardwareMap.get(DcMotor.class, "lift");
         lift.setTargetPosition(lift.getCurrentPosition());
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -101,11 +109,21 @@ public class RoboOp extends OpMode {
 
         frontLeft.setPower(Range.clip(drivePower + turnPower + strafePower, -1, 1));
         backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
+
+        /*
         telemetry.addData("Lift position: ", lift.getCurrentPosition());
         telemetry.addData("Delta: ", lift.getCurrentPosition()-lastLift);
         telemetry.addData("BoxPosition", box.getPosition());
         //position = imu.getPosition();
+        */
+
+        telemetry.addData("frontRight: ", frontRight.getDirection());
+        telemetry.addData("frontLeft: ", frontLeft.getDirection());
+        telemetry.addData("rearRight: ", backRight.getDirection());
+        telemetry.addData("rearLeft: ", backLeft.getDirection());
+
         lastTime = runtime.time();
+
         //TODO: add compliance + slide data outputs
         //做好，修一下
         //Position position = imu.getPosition();
@@ -138,6 +156,7 @@ public class RoboOp extends OpMode {
          */
     }
 
+    /*
     protected DcMotor initializeMotor(String hardwareID) {
         DcMotor returnMotor = hardwareMap.get(DcMotor.class, hardwareID);
         returnMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -147,6 +166,8 @@ public class RoboOp extends OpMode {
         }
         return returnMotor;
     }
+    */
+
 
     /*
 protected void setLiftLevel(liftLevel level) {
@@ -204,5 +225,12 @@ protected void decrementLift() {
     }
     protected void carouselClockwise(){ carousel.setPower(0.4); }
     protected void carouselCounterClockwise(){ carousel.setPower(-0.4); }
+    protected void reverseMotor(DcMotor motor){
+        if (motor.getDirection() == DcMotorSimple.Direction.FORWARD){
+            motor.setDirection(DcMotorSimple.Direction.REVERSE);
+        } else {
+            motor.setDirection(DcMotorSimple.Direction.FORWARD);
+        }
+    }
     //增加升降机功能
 }
