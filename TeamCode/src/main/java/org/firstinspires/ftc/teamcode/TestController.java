@@ -32,9 +32,7 @@ public class TestController extends RoboOp {
         lift.setPower(0.4);
 //        if (level == liftLevel.RECEIVE) {
 //            turnPower = (0.7*gamepad1.right_stick_x + 0.3*gamepad2.right_stick_x);
-//        } else {
-//            turnPower = gamepad1.right_stick_x;
-//        }
+        turnPower = gamepad1.right_stick_x;
 
 
         //intake.setPower(-1*gamepad2.left_stick_y);
@@ -46,25 +44,34 @@ public class TestController extends RoboOp {
             carousel.setPower(0);
         }
         //
-        if (gamepad1.right_trigger > 0) {
+        if (gamepad1.left_trigger > 0) {
+            int newPos = lift.getTargetPosition() + 15;
+            if (newPos <= 22) {
+                lift.setTargetPosition(newPos);
+            }
+            lift.setPower(0.4);
+
+        } else if (gamepad1.left_bumper){
             int newPos = lift.getTargetPosition() - 15;
             if (newPos >= -1902) {
                 lift.setTargetPosition(newPos);
             }
             lift.setPower(0.4);
-        } else if (gamepad1.right_bumper){
-            int newPos = lift.getTargetPosition() + 15;
-            if (newPos <= 22) {
-                lift.setTargetPosition(newPos);
-            }
+        }
+        //0.228333333
+        //0.305
+        //0.765
 
-            lift.setPower(0.4);
+        if (gamepad1.triangle) {
+            box.setPosition(0.7650);
         }
 
-        if (gamepad1.left_trigger > 0) {
-            box.setPosition(box.getPosition() + 0.01);
-        } else if (gamepad1.left_bumper){
-            box.setPosition(box.getPosition() - 0.01);
+        if (gamepad1.circle){
+            box.setPosition(0.3050);
+        }
+
+        if (gamepad1.cross){
+            box.setPosition(0.2290);
         }
 
 
