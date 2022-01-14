@@ -81,6 +81,7 @@ public class TestController extends RoboOp {
 
         */
 
+        //This code is purely for testing purposes
         if (gamepad1.triangle) {
             reverseMotor(frontLeft);
         }
