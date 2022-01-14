@@ -73,12 +73,25 @@ public class TestController extends RoboOp {
             box.setPosition(0.7650);
         }
 
-        if (gamepad1.circle){
+        if (gamepad1.circle || gamepad1.square){
             box.setPosition(0.3050);
         }
 
         if (gamepad1.cross){
             box.setPosition(0.2260);
+        }
+
+
+        if (gamepad1.dpad_up) {
+            lift.setTargetPosition(22);
+        }
+
+        if (gamepad1.dpad_right || gamepad1.dpad_left){
+            lift.setTargetPosition(940);
+        }
+
+        if (gamepad1.dpad_down){
+            lift.setTargetPosition(-1902);
         }
 
 
