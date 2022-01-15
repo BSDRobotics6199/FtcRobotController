@@ -14,15 +14,7 @@ public class TestController extends RoboOp {
     public void init() {
         super.init();
         liftTarget = lift.getCurrentPosition();
-        /*
-        leftClaw.setPosition(0);
-        try {
-            wait(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        rightClaw.setPosition(0);
-        */
+
     }
 
     @Override
@@ -33,8 +25,6 @@ public class TestController extends RoboOp {
         drivePower = curve(--gamepad1.left_stick_y);
         strafePower = curve(gamepad1.left_stick_x);
         lift.setPower(0.4);
-//        if (level == liftLevel.RECEIVE) {
-//            turnPower = (0.7*gamepad1.right_stick_x + 0.3*gamepad2.right_stick_x);
         turnPower = gamepad1.right_stick_x;
 
 
@@ -68,7 +58,7 @@ public class TestController extends RoboOp {
         //0.765
 
         //Uncomment this section to use the box
-        /*
+
         if (gamepad1.triangle) {
             box.setPosition(0.7650);
         }
@@ -81,9 +71,7 @@ public class TestController extends RoboOp {
             box.setPosition(0.2260);
         }
 
-         */
-
-
+        /*
         if (gamepad1.dpad_up) {
             lift.setTargetPosition(22);
         }
@@ -96,25 +84,9 @@ public class TestController extends RoboOp {
             lift.setTargetPosition(-1902);
         }
 
+         */
 
-        //This code is purely for testing purposes
-        /*
-        if (gamepad1.triangle) {
-            reverseMotor(frontLeft);
-        }
 
-        if (gamepad1.circle){
-            reverseMotor(frontRight);
-        }
-
-        if (gamepad1.cross){
-            reverseMotor(backRight);
-        }
-
-        if (gamepad1.square){
-            reverseMotor(backLeft);
-        }
-        */
 
 
         liftTarget += 10*(gamepad2.right_trigger - gamepad2.left_trigger);
