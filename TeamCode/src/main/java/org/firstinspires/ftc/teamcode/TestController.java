@@ -29,15 +29,15 @@ public class TestController extends RoboOp {
 
 
         //intake.setPower(-1*gamepad2.left_stick_y);
-        if (gamepad2.triangle) {
+        /*if (gamepad2.triangle) {
             carouselCounterClockwise();
-        }else if (gamepad2.circle){
+        }else */if (gamepad2.circle){
             carouselClockwise();
         } else {
             carousel.setPower(0);
         }
         //
-        if (gamepad1.left_trigger > 0) {
+        if (gamepad1.left_trigger > 0.005) {
             int newPos = lift.getTargetPosition() + 25;
             if (newPos > 22) {
                 newPos = 22;
@@ -63,14 +63,19 @@ public class TestController extends RoboOp {
             box.setPosition(0.7650);
         }
 
-        if (gamepad1.circle || gamepad1.square){
+        if (/*gamepad1.circle || */gamepad1.square){
             box.setPosition(0.3050);
         }
 
         if (gamepad1.cross){
             box.setPosition(0.2260);
         }
-
+        if (gamepad1.right_bumper) {
+            intakeClockwise();
+        }
+        if (gamepad1.right_trigger>0.005) {
+            intakeCounterClockwise();
+        }
         /*
         if (gamepad1.dpad_up) {
             lift.setTargetPosition(22);
@@ -89,7 +94,6 @@ public class TestController extends RoboOp {
 
 
 
-        liftTarget += 10*(gamepad2.right_trigger - gamepad2.left_trigger);
         //imu他妈的没用肥沃
         //telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);\
         pastDpadDown = gamepad1.dpad_down;
