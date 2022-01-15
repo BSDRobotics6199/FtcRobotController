@@ -20,7 +20,7 @@ public class TestController extends RoboOp {
     @Override
     public void loop() {
         telemetry.addData("DeltaTime", dt);
-        telemetry.addData("Liftposition", lift.getTargetPosition());
+        telemetry.addData("Lift Position", lift.getTargetPosition());
 
 
         //在这里设能量
@@ -76,6 +76,12 @@ public class TestController extends RoboOp {
         } else if (gamepad2.left_bumper) {
             intakeCounterClockwise();
         } else { intake.setPower(0); }
+
+        if (gamepad2.dpad_down) {
+            cap.setPosition(cap.getPosition() + 0.5*dt);
+        } else if (gamepad2.dpad_up) {
+            cap.setPosition(cap.getPosition() - 0.5*dt);
+        }
         /*
         if (gamepad1.dpad_up) {
             lift.setTargetPosition(22);

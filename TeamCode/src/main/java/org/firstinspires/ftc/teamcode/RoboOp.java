@@ -32,6 +32,7 @@ public class RoboOp extends OpMode {
     protected DcMotor intake;
     //protected DcMotor intake;
     protected Servo box;
+    protected Servo cap;
     //protected ServoController servoController;
     //protected BNO055IMU imu;
     protected double lastTime;
@@ -65,6 +66,7 @@ public class RoboOp extends OpMode {
         backRight = hardwareMap.get(DcMotor.class,"rearRight");
         backLeft = hardwareMap.get(DcMotor.class, "rearLeft");
         intake = hardwareMap.get(DcMotor.class, "intake");
+        cap = hardwareMap.get(Servo.class, "cap");
         //Reverse the motors here
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
