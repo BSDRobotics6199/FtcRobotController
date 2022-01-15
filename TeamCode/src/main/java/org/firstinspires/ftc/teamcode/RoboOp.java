@@ -70,6 +70,11 @@ public class RoboOp extends OpMode {
         backRight.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
 
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         lift = hardwareMap.get(DcMotor.class, "lift");
         lift.setTargetPosition(lift.getCurrentPosition());
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -110,12 +115,12 @@ public class RoboOp extends OpMode {
         frontLeft.setPower(Range.clip(-drivePower - turnPower - strafePower, -1, 1));
         backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
 
-        /*
+
         telemetry.addData("Lift position: ", lift.getCurrentPosition());
         telemetry.addData("Delta: ", lift.getCurrentPosition()-lastLift);
         telemetry.addData("BoxPosition", box.getPosition());
         //position = imu.getPosition();
-        */
+
 
         telemetry.addData("frontRight: ", frontRight.getDirection());
         telemetry.addData("frontLeft: ", frontLeft.getDirection());

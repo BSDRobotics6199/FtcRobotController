@@ -30,7 +30,7 @@ public class TestController extends RoboOp {
         telemetry.addData("DeltaTime", dt);
 
         //在这里设能量
-        drivePower = curve(-gamepad1.left_stick_y);
+        drivePower = curve(--gamepad1.left_stick_y);
         strafePower = curve(gamepad1.left_stick_x);
         lift.setPower(0.4);
 //        if (level == liftLevel.RECEIVE) {
@@ -68,7 +68,7 @@ public class TestController extends RoboOp {
         //0.765
 
         //Uncomment this section to use the box
-
+        /*
         if (gamepad1.triangle) {
             box.setPosition(0.7650);
         }
@@ -80,6 +80,8 @@ public class TestController extends RoboOp {
         if (gamepad1.cross){
             box.setPosition(0.2260);
         }
+
+         */
 
 
         if (gamepad1.dpad_up) {
@@ -126,6 +128,6 @@ public class TestController extends RoboOp {
     }
 
     public double curve(double value){
-        return 2f/(1f+Math.pow(Math.E, -4f*value))-1f;
+        return -(Math.log((2/(value+1)))/Math.log(Math.E))/4;
     }
 }
