@@ -26,19 +26,19 @@ public class TestController extends RoboOp {
 
         //在这里设能量
         if (lift.getTargetPosition()>(-500)) {
-            drivePower = -0.3*curve(gamepad1.left_stick_y);
-            strafePower = 0.3*curve(gamepad1.left_stick_x);
-            turnPower = 0.1*curve(gamepad1.right_stick_x);
+            drivePower = -0.3*(curve(gamepad1.left_stick_y));
+            strafePower = 0.3*(curve(gamepad1.left_stick_x));
+            turnPower = 0.1*(curve(gamepad1.right_stick_x));
         } else {
-            drivePower = -curve(gamepad1.left_stick_y);
+            drivePower = -1*(curve(gamepad1.left_stick_y));
             strafePower = curve(gamepad1.left_stick_x);
             lift.setPower(0.4);
-            turnPower = 0.3 * curve(gamepad1.right_stick_x);
+            turnPower = curve(gamepad1.right_stick_x);
         }
         if (gamepad1.right_bumper) {
             drivePower = Range.clip(drivePower - 0.1, -1 , 1);
         }
-        turnPower = turnPower + 0.1*(gamepad1.right_trigger - gamepad1.left_trigger);
+        turnPower = Range.clip(turnPower + 0.1*(gamepad1.right_trigger - gamepad1.left_trigger), -1 ,1);
         //intake.setPower(-1*gamepad2.left_stick_y);
         if (gamepad2.right_trigger>0.005) {
             carouselCounterClockwise();
