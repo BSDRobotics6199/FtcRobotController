@@ -18,14 +18,7 @@ public class RedWarehouse extends AutoMode {
         turn(90, Direction.CLOCKWISE);
         */
 
-        move(1.25, Direction.FORWARD);
-        move(1, Direction.LEFT);
-        move(1, Direction.FORWARD);
-
-         */
-        move(1.25, Direction.FORWARD);
-        move(1, Direction.RIGHT);
-        move(1, Direction.FORWARD);
+        move(5, Direction.FORWARD);
 
     }
 }

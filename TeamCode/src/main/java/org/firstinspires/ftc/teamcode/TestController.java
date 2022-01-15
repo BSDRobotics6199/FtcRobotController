@@ -20,62 +20,62 @@ public class TestController extends RoboOp {
     @Override
     public void loop() {
         telemetry.addData("DeltaTime", dt);
+        telemetry.addData("Liftposition", lift.getTargetPosition());
+
 
         //在这里设能量
-        drivePower = curve(--gamepad1.left_stick_y);
-        strafePower = curve(gamepad1.left_stick_x);
-        lift.setPower(0.4);
-        turnPower = gamepad1.right_stick_x;
-
+        if (lift.getTargetPosition()>(-500)) {
+            drivePower = -0.3*curve(gamepad1.left_stick_y);
+            strafePower = 0.3*curve(gamepad1.left_stick_x);
+            turnPower = 0.1 * curve(gamepad1.right_stick_x);
+        } else {
+            drivePower = -curve(gamepad1.left_stick_y);
+            strafePower = curve(gamepad1.left_stick_x);
+            lift.setPower(0.4);
+            turnPower = 0.3 * curve(gamepad1.right_stick_x);
+        }
 
         //intake.setPower(-1*gamepad2.left_stick_y);
-        /*if (gamepad2.triangle) {
+        if (gamepad2.right_trigger>0.005) {
             carouselCounterClockwise();
-        }else */if (gamepad2.circle){
+        } else if (gamepad2.left_trigger > 0.005){
             carouselClockwise();
         } else {
             carousel.setPower(0);
         }
-        //
-        if (gamepad1.left_trigger > 0.005) {
-            int newPos = lift.getTargetPosition() + 25;
-            if (newPos > 22) {
-                newPos = 22;
-            }
-            lift.setTargetPosition(newPos);
-            lift.setPower(0.4);
 
-        } else if (gamepad1.left_bumper){
-            int newPos = lift.getTargetPosition() - 25;
-            if (newPos < -1902) {
-                newPos = -1902;
-            }
-            lift.setTargetPosition(newPos);
-            lift.setPower(0.4);
+        int newPos = lift.getTargetPosition() + Math.round(25 * gamepad2.left_stick_y);
+        if (newPos > 22) {
+            newPos = 22;
         }
+        if (newPos < -1902) {
+            newPos = -1902;
+        }
+        lift.setTargetPosition(newPos);
+        lift.setPower(0.4);
+
         //0.228333333
         //0.305
         //0.765
 
         //Uncomment this section to use the box
 
-        if (gamepad1.triangle) {
+        if (gamepad2.triangle) {
             box.setPosition(0.7650);
         }
 
-        if (/*gamepad1.circle || */gamepad1.square){
+        if (gamepad2.circle || gamepad2.square){
             box.setPosition(0.3050);
         }
 
-        if (gamepad1.cross){
+        if (gamepad2.cross){
             box.setPosition(0.2260);
         }
-        if (gamepad1.right_bumper) {
+        if (gamepad2.right_bumper) {
             intakeClockwise();
-        }
-        if (gamepad1.right_trigger>0.005) {
+        } else if (gamepad2.left_bumper) {
             intakeCounterClockwise();
-        }
+        } else { intake.setPower(0); }
         /*
         if (gamepad1.dpad_up) {
             lift.setTargetPosition(22);
@@ -96,14 +96,12 @@ public class TestController extends RoboOp {
 
         //imu他妈的没用肥沃
         //telemetry.addData("Position: ",  position.x + " " + position.y + " " + position.z);\
-        pastDpadDown = gamepad1.dpad_down;
-        pastDpadUp = gamepad1.dpad_up;
         count++;
         super.loop();
         //a
     }
 
     public double curve(double value){
-        return -(Math.log((2/(value+1)))/Math.log(Math.E))/4;
+        return -(Math.log(((2/(value+1))-1))/Math.log(Math.E))/4;
     }
 }
