@@ -29,6 +29,7 @@ public class RoboOp extends OpMode {
     protected DcMotor backLeft;
     protected DcMotor lift;
     protected DcMotor carousel;
+    protected DcMotor intake;
     //protected DcMotor intake;
     protected Servo box;
     //protected ServoController servoController;
@@ -63,18 +64,19 @@ public class RoboOp extends OpMode {
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         backRight = hardwareMap.get(DcMotor.class,"rearRight");
         backLeft = hardwareMap.get(DcMotor.class, "rearLeft");
-
+        intake = hardwareMap.get(DcMotor.class, "intake");
         //Reverse the motors here
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         backRight.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
+        intake.setDirection(DcMotorSimple.Direction.FORWARD);
 
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift = hardwareMap.get(DcMotor.class, "lift");
         lift.setTargetPosition(lift.getCurrentPosition());
         lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -223,10 +225,10 @@ protected void decrementLift() {
 }
  */
     protected void intakeClockwise() {
-        carousel.setPower(liftPower);
+        intake.setPower(1);
     }
     protected void intakeCounterClockwise() {
-        carousel.setPower(-1*liftPower);
+        intake.setPower(-1);
     }
     protected void carouselClockwise(){ carousel.setPower(0.4); }
     protected void carouselCounterClockwise(){ carousel.setPower(-0.4); }
