@@ -38,6 +38,7 @@ public class TestController extends RoboOp {
         if (gamepad1.right_bumper) {
             drivePower = Range.clip(drivePower - 0.1, -1 , 1);
         }
+        turnPower = turnPower + 0.1*(gamepad1.right_trigger - gamepad1.left_trigger);
         //intake.setPower(-1*gamepad2.left_stick_y);
         if (gamepad2.right_trigger>0.005) {
             carouselCounterClockwise();
