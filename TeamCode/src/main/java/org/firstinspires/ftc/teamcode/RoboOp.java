@@ -227,10 +227,10 @@ protected void decrementLift() {
 }
  */
     protected void intakeClockwise() {
-        intake.setPower(1);
+        intake.setPower(-1);
     }
     protected void intakeCounterClockwise() {
-        intake.setPower(-1);
+        intake.setPower(1);
     }
     protected void carouselClockwise(){ carousel.setPower(0.4); }
     protected void carouselCounterClockwise(){ carousel.setPower(-0.4); }
