@@ -10,13 +10,18 @@ import org.firstinspires.ftc.onbotjava.handlers.objbuild.WaitForBuild;
 
 @Autonomous(name="YEES (All for now)", group="Auto")
 public class AutonomousYes extends LinearOpMode {
-    DcMotor frontRight  = hardwareMap.get(DcMotor .class, "frontRight");
-    DcMotor frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-    DcMotor backRight = hardwareMap.get(DcMotor.class,"rearRight");
-    DcMotor backLeft = hardwareMap.get(DcMotor.class, "rearLeft");
+    DcMotor frontRight;
+    DcMotor frontLeft;
+    DcMotor backRight;
+    DcMotor backLeft;
 
     @Override
     public void runOpMode() throws InterruptedException {
+        frontRight  = hardwareMap.get(DcMotor .class, "frontRight");
+        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+        backRight = hardwareMap.get(DcMotor.class,"rearRight");
+        backLeft = hardwareMap.get(DcMotor.class, "rearLeft");
+
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         backRight.setDirection(DcMotorSimple.Direction.FORWARD);

@@ -25,38 +25,23 @@ public class TestController extends RoboOp {
 
 
         //在这里设能量
-        if (lift.getTargetPosition()>(-500)) {
-            drivePower = -0.3*(curve(gamepad1.left_stick_y));
-            strafePower = 0.3*(curve(gamepad1.left_stick_x));
-            turnPower = 0.1*(curve(gamepad1.right_stick_x));
+        if (lift.getTargetPosition()>(-200)) {
+            drivePower = -0.3*gamepad1.left_stick_y;
+            strafePower = 0.3*gamepad1.left_stick_x;
+            turnPower = 0.3*gamepad1.right_stick_x;
         } else {
-            drivePower = -1*(curve(gamepad1.left_stick_y));
-            strafePower = curve(gamepad1.left_stick_x);
+            drivePower = -1*gamepad1.left_stick_y;
+            strafePower = gamepad1.left_stick_x;
             lift.setPower(0.4);
-            turnPower = curve(gamepad1.right_stick_x);
+            turnPower = gamepad1.right_stick_x;
         }
         if (gamepad1.right_bumper) {
             drivePower = Range.clip(drivePower - 0.1, -1 , 1);
         }
         turnPower = Range.clip(turnPower + 0.1*(gamepad1.right_trigger - gamepad1.left_trigger), -1 ,1);
         //intake.setPower(-1*gamepad2.left_stick_y);
-        if (gamepad2.right_trigger>0.005) {
-            carouselCounterClockwise();
-        } else if (gamepad2.left_trigger > 0.005){
-            carouselClockwise();
-        } else {
-            carousel.setPower(0);
-        }
+        carousel.setPower(gamepad2.right_trigger - gamepad2.left_trigger);
 
-        int newPos = lift.getTargetPosition() + Math.round(25 * gamepad2.left_stick_y);
-        if (newPos > 22) {
-            newPos = 22;
-        }
-        if (newPos < -1902) {
-            newPos = -1902;
-        }
-        lift.setTargetPosition(newPos);
-        lift.setPower(0.4);
 
         //0.228333333
         //0.305
@@ -81,25 +66,30 @@ public class TestController extends RoboOp {
             intakeCounterClockwise();
         } else { intake.setPower(0); }
 
-        if (gamepad2.dpad_down) {
-            cap.setPosition(cap.getPosition() + 0.5*dt);
-        } else if (gamepad2.dpad_up) {
-            cap.setPosition(cap.getPosition() - 0.5*dt);
-        }
-        /*
-        if (gamepad1.dpad_up) {
+        cap.setPosition(cap.getPosition() - gamepad2.right_stick_y*dt);
+
+        if (gamepad2.dpad_up) {
             lift.setTargetPosition(22);
-        }
-
-        if (gamepad1.dpad_right || gamepad1.dpad_left){
-            lift.setTargetPosition(940);
-        }
-
-        if (gamepad1.dpad_down){
+            lift.setPower(0.4);
+        } else if (gamepad2.dpad_right || gamepad2.dpad_left){
+            lift.setTargetPosition(-940);
+            lift.setPower(0.4);
+        } else if (gamepad2.dpad_down){
             lift.setTargetPosition(-1902);
+            lift.setPower(0.4);
+        } else {
+            int newPos = (int)(lift.getTargetPosition() + Math.round(30 * (gamepad2.left_stick_y)));
+            if (newPos > 22) {
+                newPos = 22;
+            }
+            if (newPos < -1902) {
+                newPos = -1902;
+            }
+            lift.setTargetPosition(newPos);
+            lift.setPower(0.4);
         }
 
-         */
+
 
 
 
