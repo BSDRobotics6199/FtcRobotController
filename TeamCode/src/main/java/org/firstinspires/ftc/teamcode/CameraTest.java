@@ -17,7 +17,9 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfInt;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
+import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
+import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
 import org.openftc.easyopencv.OpenCvCamera;
@@ -87,31 +89,29 @@ public class CameraTest extends OpMode {
     public Mat processFrame(Mat input) {
 
         Imgproc.cvtColor(input, input, Imgproc.COLOR_BGR2HSV);
-
-        Scalar lowHSV = new Scalar(15,135,110);
-        Scalar highHSV = new Scalar(25,255,255);
-
+        Scalar lowHSV = new Scalar(90,100,100);
+        Scalar highHSV = new Scalar(115,360,360);
         Core.inRange(input, lowHSV, highHSV, input);
         List<MatOfPoint> contours = new ArrayList<>();
         Mat hierarchy = new Mat();
 
         Imgproc.findContours(input, contours, input, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
         double minX = 0;
-        double minY = Integer.MAX_VALUE;
+        double minY = Integer.MAX_VALUE;/*
         for (int i = 0; i < contours.size(); i++) {
             MatOfPoint contour = contours.get(i);
             if (Imgproc.contourArea(contour)>=1600) {
                 Moments p = Imgproc.moments(contour);
-                Imgproc.circle(input, new Point(p.m10/p.m00 , p.m01/ p.m00), 5, new Scalar(128,179,179), -1);
-                Imgproc.rectangle(input, Imgproc.boundingRect(contour), new Scalar(128,179,179));
                 if ((p.m01/p.m00)<minY) {
                     minY = p.m01/p.m00;
                     minX = p.m10/p.m00;
                 }
             }
         }
-
+        */
         Imgproc.cvtColor(input, input, Imgproc.COLOR_HSV2BGR);
+        Imgproc.rectangle(input, new Rect(new Point(100,100), new Point(500, 500))
+        , new Scalar(128, 0,0));
         return input;
     }
 
