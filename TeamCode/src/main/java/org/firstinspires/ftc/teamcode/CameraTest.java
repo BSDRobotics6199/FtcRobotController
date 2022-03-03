@@ -97,7 +97,7 @@ public class CameraTest extends OpMode {
 
         Imgproc.findContours(input, contours, input, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE);
         double minX = 0;
-        double minY = Integer.MAX_VALUE;/*
+        double minY = Integer.MAX_VALUE;
         for (int i = 0; i < contours.size(); i++) {
             MatOfPoint contour = contours.get(i);
             if (Imgproc.contourArea(contour)>=1600) {
@@ -108,7 +108,7 @@ public class CameraTest extends OpMode {
                 }
             }
         }
-        */
+
         Imgproc.cvtColor(input, input, Imgproc.COLOR_HSV2BGR);
         Imgproc.rectangle(input, new Rect(new Point(100,100), new Point(500, 500))
         , new Scalar(128, 0,0));
