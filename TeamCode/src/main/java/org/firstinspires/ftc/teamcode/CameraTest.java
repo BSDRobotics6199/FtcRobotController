@@ -36,7 +36,7 @@ import java.util.Random;
 @TeleOp(name="CameraTest", group="Linear Opmode")
 public class CameraTest extends OpMode {
     //注意，这个程序的很多部分都是按照示范写的
-    //这个程序有MIT许可证，我们没有任何责任
+    //这个程序有MIT许可证，我们没有任何责任 ye
     protected ElapsedTime runtime;
     protected OpenCvCamera camera;
     protected double lastTime;
