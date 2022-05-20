@@ -24,11 +24,11 @@ public abstract class AutoMode extends LinearOpMode {
     public double liftTarget;
     public enum Direction {
         FORWARD,
-        LEFT,
-        RIGHT,
-        BACK,
+        LEFTWARD,
+        RIGHTWARD,
+        BACKWARD,
         CLOCKWISE,
-        COUNTER_CLOCKWISE
+        COUNTERCLOCKWISE
     }
 
     public enum liftLevel{
@@ -95,7 +95,7 @@ public abstract class AutoMode extends LinearOpMode {
 
     public void intake(long milliseconds, Direction direction){
         switch (direction){
-            case BACK:
+            case BACKWARD:
                 intake.setPower(-1);
                 break;
             case FORWARD:
@@ -106,19 +106,19 @@ public abstract class AutoMode extends LinearOpMode {
         delay(milliseconds);
     }
 
-    public void move(double tiles, Direction direction){
+    public void moveTiles(double tiles, Direction direction){
         TrajectoryBuilder builder = drive.trajectoryBuilder(drive.getPoseEstimate());
         switch (direction){
             case FORWARD:
                 builder.forward(tiles*24);
                 break;
-            case LEFT:
+            case LEFTWARD:
                 builder.strafeLeft(tiles*24);
                 break;
-            case RIGHT:
+            case RIGHTWARD:
                 builder.strafeRight(tiles*24);
                 break;
-            case BACK:
+            case BACKWARD:
                 builder.back(tiles*24);
                 break;
 
@@ -126,13 +126,44 @@ public abstract class AutoMode extends LinearOpMode {
         drive.followTrajectory(builder.build());
     }
 
-    public void turn(double angle, Direction direction){
+    public void move(double meters, Direction direction){
+        TrajectoryBuilder builder = drive.trajectoryBuilder(drive.getPoseEstimate());
+        switch (direction){
+            case FORWARD:
+                builder.forward(meters / METER_PER_INCH);
+                break;
+            case LEFTWARD:
+                builder.strafeLeft(meters / METER_PER_INCH);
+                break;
+            case RIGHTWARD:
+                builder.strafeRight(meters / METER_PER_INCH);
+                break;
+            case BACKWARD:
+                builder.back(meters / METER_PER_INCH);
+                break;
+
+        }
+        drive.followTrajectory(builder.build());
+    }
+
+    public void turnDegrees(double angle, Direction direction){
         switch (direction) {
-            case COUNTER_CLOCKWISE:
+            case COUNTERCLOCKWISE:
                 drive.turn(-angle * Math.PI / 180);
                 break;
             case CLOCKWISE:
                 drive.turn(angle * Math.PI / 180);
+                break;
+        }
+    }
+
+    public void turn(double angle, Direction direction){
+        switch (direction) {
+            case COUNTERCLOCKWISE:
+                drive.turn(-angle);
+                break;
+            case CLOCKWISE:
+                drive.turn(angle);
                 break;
         }
     }
@@ -142,7 +173,7 @@ public abstract class AutoMode extends LinearOpMode {
             case CLOCKWISE:
                 carousel.setPower(0.25);
                 break;
-            case COUNTER_CLOCKWISE:
+            case COUNTERCLOCKWISE:
                 carousel.setPower(-0.25);
                 break;
             default:
@@ -161,7 +192,7 @@ public abstract class AutoMode extends LinearOpMode {
     }
 
     public void spin(double times, Direction direction){
-        turn(times*360, direction);
+        turnDegrees(times*360, direction);
     }
 
     private void dot(){

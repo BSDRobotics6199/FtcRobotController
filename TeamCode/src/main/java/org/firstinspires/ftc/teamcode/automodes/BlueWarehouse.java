@@ -7,13 +7,13 @@ public class BlueWarehouse extends AutoMode {
 
     public void doTasks(){
         setLiftLevel(liftLevel.HUB_1);
-        move(1, Direction.RIGHT);
-        move(1.5, Direction.FORWARD);
-        intake(2000, Direction.BACK);
+        moveTiles(1, Direction.RIGHTWARD);
+        moveTiles(1.5, Direction.FORWARD);
+        intake(2000, Direction.BACKWARD);
 
-        move(1.5, Direction.BACK);
-        move(2.25, Direction.LEFT);
-        move(1, Direction.FORWARD);
+        moveTiles(1.5, Direction.BACKWARD);
+        moveTiles(2.25, Direction.LEFTWARD);
+        moveTiles(1, Direction.FORWARD);
 
         playString("That sounds like a skill issue ");
     }
