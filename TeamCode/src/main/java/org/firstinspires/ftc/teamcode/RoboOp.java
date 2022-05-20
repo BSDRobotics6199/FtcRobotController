@@ -38,6 +38,8 @@ public class RoboOp extends OpMode {
     protected double drivePower, strafePower, turnPower;
     protected double leftFlipPosition;
     protected double rightFlipPosition;
+    protected double driveVariable;
+    protected DcMotor capstone;
     //-130
     //protected enum liftLevel { //TODO: attach ints to values
     //    RECEIVE, HUB_1, HUB_2, HUB_3
@@ -52,11 +54,12 @@ public class RoboOp extends OpMode {
 
         //假设有四个驾驶马达
         //登录马达
-        frontRight  = hardwareMap.get(DcMotor.class, "frontRight");
+        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        backRight = hardwareMap.get(DcMotor.class,"rearRight");
+        backRight = hardwareMap.get(DcMotor.class, "rearRight");
         backLeft = hardwareMap.get(DcMotor.class, "rearLeft");
         intake = hardwareMap.get(DcMotor.class, "intake");
+        capstone = hardwareMap.get(DcMotor.class, "capstone");
         leftFlip = hardwareMap.get(Servo.class, "leftFlip");
         rightFlip = hardwareMap.get(Servo.class, "rightFlip");
         //Reverse the motors here
@@ -73,7 +76,7 @@ public class RoboOp extends OpMode {
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         telemetry.addData("Motors: ", hardwareMap.getAll(DcMotor.class));
-
+        driveVariable = 0.5;
         leftFlipPosition = leftFlip.getPosition();
         rightFlipPosition = rightFlip.getPosition();
         //liftTarget = lift.getCurrentPosition();
@@ -90,33 +93,40 @@ public class RoboOp extends OpMode {
 //        imu.initialize(parameters);
 //
 //        position = imu.getPosition();
+
     }
 
     @Override
     public void loop() {
         dt = runtime.time() - lastTime;
         //每一回合都会设马达力量
-        frontRight.setPower(Range.clip(drivePower - turnPower - strafePower, -1, 1));
-        backRight.setPower(Range.clip(-1 * drivePower + turnPower - strafePower, -1, 1));
+        frontRight.setPower(Range.clip(driveVariable*(drivePower - turnPower - strafePower), -1, 1));
+        backRight.setPower(Range.clip(driveVariable*(-1 * drivePower + turnPower - strafePower), -1, 1));
 
-        frontLeft.setPower(Range.clip(-1 * drivePower - turnPower - strafePower, -1, 1));
-        backLeft.setPower(Range.clip(drivePower + turnPower - strafePower, -1, 1));
-
+        frontLeft.setPower(Range.clip(driveVariable*(-1 * drivePower - turnPower - strafePower), -1, 1));
+        backLeft.setPower(Range.clip(driveVariable*(drivePower + turnPower - strafePower), -1, 1));
 
         //position = imu.getPosition();
 
-
+        telemetry.update();
         lastTime = runtime.time();
 
     }
-    public void flipOut() {
-        rightFlipPosition = rightFlipPosition + (0.1 * dt);
-        leftFlipPosition = leftFlipPosition + (0.1 * dt);
+    public void rightFlipOut() {
+        rightFlipPosition = 0.59;
+        rightFlip.setPosition(rightFlipPosition);
     }
-    public void flipIn() {
-        rightFlipPosition = rightFlipPosition - (0.1 * dt);
-        leftFlipPosition = leftFlipPosition - (0.1 * dt);
+    public void rightFlipIn() {
+        rightFlipPosition = 0.153;
+        rightFlip.setPosition(rightFlipPosition);
     }
-
+    public void leftFlipOut() {
+        leftFlipPosition = 0.25;
+        leftFlip.setPosition(leftFlipPosition);
+    }
+    public void leftFlipIn() {
+        leftFlipPosition = 0.687;
+        leftFlip.setPosition(leftFlipPosition);
+    }
     //增加升降机功能
 }
